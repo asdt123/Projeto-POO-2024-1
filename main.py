@@ -33,7 +33,9 @@ z = screen.get_height()
 f = 0
 k = 0
 pulo = False
+relogio = pygame.time.Clock()
 while running:
+    relogio.tick(30)
     pygame.key.set_repeat(10)
     # Did the user click the window close button?
     for event in pygame.event.get():
@@ -69,14 +71,14 @@ while running:
     if pulo:
         if z>int(screen.get_height()/2):
             pygame.time.delay(1)
-            z=z-int(screen.get_height()*0.018036-8.0180)
+            z=z-20
             print(z)  
         else:
             pulo = False
     else:
         if z<screen.get_height():
             pygame.time.delay(1)
-            z=z+int(screen.get_height()*0.018036-8.0180)
+            z=z+20
             print(z) 
     if z>screen.get_height(): 
         z=screen.get_height()
