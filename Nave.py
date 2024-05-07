@@ -1,24 +1,23 @@
-# Constantes
-WIDTH = 800
-HEIGHT = 600
-
-class Nave:
-  def __init__(self,vida,poder,posição_nave,posição_tiro,imagem_nave,imagem_tiro):
+import abc from ABC, abstractmethod
+import pygame
+class Nave(ABC):
+  def __init__(self,vida,poder,posição_nave,imagem_nave):
     self.vida = vida
     self.poder = poder
-    self.posição_nave = posição_nave
-    self.posição_tiro = posição_tiro
-    self.imagem_nave = imagem_nave
-    self.imagem_tiro = imagem_tiro
+    self.rectHitbox = pygame.rect(posição_nave,(50,50))    
 
+  @abstractmethod
   def atacar(self):
     pass
 
+  @abstractmethod
   def mover(event):
     pass
 
+  @abstractmethod
   def limite(self):
     pass
 
-  def show(self):
-    pass
+  def show(self, screen):
+    screen.
+    
