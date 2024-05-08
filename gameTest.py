@@ -1,82 +1,65 @@
 import pygame
 from Player import Player
-from Nave import WIDTH
-from Nave import HEIGHT
+from Alien import Alien
+import random
 
+#inicialização pygames
+pygame.init()
 relogio = pygame.time.Clock()
 
-X_INICIAL_NAVE = 430-64
-Y_INICIAL_NAVE = 550-64
-X_INICIAL_TIRO = X_INICIAL_NAVE + 2*8 + 4
-Y_INICIAL_TIRO = Y_INICIAL_NAVE
-
-pygame.init()
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
+#definiçao da tela
+screen = pygame.display.set_mode((430,550))
 pygame.display.set_caption("Interestelar")
+
+#criação do sprite do jogador
 player = Player()
+players = pygame.sprite.Group()
+players.add(player)
 
-# Tiro
-tiro_img = pygame.image.load("images/bullet.png")
-posição_inicial = [X_INICIAL_TIRO,Y_INICIAL_TIRO]
+#definição do background
+background = pygame.image.load("images/stars.jpg") 
+aliens = pygame.sprite.Group() 
 
-player_tiro_img = [tiro_img]
-posição_tiro = [posição_inicial]
-posição_tiro_mov = [X_INICIAL_TIRO,Y_INICIAL_TIRO]
-delta_Y = [0]
-x = [0]
-y = [0]
-
-aux = 0
+#loop principal
 running = True
 while running:
-
+  #frames
   relogio.tick(30)
-  backgraound = pygame.image.load("images/stars.jpg") 
-  screen.blit(backgraound,(0,0))
 
+  #criação dos inimigos, sujeito a alteração
+  if len(aliens)<2:
+    aliens.add(Alien((random.randint(50,300),-30)))
+  screen.blit(background,(0,0))
+
+  #analise do teclado para controle do personagem
+  key=pygame.key.get_pressed()
+  if key[pygame.K_UP]:     # Andar para cima
+    player.mover((0,-10))
+  if key[pygame.K_DOWN]:   # Andar para baixo
+    player.mover((0,10))
+  if key[pygame.K_RIGHT]:  # Andar para direita
+    player.mover((10,0))
+  if key[pygame.K_LEFT]:   # Andar para esquerda
+    player.mover((-10,0))
+  if key[pygame.K_SPACE]:   # Andar para esquerda
+    player.atacar(screen)
+  else:
+    pass
+
+  #analise dos demais eventos
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
-      running == False
-
-    deltas_nave = player.mover(event)
-
+      running = False
     if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_SPACE:
-        delta_Y[aux] = -5
-        delta_Y.append(0)
-        posição_tiro.append(posição_inicial)
-        x[aux] = player.posição_nave[0] + deltas_nave[0] + 2*8 + 4
-        y[aux] = player.posição_nave[1] + deltas_nave[1]
-        x.append(0)
-        y.append(0) 
-        aux += 1
-
-  player.posição_nave[0] += deltas_nave[0]
-  player.posição_nave[1] += deltas_nave[1]
-
-  posição_tiro_mov[0] += deltas_nave[0]
-  posição_tiro_mov[1] += deltas_nave[1]    
-
-  for i in range(0,aux+1):
-    
-    posição_tiro[i][0] = x[i]
-    posição_tiro[i][1] += delta_Y[i]
-
-    ''' 
-    posição_tiro[i][0] = posição_tiro_mov[0] 
-    posição_tiro[i][1] = posição_tiro_mov[1]
-    '''
-
-    screen.blit(player_tiro_img[i],(posição_tiro[i][0],posição_tiro[i][1]))
-    player_tiro_img.append(tiro_img)
-
-  for i in range(0,aux+1):
-    if posição_tiro[i][1] <= 0:
-      posição_tiro[i] = [X_INICIAL_TIRO,Y_INICIAL_TIRO]
-      delta_Y[i] = 0
+      if event.key == pygame.K_ESCAPE:
+        running = False
   
-  player.show(screen)
-  player.limite()
-  pygame.display.update()
+  #desenho dos sprites, da pra colocar numa função depois
+  player.image
+  players.draw(screen)
+  players.update(screen, aliens)
+  aliens.draw(screen)
+  aliens.update()
+  pygame.display.flip()
 
 pygame.quit()

@@ -1,23 +1,28 @@
-import abc from ABC, abstractmethod
+from abc import ABC, abstractmethod
 import pygame
-class Nave(ABC):
-  def __init__(self,vida,poder,posição_nave,imagem_nave):
+
+class Nave(ABC, pygame.sprite.Sprite):
+  def __init__(self,vida,posição_nave,imagem_nave):
+    pygame.sprite.Sprite.__init__(self)
+    
+    self.image = pygame.image.load(imagem_nave)
+    self.rect= self.image.get_rect()
+    self.rect.center = posição_nave
     self.vida = vida
-    self.poder = poder
-    self.rectHitbox = pygame.rect(posição_nave,(50,50))    
+
+  def receber_dano(self, dano):
+    self.vida-=dano
 
   @abstractmethod
   def atacar(self):
     pass
 
   @abstractmethod
-  def mover(event):
+  def mover(self):
     pass
 
   @abstractmethod
   def limite(self):
     pass
 
-  def show(self, screen):
-    screen.
     
