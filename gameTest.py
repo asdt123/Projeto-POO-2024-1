@@ -8,7 +8,7 @@ pygame.init()
 relogio = pygame.time.Clock()
 
 #definiçao da tela
-screen = pygame.display.set_mode((430,550))
+screen = pygame.display.set_mode((900,600))
 pygame.display.set_caption("Interestelar")
 
 #criação do sprite do jogador
@@ -19,17 +19,18 @@ players.add(player)
 #definição do background
 background = pygame.image.load("images/stars.jpg") 
 aliens = pygame.sprite.Group() 
-
 #loop principal
 running = True
 while running:
   #frames
   relogio.tick(30)
 
+  
   #criação dos inimigos, sujeito a alteração
   if len(aliens)<2:
-    aliens.add(Alien((random.randint(50,300),-30)))
+    aliens.add(Alien((random.randint(50,800),-30)))
   screen.blit(background,(0,0))
+
 
   #analise do teclado para controle do personagem
   key=pygame.key.get_pressed()
@@ -59,7 +60,7 @@ while running:
   players.draw(screen)
   players.update(screen, aliens)
   aliens.draw(screen)
-  aliens.update()
+  aliens.update(screen, players)
   pygame.display.flip()
 
 pygame.quit()
