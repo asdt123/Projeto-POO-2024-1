@@ -27,25 +27,35 @@ while running:
 
   
   #criação dos inimigos, sujeito a alteração
-  if len(aliens)<2:
-    aliens.add(Alien((random.randint(50,800),-30)))
+ # if len(aliens)<2:
+  #  aliens.add(Alien((random.randint(50,800),-30)))
   screen.blit(background,(0,0))
 
 
   #analise do teclado para controle do personagem
   key=pygame.key.get_pressed()
-  if key[pygame.K_UP]:     # Andar para cima
+  
+  if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita
+    player.mover((10,-10))
+  elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:  # Andar para direita
+    player.mover((10,10))
+  elif key[pygame.K_LEFT] and key[pygame.K_UP]:  # Andar para direita
+    player.mover((-10,-10))
+  elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:  # Andar para direita
+    player.mover((-10,10))
+  elif key[pygame.K_UP]:     # Andar para cima
     player.mover((0,-10))
-  if key[pygame.K_DOWN]:   # Andar para baixo
-    player.mover((0,10))
-  if key[pygame.K_RIGHT]:  # Andar para direita
-    player.mover((10,0))
-  if key[pygame.K_LEFT]:   # Andar para esquerda
+  elif key[pygame.K_LEFT]:   # Andar para esquerda
     player.mover((-10,0))
+  elif key[pygame.K_DOWN]:   # Andar para baixo
+    player.mover((0,10))
+  elif key[pygame.K_RIGHT]:  # Andar para direita
+    player.mover((10,0))
+  else:
+    player.mover((0,0))
+  
   if key[pygame.K_SPACE]:   # Andar para esquerda
     player.atacar(screen)
-  else:
-    pass
 
   #analise dos demais eventos
   for event in pygame.event.get():
@@ -59,8 +69,8 @@ while running:
   player.image
   players.draw(screen)
   players.update(screen, aliens)
-  aliens.draw(screen)
-  aliens.update(screen, players)
+#  aliens.draw(screen)
+ # aliens.update(screen, players)
   pygame.display.flip()
 
 pygame.quit()

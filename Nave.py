@@ -5,7 +5,7 @@ class Nave(ABC, pygame.sprite.Sprite):
   def __init__(self,vida,posição_nave,imagem_nave):
     pygame.sprite.Sprite.__init__(self)
     
-    self.image = pygame.image.load(imagem_nave)
+    self.image = imagem_nave
     self.rect= self.image.get_rect()
     self.rect.center = posição_nave
     self.vida = vida

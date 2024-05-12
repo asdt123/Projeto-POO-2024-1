@@ -7,7 +7,7 @@ DANO_PLAYER = 20
 
 class Alien(Nave):
   def __init__(self, posição_inicial):
-    super().__init__(VIDA_PLAYER, posição_inicial,"images/alien.png")
+    super().__init__(VIDA_PLAYER, posição_inicial,"images/spaceship.png")
     self.tiros = pygame.sprite.Group()
     self.tempo = 0
     
@@ -30,6 +30,9 @@ class Alien(Nave):
   def update(self, screen, player):
     self.rect.move_ip(0,10)
     self.atacar(player)
+    inimigos_atingidos=pygame.sprite.spritecollide(self, player, 0)
+    for inimigo in inimigos_atingidos:
+        inimigo.receber_dano(0.5)
     self.tiros.draw(screen)
     if self.vida <= 0 or self.rect.top>550:
         self.kill()
