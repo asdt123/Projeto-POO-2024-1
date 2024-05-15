@@ -1,26 +1,39 @@
 from Nave import Nave
 from Arsenal import Arsenal
 import pygame
+import random
 
 VIDA_PLAYER = 100
 
 class Player(Nave):
-  def __init__(self):
+  def __init__(self, posição_vida, skin):
     #adicionando os sprites de animação
     self.img_anim=[]
     for i in range(10):
-      self.img_anim.append(pygame.image.load("images/navezinha.png").subsurface((i*64,0),(64,64)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load("images/navezinha.png").subsurface((i*64,skin*64),(64,64)), (64*2,64*2)))
     #deinfindo o sprite inicial
     super().__init__(VIDA_PLAYER, (250,250),self.img_anim[0])
     #grupo de sprites tiro
     self.tiros = pygame.sprite.Group()
     #auxilio visual para vida
-    self.boxVida = pygame.Rect(25,25,self.vida, 10)
+    self.boxVida = pygame.Rect(posição_vida,25,self.vida, 10)
+    #total de pontos do jogador
+    self.pontos = 0
+    #esolha da munnição
+    self.tipo_mun = [True, False, False]
+    self.index_mun = 0
     
 
   def atacar(self):
-    #cria objetos do tiro e adiciona ao grupo
-    self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), "images/bullet.png", 5))
+    #analisa a mutição ativa, cria objetos do tiro e adiciona ao grupo
+    if self.tipo_mun[0]:
+      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((0,0),(24,24)), 5))
+    elif self.tipo_mun[1]:
+      if len(self.tiros.sprites())<9:
+        for i in range(3):
+          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((24,0),(24,24)), 5, -30+30*i ))
+    elif self.tipo_mun[2]:
+      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((48,0),(24,24)), 5, random.randint(-30,30) ))
 
   def mover(self,velocidade):
     #verifica se o jogador não ultrapassou os limites da tela
@@ -66,8 +79,14 @@ class Player(Nave):
     
   def update(self,screen, aliens):
     #mostra na tela a vida do jogador
-    self.boxVida.update(25,25,self.vida*2, 20)
+    self.boxVida.update(self.boxVida.left,25,self.vida*2, 20)
     pygame.draw.rect(screen, (255,0,0),self.boxVida)
+
+    #ativa apenas uma munição
+    for i in range(3):
+        self.tipo_mun[i]=False
+        if i==self.index_mun%3:
+          self.tipo_mun[i]=True
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if pygame.time.get_ticks()%30==0 and self.vida<40:
@@ -75,7 +94,13 @@ class Player(Nave):
 
     #desenha os tiros na tela e verifica se acertou um alien
     self.tiros.draw(screen)
-    self.tiros.update(aliens) 
+    self.tiros.update(aliens, self)
+
+    #imprime a pontuação
+    fonte = pygame.font.SysFont("Monospace", 18, True, True)
+    mensagem = f"Pontuação: {self.pontos}"
+    format_text = fonte.render(mensagem, False, (255,255,255))
+    screen.blit(format_text, (self.boxVida.left,60))
 
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
