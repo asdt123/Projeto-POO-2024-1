@@ -12,8 +12,8 @@ screen = pygame.display.set_mode((900,600))
 pygame.display.set_caption("Interestelar")
 
 #criação do sprite do jogador
-player = Player(650, 3)
-player2 = Player(25, 4)
+player = Player(650, 2)
+player2 = Player(25, 3)
 players = pygame.sprite.Group()
 players.add(player)
 players.add(player2)
@@ -30,8 +30,8 @@ while running:
   relogio.tick(30)
 
   #criação dos inimigos, sujeito a alteração
-  #if len(aliens)<random.randint(2,3) and pygame.time.get_ticks()%50>45:
-   # aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
+  if len(aliens)<random.randint(2,3) and pygame.time.get_ticks()%50>45:
+    aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
   screen.blit(background,(0,0))
   #analise do teclado para controle do personagem
   key=pygame.key.get_pressed()
@@ -59,7 +59,7 @@ while running:
     player2.atacar()
 
   if key[pygame.K_2] and not players.has(player2):   # renascer
-    player2 = Player(25)
+    player2 = Player(25,0)
     players.add(player2)
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
@@ -85,7 +85,7 @@ while running:
     player.atacar()
 
   if key[pygame.K_j] and not players.has(player):   # renascer
-    player = Player(650)
+    player = Player(650, 1)
     players.add(player)
 
   #analise dos demais eventos

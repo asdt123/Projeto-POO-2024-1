@@ -20,7 +20,7 @@ class Alien(Nave):
     self.pontos = 100
     
 
-  def atacar(self, player):
+  def atacar(self):
     #sai um tiro a cada 5ms, não dá muito certo isso aqui mas ta bom por enquanto
     if self.tipo_alien == 1:
       if len(self.tiros.sprites())<8:
@@ -52,7 +52,7 @@ class Alien(Nave):
     self.image = self.img_anim[int(self.index)]
 
     #atira
-    self.atacar(player)
+    #self.atacar()
     #verifica se acertou o jogador
     self.tiros.update(player)
     #verifica se colidiu com o jogador pra tirar a vida dele

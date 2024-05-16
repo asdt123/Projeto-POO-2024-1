@@ -20,7 +20,7 @@ class Player(Nave):
     #total de pontos do jogador
     self.pontos = 0
     #esolha da munnição
-    self.tipo_mun = [True, False, False]
+    self.tipo_mun = [True, False, False, False]
     self.index_mun = 0
     
 
@@ -34,6 +34,11 @@ class Player(Nave):
           self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((24,0),(24,24)), 5, -30+30*i ))
     elif self.tipo_mun[2]:
       self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((48,0),(24,24)), 5, random.randint(-30,30) ))
+    elif self.tipo_mun[3]:
+      if len(self.tiros.sprites())<12:
+        for i in range(2):
+          self.tiros.add(Arsenal((self.rect.centerx+15-i*30, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((24,0),(24,24)), 5))
+
 
   def mover(self,velocidade):
     #verifica se o jogador não ultrapassou os limites da tela
@@ -83,9 +88,9 @@ class Player(Nave):
     pygame.draw.rect(screen, (255,0,0),self.boxVida)
 
     #ativa apenas uma munição
-    for i in range(3):
+    for i in range(len(self.tipo_mun)):
         self.tipo_mun[i]=False
-        if i==self.index_mun%3:
+        if i==self.index_mun%4:
           self.tipo_mun[i]=True
 
     #recupera a vida ate 40% mais ou menos, uma mamata
