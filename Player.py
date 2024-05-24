@@ -8,9 +8,11 @@ VIDA_PLAYER = 100
 class Player(Nave):
   def __init__(self, posição_vida, skin):
     #adicionando os sprites de animação
+    self.skin = skin
+    self.alternar_skin = 0
     self.img_anim=[]
-    for i in range(10):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load("images/navezinha.png").subsurface((i*64,skin*64),(64,64)), (64*2,64*2)))
+    for i in range(20):
+      self.img_anim.append(pygame.transform.scale(pygame.image.load("images/navezinha.png").subsurface((i%10*64,(self.skin+i//10)*64),(64,64)), (64*2,64*2)))
     #deinfindo o sprite inicial
     super().__init__(VIDA_PLAYER, (250,250),self.img_anim[0])
     #grupo de sprites tiro
@@ -20,12 +22,14 @@ class Player(Nave):
     #total de pontos do jogador
     self.pontos = 0
     #esolha da munnição
-    self.tipo_mun = [True, False, False, False]
+    self.tipo_mun = [True, False, False, False, False]
     self.index_mun = 0
     
 
   def atacar(self):
     #analisa a mutição ativa, cria objetos do tiro e adiciona ao grupo
+    if self.skin<8:
+      self.alternar_skin = 10
     if self.tipo_mun[0]:
       self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), pygame.image.load("images/MUNIÇÕES.png").subsurface((0,0),(24,24)), 5))
     elif self.tipo_mun[1]:
@@ -63,34 +67,34 @@ class Player(Nave):
 
     #ajusta a animação dependendo do movimento
     if velocidade==(-10,-10):
-      self.image=self.img_anim[9]
+      self.image=self.img_anim[self.alternar_skin+9]
     if velocidade==(10,-10):
-      self.image=self.img_anim[8]
+      self.image=self.img_anim[self.alternar_skin+8]
     if velocidade==(0,-10):
-      self.image=self.img_anim[7]
+      self.image=self.img_anim[self.alternar_skin+7]
     if velocidade==(-10,0):
-      self.image=self.img_anim[6]
+      self.image=self.img_anim[self.alternar_skin+6]
     if velocidade==(10,0):
-      self.image=self.img_anim[5]
+      self.image=self.img_anim[self.alternar_skin+5]
     if velocidade==(0,0):
-      self.image=self.img_anim[4]
+      self.image=self.img_anim[self.alternar_skin+4]
     if velocidade==(-10,10):
-      self.image=self.img_anim[3]
+      self.image=self.img_anim[self.alternar_skin+3]
     if velocidade==(10,10):
-      self.image=self.img_anim[2]
+      self.image=self.img_anim[self.alternar_skin+2]
     if velocidade==(0,10):
-      self.image=self.img_anim[1]
+      self.image=self.img_anim[self.alternar_skin+1]
     
     
   def update(self,screen, aliens):
     #mostra na tela a vida do jogador
     self.boxVida.update(self.boxVida.left,25,self.vida*2, 20)
     pygame.draw.rect(screen, (255,0,0),self.boxVida)
-
+    
     #ativa apenas uma munição
     for i in range(len(self.tipo_mun)):
         self.tipo_mun[i]=False
-        if i==self.index_mun%4:
+        if i==self.index_mun%5:
           self.tipo_mun[i]=True
 
     #recupera a vida ate 40% mais ou menos, uma mamata
@@ -106,6 +110,9 @@ class Player(Nave):
     mensagem = f"Pontuação: {self.pontos}"
     format_text = fonte.render(mensagem, False, (255,255,255))
     screen.blit(format_text, (self.boxVida.left,60))
+
+
+    self.alternar_skin=0
 
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:

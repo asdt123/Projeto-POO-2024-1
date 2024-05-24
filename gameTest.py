@@ -12,8 +12,8 @@ screen = pygame.display.set_mode((900,600))
 pygame.display.set_caption("Interestelar")
 
 #criação do sprite do jogador
-player = Player(650, 2)
-player2 = Player(25, 3)
+player = Player(650, 0)
+player2 = Player(25, 8)
 players = pygame.sprite.Group()
 players.add(player)
 players.add(player2)
@@ -35,6 +35,9 @@ while running:
   screen.blit(background,(0,0))
   #analise do teclado para controle do personagem
   key=pygame.key.get_pressed()
+
+  if key[pygame.K_1]:   # atacar
+    player2.atacar()
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
     player2.mover((10,-10))
@@ -54,13 +57,14 @@ while running:
     player2.mover((10,0))
   else:
     player2.mover((0,0))
-  
-  if key[pygame.K_1]:   # atacar
-    player2.atacar()
 
   if key[pygame.K_2] and not players.has(player2):   # renascer
     player2 = Player(25,0)
     players.add(player2)
+
+
+  if key[pygame.K_l]:   # atacar
+    player.atacar()
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
     player.mover((10,-10))
@@ -81,8 +85,6 @@ while running:
   else:
     player.mover((0,0))
   
-  if key[pygame.K_l]:   # atacar
-    player.atacar()
 
   if key[pygame.K_j] and not players.has(player):   # renascer
     player = Player(650, 1)
