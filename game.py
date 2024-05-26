@@ -1,40 +1,31 @@
 import pygame
-from Player import Player
-from Alien import Alien
-import random
+from modulos.personagens.Player import Player
+from modulos.personagens.Alien import Alien
+from modulos.janelas.Janelas import * 
+from configurações.Config import *
 
 #inicialização pygames
 pygame.init()
 relogio = pygame.time.Clock()
 
 #definiçao da tela
-screen = pygame.display.set_mode((900,600))
-pygame.display.set_caption("Interestelar")
+screen = pygame.display.set_mode(DIMENSÕES_TELA)
+pygame.display.set_caption(TÍTULO)
 
-#criação do sprite do jogador
-player = Player(650, 0)
-player2 = Player(25, 8)
-players = pygame.sprite.Group()
-players.add(player)
-players.add(player2)
-
+janela = Janelas(screen,"Menu Inicial 1")
 
 #definição do background
-background = pygame.image.load("images/stars.jpg") 
 aliens = pygame.sprite.Group() 
 
 #loop principal
 running = True
 while running:
   #frames
-  relogio.tick(30)
+  relogio.tick(FPS)
 
-  #criação dos inimigos, sujeito a alteração
-  if len(aliens)<random.randint(2,3) and pygame.time.get_ticks()%50>45:
-    aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
-  screen.blit(background,(0,0))
+  janela.atualizar_janela()
   #analise do teclado para controle do personagem
-  key=pygame.key.get_pressed()
+  key = pygame.key.get_pressed()
 
   if key[pygame.K_1]:   # atacar
     player2.atacar()
@@ -62,7 +53,6 @@ while running:
     player2 = Player(25,0)
     players.add(player2)
 
-
   if key[pygame.K_l]:   # atacar
     player.atacar()
 
@@ -84,7 +74,6 @@ while running:
     player.mover((10,0))
   else:
     player.mover((0,0))
-  
 
   if key[pygame.K_j] and not players.has(player):   # renascer
     player = Player(650, 1)
@@ -98,15 +87,13 @@ while running:
       if event.key == pygame.K_ESCAPE:
         running = False
       if event.key == pygame.K_k:
-        player.index_mun+=1
+        player.index_mun += 1
       if event.key == pygame.K_TAB:
-        player2.index_mun+=1
+        player2.index_mun += 1
+      if event.key == pygame.K_SPACE:
+        ESCOLHE_JANELA += 1
   
-  #desenho dos sprites, da pra colocar numa função depois
-  players.draw(screen)
-  players.update(screen, aliens)
-  aliens.draw(screen)
-  aliens.update(screen, players)
+  janela.mudar_janela(ESCOLHE_JANELA,(0,0))
   pygame.display.flip()
 
 pygame.quit()
