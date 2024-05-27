@@ -19,7 +19,8 @@ BACKGROUND = pygame.image.load("imagens/cenário/stars.jpg")
 
 
 # Imagens
-
+#essas variaveis não atualizam valor ao longo da compilação, não servindo pra atualizar proporção nem posição
+#encontrar outra alternativa pegado a variavel screen diretamente
 NAVE_POSIÇÃO = (int(0.4270*LARGURA),int(0.7473*ALTURA))
 NAVE_TAMANHO = (int(0.1422*screen.get_width()),int(0.2133*screen.get_height()))
 
