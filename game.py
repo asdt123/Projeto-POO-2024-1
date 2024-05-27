@@ -23,7 +23,7 @@ while running:
   janela.atualizar_janela()
 
   #determinação da velocidade dependente do tamanho da tela(temporario)
-  velocidade=15
+  velocidade=screen.get_height()//46.15
 
   #analise do teclado para controle do personagem
   key = pygame.key.get_pressed()

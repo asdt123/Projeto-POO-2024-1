@@ -45,7 +45,7 @@ class Alien(Nave):
 
   def update(self,screen:pygame.Surface,player:Player)->None:
     #movimenta pra baixo
-    self.rect.move_ip(0,6)
+    self.rect.move_ip(0,screen.get_height()//100)
 
     #cicla atraves das sprites e define a escala do sprite
     proporção=(screen.get_height()//4.6875,screen.get_height()//4.6875)
