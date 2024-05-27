@@ -5,14 +5,11 @@ from modulos.janelas.Janelas import *
 from configurações.Config import *
 
 #inicialização pygames
-pygame.init()
 relogio = pygame.time.Clock()
 
-#definiçao da tela
-screen = pygame.display.set_mode(DIMENSÕES_TELA)
-pygame.display.set_caption(TÍTULO)
 
-janela = Janelas(screen,"Menu Inicial 1")
+
+janela = Janelas(screen,"Fase 1")
 
 #definição do background
 aliens = pygame.sprite.Group() 
@@ -24,6 +21,10 @@ while running:
   relogio.tick(FPS)
 
   janela.atualizar_janela()
+
+  #determinação da velocidade dependente do tamanho da tela(temporario)
+  velocidade=15
+
   #analise do teclado para controle do personagem
   key = pygame.key.get_pressed()
 
@@ -31,21 +32,21 @@ while running:
     player2.atacar()
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
-    player2.mover((10,-10))
+    player2.mover((velocidade,-1*velocidade))
   elif key[pygame.K_d] and key[pygame.K_s]:  # Andar para direita e pra baixo
-    player2.mover((10,10))
+    player2.mover((velocidade,velocidade))
   elif key[pygame.K_a] and key[pygame.K_w]:  # Andar para esquerda e pra cima
-    player2.mover((-10,-10))
+    player2.mover((-1*velocidade,-1*velocidade))
   elif key[pygame.K_a] and key[pygame.K_s]:  # Andar para esquerda e pra baixo
-    player2.mover((-10,10))
+    player2.mover((-1*velocidade,velocidade))
   elif key[pygame.K_w]:     # Andar para cima
-    player2.mover((0,-10))
+    player2.mover((0,-1*velocidade))
   elif key[pygame.K_a]:   # Andar para esquerda
-    player2.mover((-10,0))
+    player2.mover((-1*velocidade,0))
   elif key[pygame.K_s]:   # Andar para baixo
-    player2.mover((0,10))
+    player2.mover((0,velocidade))
   elif key[pygame.K_d]:  # Andar para direita
-    player2.mover((10,0))
+    player2.mover((velocidade, 0))
   else:
     player2.mover((0,0))
 

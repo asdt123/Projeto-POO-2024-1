@@ -2,12 +2,8 @@ import pygame
 
 pygame.init()
 
+#definiçao da tela
 # Tela
-
-MEDIDAS_TELA = pygame.display.Info()
-#LARGURA = MEDIDAS_TELA.current_w
-#ALTURA = MEDIDAS_TELA.current_h
-
 LARGURA = 900
 ALTURA = 600
 
@@ -16,13 +12,16 @@ DIMENSÕES_TELA = (LARGURA,ALTURA)
 TÍTULO = "Space Fighters"
 
 FPS = 30
-
+pygame.display.set_caption(TÍTULO)
+screen = pygame.display.set_mode(DIMENSÕES_TELA)
 BACKGROUND = pygame.image.load("imagens/cenário/stars.jpg")
+
+
 
 # Imagens
 
 NAVE_POSIÇÃO = (int(0.4270*LARGURA),int(0.7473*ALTURA))
-NAVE_TAMANHO = (int(0.1422*LARGURA),int(0.2133*ALTURA))
+NAVE_TAMANHO = (int(0.1422*screen.get_width()),int(0.2133*screen.get_height()))
 
 INIMIGO_TAMANHO = (int(0.2133*LARGURA),int(0.1813*ALTURA))
 

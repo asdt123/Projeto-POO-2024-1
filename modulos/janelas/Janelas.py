@@ -44,7 +44,7 @@ class Janelas:
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
                 
-                self.screen.blit(BACKGROUND,(0,0))
+                self.screen.blit(pygame.transform.scale(BACKGROUND, (screen.get_width(),screen.get_height())),(0,0))
 
                 players.draw(self.screen)
                 players.update(self.screen,aliens)
