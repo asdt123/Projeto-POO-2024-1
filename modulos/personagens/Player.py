@@ -47,7 +47,7 @@ class Player(Nave):
 
   def mover(self,velocidade:int)->None:
     #nova proporção do sprite
-    proporção=(screen.get_height()//4.6875,screen.get_height()//4.6875)
+    proporção=(screen.get_height()//7,screen.get_height()//7)
 
     #ajusta a animação dependendo do movimento
     if velocidade[0] < 0 and velocidade[1] < 0:
