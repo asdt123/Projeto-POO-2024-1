@@ -58,14 +58,16 @@ class Alien(Nave):
     self.rect.w=self.image.get_width()
     self.rect.h=self.image.get_height()
 
-    #atira
-    self.atacar()
     #verifica se acertou o jogador
     self.tiros.update(player)
     #verifica se colidiu com o jogador pra tirar a vida dele
     inimigos_atingidos = pygame.sprite.spritecollide(self,player,0)
     for inimigo in inimigos_atingidos:
         inimigo.receber_dano(0.5)
+    
+    #atira
+    if len(inimigos_atingidos)==0:
+       self.atacar()
 
     #desenha na tela
     self.tiros.draw(screen)
