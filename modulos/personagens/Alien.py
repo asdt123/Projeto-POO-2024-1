@@ -15,7 +15,7 @@ class Alien(Nave):
     self.index = 0
     self.img_anim = []
     for i in range(8):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load("imagens/inimigos/inimigos.png").subsurface((i*64,self.tipo_alien*64),(64,64)), (64*3,64*1.7)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load("imagens/inimigos/inimigos.png").subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
@@ -44,17 +44,18 @@ class Alien(Nave):
     pass
 
   def update(self,screen:pygame.Surface,player:Player)->None:
-    #movimenta pra baixo so
+    #movimenta pra baixo
     self.rect.move_ip(0,6)
 
-    #cicla atraves das sprites
+    #cicla atraves das sprites e define a escala do sprite
+    proporção=(screen.get_height()//4.6875,screen.get_height()//4.6875)
     if self.index >= 7:
       self.index=0
     self.index+=0.5
-    self.image = self.img_anim[int(self.index)]
+    self.image = pygame.transform.scale(self.img_anim[int(self.index)], proporção)
 
     #atira
-    #self.atacar()
+    self.atacar()
     #verifica se acertou o jogador
     self.tiros.update(player)
     #verifica se colidiu com o jogador pra tirar a vida dele
@@ -66,5 +67,5 @@ class Alien(Nave):
     self.tiros.draw(screen)
 
     #morre se sair da tela ou se perder a vida, colocar animação de explosão aqui
-    if self.vida <= 0 or self.rect.top>550:
+    if self.vida <= 0 or self.rect.top>screen.get_height():
         self.kill()
