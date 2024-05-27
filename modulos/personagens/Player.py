@@ -36,7 +36,7 @@ class Player(Nave):
     elif self.tipo_mun[1]:
       if len(self.tiros.sprites())<9:
         for i in range(3):
-          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.top-10), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)), 5, -30+30*i ))
+          self.tiros.add(Arsenal((self.rect.centerx+20-i*20, self.rect.top-10), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)), 5, -30+30*i ))
     elif self.tipo_mun[2]:
       self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-10), pygame.image.load("imagens/armamento/munições.png").subsurface((48,0),(24,24)), 5, random.randint(-30,30) ))
     elif self.tipo_mun[3]:
