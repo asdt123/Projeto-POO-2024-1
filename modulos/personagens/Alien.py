@@ -54,6 +54,10 @@ class Alien(Nave):
     self.index+=0.5
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], proporção)
 
+    #ajusta hitbox
+    self.rect.w=self.image.get_width()
+    self.rect.h=self.image.get_height()
+
     #atira
     self.atacar()
     #verifica se acertou o jogador
