@@ -32,17 +32,17 @@ while running:
     player2.atacar()
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
-    player2.mover((velocidade,-1*velocidade))
+    player2.mover((velocidade,-velocidade))
   elif key[pygame.K_d] and key[pygame.K_s]:  # Andar para direita e pra baixo
     player2.mover((velocidade,velocidade))
   elif key[pygame.K_a] and key[pygame.K_w]:  # Andar para esquerda e pra cima
-    player2.mover((-1*velocidade,-1*velocidade))
+    player2.mover((-velocidade,-velocidade))
   elif key[pygame.K_a] and key[pygame.K_s]:  # Andar para esquerda e pra baixo
-    player2.mover((-1*velocidade,velocidade))
+    player2.mover((-velocidade,velocidade))
   elif key[pygame.K_w]:     # Andar para cima
-    player2.mover((0,-1*velocidade))
+    player2.mover((0,-velocidade))
   elif key[pygame.K_a]:   # Andar para esquerda
-    player2.mover((-1*velocidade,0))
+    player2.mover((-velocidade,0))
   elif key[pygame.K_s]:   # Andar para baixo
     player2.mover((0,velocidade))
   elif key[pygame.K_d]:  # Andar para direita
@@ -58,21 +58,21 @@ while running:
     player.atacar()
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
-    player.mover((10,-10))
+    player.mover((velocidade,-velocidade))
   elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:  # Andar para direita e pra baixo
-    player.mover((10,10))
+    player.mover((velocidade,velocidade))
   elif key[pygame.K_LEFT] and key[pygame.K_UP]:  # Andar para esquerda e pra cima
-    player.mover((-10,-10))
+    player.mover((-velocidade,-velocidade))
   elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:  # Andar para esquerda e pra baixo
-    player.mover((-10,10))
+    player.mover((-velocidade,velocidade))
   elif key[pygame.K_UP]:     # Andar para cima
-    player.mover((0,-10))
+    player.mover((0,-velocidade))
   elif key[pygame.K_LEFT]:   # Andar para esquerda
-    player.mover((-10,0))
+    player.mover((-velocidade,0))
   elif key[pygame.K_DOWN]:   # Andar para baixo
-    player.mover((0,10))
+    player.mover((0,velocidade))
   elif key[pygame.K_RIGHT]:  # Andar para direita
-    player.mover((10,0))
+    player.mover((velocidade,0))
   else:
     player.mover((0,0))
 
