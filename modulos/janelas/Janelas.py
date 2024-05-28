@@ -42,7 +42,7 @@ class Janelas:
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA_SAIR,2)
 
             case "Fase 1":
-                BACKGROUND = pygame.image.load("imagens/cenário/cenario.png").subsurface((0,3000-128-self.scroll),(128,128)).convert()
+                BACKGROUND = pygame.image.load("imagens/cenário/cenario.png").subsurface((0,3000-128-self.scroll),(128,128)).convert_alpha()
                 if self.scroll<3000:
                     self.scroll+=2*math.ceil(screen.get_height()/600)
                 else:

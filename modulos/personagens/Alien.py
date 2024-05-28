@@ -27,10 +27,10 @@ class Alien(Nave):
     if self.tipo_alien == 1:
       if len(self.tiros.sprites()) < 2:
         for i in range(2):
-          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)), 1, 180+30-60*i ))
+          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 1, 180+30-60*i ))
     else:  
       if len(self.tiros.sprites())<3:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)), 1, random.randint(165,195)))  
+        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
 
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
