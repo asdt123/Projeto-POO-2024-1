@@ -11,10 +11,9 @@ DIMENSÕES_TELA = (LARGURA,ALTURA)
 
 TÍTULO = "Space Fighters"
 
-FPS = 30
+FPS = 60
 pygame.display.set_caption(TÍTULO)
 screen = pygame.display.set_mode(DIMENSÕES_TELA)
-BACKGROUND = pygame.image.load("imagens/cenário/stars.jpg")
 
 
 

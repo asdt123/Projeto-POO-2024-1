@@ -3,6 +3,7 @@ import random
 from configurações.Config import *
 from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
+import math
 
 pygame.init()
 
@@ -19,6 +20,7 @@ class Janelas:
 
         self.screen = screen
         self.janela_atual = janela
+        self.scroll = 0
         
     def atualizar_janela(self):
 
@@ -40,12 +42,14 @@ class Janelas:
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA_SAIR,2)
 
             case "Fase 1":
-
+                BACKGROUND = pygame.image.load("imagens/cenário/cenario.png").subsurface((0,3000-128-self.scroll),(128,128)).convert()
+                if self.scroll<3000:
+                    self.scroll+=2*math.ceil(screen.get_height()/600)
+                else:
+                    self.scroll=0
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
-                
-                self.screen.blit(pygame.transform.scale(BACKGROUND, (screen.get_width(),screen.get_height())),(0,0))
-
+                self.screen.blit(pygame.transform.scale(BACKGROUND, (self.screen.get_width(),self.screen.get_height())),(0,0))
                 players.draw(self.screen)
                 players.update(self.screen,aliens)
                 aliens.draw(self.screen)

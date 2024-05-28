@@ -93,7 +93,7 @@ while running:
         player2.index_mun += 1
       if event.key == pygame.K_SPACE:
         ESCOLHE_JANELA += 1
-  
+  print(relogio.get_fps())
   janela.mudar_janela(ESCOLHE_JANELA,(0,0))
   pygame.display.flip()
 
