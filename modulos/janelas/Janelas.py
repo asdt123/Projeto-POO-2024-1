@@ -5,8 +5,6 @@ from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
 import math
 
-pygame.init()
-
 #criação do sprite do jogador e inimigos
 player = Player(650, 0)
 player2 = Player(25, 8)
