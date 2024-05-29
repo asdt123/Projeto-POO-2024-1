@@ -43,7 +43,7 @@ class Alien(Nave):
   def mover(self)->None:
     pass
 
-  def update(self,screen:pygame.Surface,player:Player)->None:
+  def update(self,player:Player)->None:
     #movimenta pra baixo
     self.rect.move_ip(0,screen.get_height()//100)
 

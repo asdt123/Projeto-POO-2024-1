@@ -7,9 +7,7 @@ from configurações.Config import *
 #inicialização pygames
 relogio = pygame.time.Clock()
 
-
-
-janela = Janelas(screen,"Fase 1")
+janela = Janelas("Fase 1")
 
 #definição do background
 aliens = pygame.sprite.Group() 

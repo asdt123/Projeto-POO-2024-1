@@ -95,7 +95,7 @@ class Player(Nave):
 
     
     
-  def update(self,screen:pygame.Surface,aliens:pygame.sprite.Group)->None:
+  def update(self,aliens:pygame.sprite.Group)->None:
     #mostra na tela a vida do jogador
     self.boxVida.update(self.boxVida.left,25,self.vida*2, 20)
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
