@@ -6,7 +6,7 @@ from modulos.personagens.Player import Player
 import math
 
 #criação do sprite do jogador e inimigos
-player = Player(650, 0)
+player = Player(screen.get_width()-150, 14)
 player2 = Player(25, 8)
 players = pygame.sprite.Group()
 players.add(player)
