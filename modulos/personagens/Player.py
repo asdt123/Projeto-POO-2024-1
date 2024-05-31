@@ -12,8 +12,14 @@ class Player(Nave):
     self.skin = skin
     self.alternar_skin = 0
     self.img_anim = []
-    for i in range(20):
-      self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,(self.skin+i//10)*64),(64,64)).convert_alpha())
+    if self.skin<7:
+      for i in range(20):
+        self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,(self.skin+i//10)*64),(64,64)).convert_alpha())
+    else:
+      for i in range(10):
+        self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
+    #for i in range(4):
+     # self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,(self.skin+i//10)*64),(64,64)).convert_alpha())
     #deinfindo o sprite inicial
     super().__init__(VIDA_PLAYER,(250,250),self.img_anim[0])
     #grupo de sprites tiro
@@ -32,17 +38,17 @@ class Player(Nave):
     if self.skin < 8:
       self.alternar_skin = 10
     if self.tipo_mun[0]:
-      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//60), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 5))
+      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 5))
     elif self.tipo_mun[1]:
       if len(self.tiros.sprites())<9:
         for i in range(3):
-          self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//60), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
+          self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
     elif self.tipo_mun[2]:
-      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//60), pygame.image.load("imagens/armamento/munições.png").subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
+      self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
     elif self.tipo_mun[3]:
       if len(self.tiros.sprites())<12:
         for i in range(2):
-          self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//40*(1-i*2), self.rect.top-screen.get_height()//60), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5))
+          self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5))
 
 
   def mover(self,velocidade:int)->None:
