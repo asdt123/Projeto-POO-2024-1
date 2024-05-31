@@ -27,7 +27,7 @@ while running:
   key = pygame.key.get_pressed()
 
   if key[pygame.K_1]:   # atacar
-    player2.atacar()
+    player2.vida=0
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
     player2.mover((velocidade,-velocidade))
@@ -53,7 +53,7 @@ while running:
     players.add(player2)
 
   if key[pygame.K_l]:   # atacar
-    player.atacar()
+    player.vida=0
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
     player.mover((velocidade,-velocidade))
@@ -91,7 +91,6 @@ while running:
         player2.index_mun += 1
       if event.key == pygame.K_SPACE:
         ESCOLHE_JANELA += 1
-  print(relogio.get_fps())
   janela.mudar_janela(ESCOLHE_JANELA,(0,0))
   pygame.display.flip()
 
