@@ -11,6 +11,9 @@ class Player(Nave):
     #adicionando os sprites de animação
     self.skin = skin
     self.alternar_skin = 0
+
+    #sprites normais
+    #até a 4 skin tem animação de tiro diferente, o resto não
     self.img_anim = []
     if self.skin<8:
       for i in range(20):
@@ -18,31 +21,38 @@ class Player(Nave):
     else:
       for i in range(10):
         self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
+    
+    #sprites de morte
     self.index_morte = 0
     self.img_anim_morte = []
     if self.skin<8:
+      #sprites pros modelos com animação de tiro
       for i in range(4):
-        print(i*64,(self.skin//2)*64)
         self.img_anim_morte.append(pygame.image.load("imagens/morte/morte_naves.png").subsurface((i*64,(self.skin//2)*64),(64,64)).convert_alpha())
     else:
+      #sprites pros modelos sem animação de tiro
       for i in range(4):
-        self.img_anim_morte.append(pygame.image.load("imagens/morte/morte_naves.png").subsurface((i*64,self.skin*64),(64,64)).convert_alpha())
-    #deinfindo o sprite inicial
-    print(self.img_anim_morte)
+        self.img_anim_morte.append(pygame.image.load("imagens/morte/morte_naves.png").subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
+    
+    #definindo o sprite inicial
     super().__init__(VIDA_PLAYER,(250,250),self.img_anim[0])
+    
     #grupo de sprites tiro
     self.tiros = pygame.sprite.Group()
+    
     #auxilio visual para vida
     self.boxVida = pygame.Rect(posição_vida,25,self.vida,10)
+    
     #total de pontos do jogador
     self.pontos = 0
-    #esolha da munnição
+    
+    #escolha da munição
     self.tipo_mun = [True, False, False, False, False]
     self.index_mun = 0
     
 
   def atacar(self)->None:
-    #analisa a mutição ativa, cria objetos do tiro e adiciona ao grupo
+    #analisa se o jogador está vivo, a munição ativa, cria objetos do tiro e adiciona ao grupo
     if self.vida>0:
       if self.skin < 8:
         self.alternar_skin = 10
@@ -61,9 +71,10 @@ class Player(Nave):
 
 
   def mover(self,velocidade:int)->None:
+    #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
     if self.vida>0:
 
-      proporção=(screen.get_height()//7,screen.get_height()//7)
+      proporção=(screen.get_height()//6,screen.get_height()//6)
 
       #ajusta a animação dependendo do movimento
       if velocidade[0] < 0 and velocidade[1] < 0:
@@ -112,8 +123,6 @@ class Player(Nave):
     
     
   def update(self,aliens:pygame.sprite.Group)->None:
-    proporção=(screen.get_height()//7,screen.get_height()//7)
-
     #mostra na tela a vida do jogador
     self.boxVida.update(self.boxVida.left,25,self.vida*2, 20)
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
@@ -141,9 +150,9 @@ class Player(Nave):
     self.alternar_skin = 0
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
-      self.index_morte+=0.3
+      proporção=(screen.get_height()//6,screen.get_height()//6)
+      self.index_morte+=0.37
       self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], proporção)
-      print(int(self.index_morte), self.index_morte)
-      if self.index_morte>3.3:
+      if self.index_morte>=3.6:
         self.kill()
     
