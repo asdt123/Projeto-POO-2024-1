@@ -27,7 +27,7 @@ while running:
   janela.atualizar_janela()
 
   if key[pygame.K_1]:   # atacar
-    player2.atacar()
+    player2.vida=0
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
     player2.mover((velocidade,-velocidade))
@@ -53,7 +53,7 @@ while running:
     players.add(player2)
 
   if key[pygame.K_l]:   # atacar
-    player.atacar()
+    player.vida=0
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
     player.mover((velocidade,-velocidade))

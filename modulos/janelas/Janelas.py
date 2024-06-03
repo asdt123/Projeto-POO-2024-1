@@ -5,11 +5,9 @@ from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
 import math
 
-pygame.init()
-
 #criação do sprite do jogador e inimigos
-player = Player(650, 0)
-player2 = Player(25, 8)
+player = Player(screen.get_width()-150, 17)
+player2 = Player(25, 16)
 players = pygame.sprite.Group()
 players.add(player)
 players.add(player2)
@@ -57,10 +55,12 @@ class Janelas:
                 #gera os aliens
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
-                players.draw(self.screen)
-                players.update(self.screen,aliens)
-                aliens.draw(self.screen)
-                aliens.update(self.screen,players)
+                screen.fill(CORES["Azul Escuro"])
+                #screen.blit(pygame.transform.scale(BACKGROUND, (screen.get_width(),screen.get_height())),(0,0))
+                players.draw(screen)
+                players.update(aliens)
+                aliens.draw(screen)
+                aliens.update(players)
 
             case _:
                 pass
