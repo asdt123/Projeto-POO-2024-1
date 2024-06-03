@@ -5,11 +5,8 @@ from modulos.janelas.Janelas import *
 from configurações.Config import *
 
 #inicialização pygames
-relogio = pygame.time.Clock()
 
-
-
-janela = Janelas(screen,"Fase 1")
+janela = Janelas()
 
 #definição do background
 aliens = pygame.sprite.Group() 
@@ -20,13 +17,14 @@ while running:
   #frames
   relogio.tick(FPS)
 
-  janela.atualizar_janela()
-
   #determinação da velocidade dependente do tamanho da tela(temporario)
-  velocidade=screen.get_height()//46.15
+  velocidade = screen.get_height()//46.15
 
   #analise do teclado para controle do personagem
   key = pygame.key.get_pressed()
+  MOUSE_POS = pygame.mouse.get_pos()
+
+  janela.atualizar_janela()
 
   if key[pygame.K_1]:   # atacar
     player2.atacar()
@@ -91,10 +89,13 @@ while running:
         player.index_mun += 1
       if event.key == pygame.K_TAB:
         player2.index_mun += 1
-      if event.key == pygame.K_SPACE:
-        ESCOLHE_JANELA += 1
-  print(relogio.get_fps())
-  janela.mudar_janela(ESCOLHE_JANELA,(0,0))
+      if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
+        janela.janela_atual = JANELAS[1]
+    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:
+      if event.button == 1:
+        pass
+    
+  janela.mudar_janela(MOUSE_POS)
   pygame.display.flip()
 
 pygame.quit()
