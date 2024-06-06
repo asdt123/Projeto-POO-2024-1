@@ -27,20 +27,18 @@ class Janelas:
                 
                 self.screen.fill(CORES["Azul Escuro"])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                
-                fonte = pygame.font.SysFont("fontes/Star_fighters-Regular.ttf",MENSAGEM("ESPAÇO")[1], True, True)
-                mensagem = f"PRECIONE ESPAÇO"
-                format_text = fonte.render(mensagem, False, (255,255,255))
-
-                self.screen.blit(format_text,MENSAGEM("ESPAÇO")[0])
+                screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
 
             case "Menu Inicial 2":
 
                 self.screen.fill(CORES["Azul Escuro"])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("TÍTULO"),2)
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("CAMPANHA"),2)
+                screen.blit(MENSAGEM("CAMPANHA")[0],MENSAGEM("CAMPANHA")[1])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("VERSUS"),2)
+                screen.blit(MENSAGEM("VERSUS")[0],MENSAGEM("VERSUS")[1])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("SAIR"),2)
+                screen.blit(MENSAGEM("SAIR")[0],MENSAGEM("SAIR")[1])
 
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima

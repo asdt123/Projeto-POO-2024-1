@@ -45,7 +45,7 @@ def CAIXA(nome_caixa:str):
     # Retorno: (x,y,x_size,y_size)
     match nome_caixa:
       case "TÍTULO":
-        return (int(0.3132*screen.get_width()),int(0.1484*screen.get_height()),int(0.3699*screen.get_width()),int(0.2371*screen.get_height()))
+        return (int(0.2453*screen.get_width()),int(0.0467*screen.get_height()),int(0.5193*screen.get_width()),int(0.3860*screen.get_height()))
       case "CAMPANHA":
         return (int(0.3854*screen.get_width()),int(0.6374*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
       case "VERSUS":
@@ -60,9 +60,38 @@ def CAIXA(nome_caixa:str):
 # Atualiza todas as mensagens
 def MENSAGEM(nome_mensagem:str):
 
-   # Retorno: (x,y) e (x_size,y_size)
   match nome_mensagem:
     case "ESPAÇO":
-      return [(int(0.3013*screen.get_width()),int(0.7398*screen.get_height())),int((0.05*screen.get_width()+0.05*screen.get_height())/2)]
+
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",16)
+      texto = fonte.render("PRESSIONE ESPAÇO",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.3013*screen.get_width()+0.4047*screen.get_width()//2),int(0.7398*screen.get_height()+0.1107*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+
+    case "CAMPANHA":
+      
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",36)
+      texto = fonte.render("CAMPANHA",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(0.3854*screen.get_width()+0.2295*screen.get_width()//2),int(0.6374*screen.get_height()+0.0715*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+
+    case "VERSUS":
+
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",36)
+      texto = fonte.render("VERSUS",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(0.3854*screen.get_width()+0.2295*screen.get_width()//2),int(0.7420*screen.get_height()+0.0715*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+
+    case "SAIR":
+
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",36)
+      texto = fonte.render("SAIR",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(0.3854*screen.get_width()+0.2295*screen.get_width()//2),int(0.8480*screen.get_height()+0.0715*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+
     case _:
-      return [(0,0),0]
+      pass
