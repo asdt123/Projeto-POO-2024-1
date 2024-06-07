@@ -118,9 +118,11 @@ class Player(Nave):
       else:
         self.rect.move_ip(velocidade)
 
-  def reposicionar(self, tam_tela_novo):
-    pos_rel = self.rect.x/DIMENSÕES_TELA[0], self.rect.y/DIMENSÕES_TELA[1]
-    self.rect.x, self.rect.y = tam_tela_novo[0]*pos_rel[0], tam_tela_novo[1]*pos_rel[1]
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
+    print('1',self.rect.y, dimensões_antigas[1], dimensões_novas[1])
+    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
+    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+    print('2',self.rect.y)
 
         
   def update(self,aliens:pygame.sprite.Group)->None:

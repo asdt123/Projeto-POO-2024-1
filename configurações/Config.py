@@ -6,11 +6,10 @@ relogio = pygame.time.Clock()
 # Definições da janela
 
 TÍTULO = "Space Fighters"
-DIMENSÕES_TELA = (900,600)
 
 FPS = 30
 pygame.display.set_caption(TÍTULO)
-screen = pygame.display.set_mode(DIMENSÕES_TELA)
+screen = pygame.display.set_mode((900,600))
 
 #definições sprites
 #players
