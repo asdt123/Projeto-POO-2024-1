@@ -4,23 +4,24 @@ from configurações.Config import *
 import pygame
 import random
 
-VIDA_PLAYER = 100
+
 
 class Player(Nave):
-  def __init__(self,posição_vida:int,skin:int)->None:
+  def __init__(self,tipo_player:int,skin:int)->None:
     #adicionando os sprites de animação
     self.skin = skin
     self.alternar_skin = 0
+    self.tipo_player = tipo_player
 
     #sprites normais
     #até a 4 skin tem animação de tiro diferente, o resto não
     self.img_anim = []
     if self.skin<8:
       for i in range(20):
-        self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,(self.skin+i//10)*64),(64,64)).convert_alpha())
+        self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,(self.skin+i//10)*64),(64,64)).convert_alpha())
     else:
       for i in range(10):
-        self.img_anim.append(pygame.image.load("imagens/jogadores/naves.png").subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
+        self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
     
     #sprites de morte
     self.index_morte = 0
@@ -28,11 +29,11 @@ class Player(Nave):
     if self.skin<8:
       #sprites pros modelos com animação de tiro
       for i in range(4):
-        self.img_anim_morte.append(pygame.image.load("imagens/morte/morte_naves.png").subsurface((i*64,(self.skin//2)*64),(64,64)).convert_alpha())
+        self.img_anim_morte.append(pygame.image.load(morte_naves).subsurface((i*64,(self.skin//2)*64),(64,64)).convert_alpha())
     else:
       #sprites pros modelos sem animação de tiro
       for i in range(4):
-        self.img_anim_morte.append(pygame.image.load("imagens/morte/morte_naves.png").subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
+        self.img_anim_morte.append(pygame.image.load(morte_naves).subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
     
     #definindo o sprite inicial
     super().__init__(VIDA_PLAYER,(250,250),self.img_anim[0])
@@ -41,7 +42,7 @@ class Player(Nave):
     self.tiros = pygame.sprite.Group()
     
     #auxilio visual para vida
-    self.boxVida = pygame.Rect(posição_vida,25,self.vida,10)
+    self.boxVida = pygame.Rect(barra_vida(self.tipo_player, self.vida))
     
     #total de pontos do jogador
     self.pontos = 0
@@ -57,44 +58,41 @@ class Player(Nave):
       if self.skin < 8:
         self.alternar_skin = 10
       if self.tipo_mun[0]:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 5))
+        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((0,0),(24,24)).convert_alpha(), 5))
       elif self.tipo_mun[1]:
         if len(self.tiros.sprites())<9:
           for i in range(3):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
+            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
       elif self.tipo_mun[2]:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
+        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
       elif self.tipo_mun[3]:
         if len(self.tiros.sprites())<12:
           for i in range(2):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), pygame.image.load("imagens/armamento/munições.png").subsurface((24,0),(24,24)).convert_alpha(), 5))
+            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((24,0),(24,24)).convert_alpha(), 5))
 
 
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
     if self.vida>0:
-
-      proporção=(screen.get_height()//6,screen.get_height()//6)
-
       #ajusta a animação dependendo do movimento
       if velocidade[0] < 0 and velocidade[1] < 0:
-        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], proporção)
+        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], tamanho_nave())
       if velocidade[0] < 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], tamanho_nave())
       if velocidade[0] < 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], proporção)
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], tamanho_nave())
 
       #ajusta hitbox
       self.rect.w=self.image.get_width()
@@ -124,7 +122,7 @@ class Player(Nave):
     
   def update(self,aliens:pygame.sprite.Group)->None:
     #mostra na tela a vida do jogador
-    self.boxVida.update(self.boxVida.left,25,self.vida*2, 20)
+    self.boxVida.update(barra_vida(self.tipo_player, self.vida))
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
     
     #ativa apenas uma munição
@@ -150,9 +148,8 @@ class Player(Nave):
     self.alternar_skin = 0
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
-      proporção=(screen.get_height()//6,screen.get_height()//6)
       self.index_morte+=0.37
-      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], proporção)
+      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], tamanho_nave()())
       if self.index_morte>=3.6:
         self.kill()
     

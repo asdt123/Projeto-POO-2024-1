@@ -5,12 +5,12 @@ from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
 
 #criação do sprite do jogador e inimigos
-player = Player(screen.get_width()-150, 17)
-player2 = Player(25, 16)
-players = pygame.sprite.Group()
+#trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
+player = Player(0, 17)
+player2 = Player(1, 16)
 players.add(player)
 players.add(player2)
-aliens = pygame.sprite.Group() 
+ 
 
 class Janelas:
     def __init__(self)->None:
@@ -42,18 +42,18 @@ class Janelas:
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
-                if self.scroll< 2500-129:
+                if self.scroll < background_altura-background_largura-1:
                     self.scroll += 1
                 else:
                     self.scroll = 0
-                BACKGROUND = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0,2500-128-self.scroll),(128,128)).convert_alpha()
+                BACKGROUND = pygame.image.load(background).subsurface((0,background_altura-background_largura-self.scroll),(128,128)).convert_alpha()
 
                 self.screen.blit(pygame.transform.scale(BACKGROUND,(self.screen.get_width(),self.screen.get_height())),(0,0))
                 
                 #gera os aliens
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
-                    aliens.add(Alien((random.randint(50,800),-30), random.randint(0,1)))
-                #screen.blit(pygame.transform.scale(BACKGROUND, (screen.get_width(),screen.get_height())),(0,0))
+                    aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,1)))
+
                 players.draw(screen)
                 players.update(aliens)
                 aliens.draw(screen)

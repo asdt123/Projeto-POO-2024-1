@@ -5,8 +5,6 @@ from .Player import Player
 import pygame
 import random
 
-VIDA_ALIEN = [100, 50]
-DANO_PLAYER = 20
 
 class Alien(Nave):
   def __init__(self,posição_inicial:tuple,tipo_alien:int)->None:
@@ -15,7 +13,7 @@ class Alien(Nave):
     self.index = 0
     self.img_anim = []
     for i in range(8):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load("imagens/inimigos/inimigos.png").subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
@@ -27,10 +25,10 @@ class Alien(Nave):
     if self.tipo_alien == 1:
       if len(self.tiros.sprites()) < 2:
         for i in range(2):
-          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 1, 180+30-60*i ))
+          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, 180+30-60*i ))
     else:  
       if len(self.tiros.sprites())<3:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load("imagens/armamento/munições.png").subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
+        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
 
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
@@ -48,11 +46,10 @@ class Alien(Nave):
     self.rect.move_ip(0,screen.get_height()//100)
 
     #cicla atraves das sprites e define a escala do sprite
-    proporção=(screen.get_height()//4.6875,screen.get_height()//4.6875)
     if self.index >= 7:
       self.index=0
     self.index+=0.5
-    self.image = pygame.transform.scale(self.img_anim[int(self.index)], proporção)
+    self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
 
     #ajusta hitbox
     self.rect.w=self.image.get_width()
