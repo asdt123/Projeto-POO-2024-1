@@ -53,7 +53,7 @@ while running:
     players.add(player2)
 
   if key[pygame.K_l]:   # atacar
-    player.vida=0
+    player.atacar()
 
   if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
     player.mover((velocidade,-velocidade))
