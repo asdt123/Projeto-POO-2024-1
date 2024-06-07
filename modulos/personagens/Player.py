@@ -119,10 +119,10 @@ class Player(Nave):
         self.rect.move_ip(velocidade)
 
   def reposicionar(self, dimensões_antigas, dimensões_novas):
-    print('1',self.rect.y, dimensões_antigas[1], dimensões_novas[1])
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
-    print('2',self.rect.y)
+    for lista_tiros in self.tiros.sprites():
+        lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
 
         
   def update(self,aliens:pygame.sprite.Group)->None:

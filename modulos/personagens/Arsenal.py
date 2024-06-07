@@ -17,9 +17,14 @@ class Arsenal(pygame.sprite.Sprite):
     self.velocidade = -1*(tamanho_municao()[0]+1)
     self.angulo = angulo
 
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
+    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
+    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+
   
   def update(self,inimigos,aliado = None)->None:
     #movimenta o tiro dependendo do angulo e da velocidade
+    
     self.velocidade=-1*(tamanho_municao()[0]+1)
     self.rect.move_ip(math.sin(math.radians(self.angulo))*self.velocidade, math.cos(math.radians(self.angulo))*self.velocidade)
     #verifica se atingiu algum inimigo, dando dano nele e matando o sprite

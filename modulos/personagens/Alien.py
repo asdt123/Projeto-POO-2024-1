@@ -41,6 +41,13 @@ class Alien(Nave):
   def mover(self)->None:
     pass
 
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
+    print('entrei')
+    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
+    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+    for lista_tiros in self.tiros.sprites():
+        lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
+
   def update(self,player:Player)->None:
     #movimenta pra baixo
     self.rect.move_ip(0,screen.get_height()//100)
