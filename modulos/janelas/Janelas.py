@@ -42,11 +42,11 @@ class Janelas:
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
-                if self.scroll< 3000-129:
+                if self.scroll< 2500-129:
                     self.scroll += 1
                 else:
                     self.scroll = 0
-                BACKGROUND = pygame.image.load("imagens/cenário/cenario.png").subsurface((0,3000-128-self.scroll),(128,128)).convert_alpha()
+                BACKGROUND = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0,2500-128-self.scroll),(128,128)).convert_alpha()
 
                 self.screen.blit(pygame.transform.scale(BACKGROUND,(self.screen.get_width(),self.screen.get_height())),(0,0))
                 
