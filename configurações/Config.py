@@ -23,6 +23,7 @@ VIDA_PLAYER = 100
 imagens_naves = "imagens/jogadores/naves.png"
 morte_naves = "imagens/morte/morte_naves.png"
 municao_naves = "imagens/armamento/munições.png"
+imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
 
 #aliens
 aliens = pygame.sprite.Group()
@@ -31,11 +32,8 @@ DANO_PLAYER = [20,20]
 imagens_aliens = "imagens/inimigos/inimigos.png"
 morte_aliens = ""
 municao_aliens = "imagens/armamento/munições.png"
-# Imagens
-#essas variaveis não atualizam valor ao longo da compilação, não servindo pra atualizar proporção nem posição
-#encontrar outra alternativa pegado a variavel screen diretamente
 
-imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
+# backgorund 
 background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
@@ -49,13 +47,14 @@ def tamanho_municao():
   return (screen.get_height()//25,screen.get_height()//25)
 
 def barra_vida(tipo_player, vida):
+  #vida player 1
   if tipo_player==0:
     return (screen.get_width()//36,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
+  #vida player 2
   else:
     return (screen.get_width()//1.2,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
 
-
-
+## Cores ##
 
 CORES = {"Preto":(0,0,0),
          "Branco":(255,255,255),
