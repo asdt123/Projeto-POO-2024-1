@@ -118,8 +118,11 @@ class Player(Nave):
       else:
         self.rect.move_ip(velocidade)
 
-    
-    
+  def reposicionar(self, tam_tela_novo):
+    pos_rel = self.rect.x/DIMENSÕES_TELA[0], self.rect.y/DIMENSÕES_TELA[1]
+    self.rect.x, self.rect.y = tam_tela_novo[0]*pos_rel[0], tam_tela_novo[1]*pos_rel[1]
+
+        
   def update(self,aliens:pygame.sprite.Group)->None:
     #mostra na tela a vida do jogador
     self.boxVida.update(barra_vida(self.tipo_player, self.vida))
@@ -149,7 +152,7 @@ class Player(Nave):
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       self.index_morte+=0.37
-      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], tamanho_nave()())
+      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], tamanho_nave())
       if self.index_morte>=3.6:
         self.kill()
     

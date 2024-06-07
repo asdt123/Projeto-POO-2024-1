@@ -79,22 +79,27 @@ while running:
     players.add(player)
 
   #analise dos demais eventos
-  for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      running = False
-    if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_ESCAPE:
-        running = False
-      if event.key == pygame.K_k:
-        player.index_mun += 1
-      if event.key == pygame.K_TAB:
-        player2.index_mun += 1
-      if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
-        janela.janela_atual = JANELAS[1]
-    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:
-      if event.button == 1:
-        pass
-    
+    for event in pygame.event.get():
+      if event.type == pygame.QUIT:
+          running = False
+      if event.type == pygame.WINDOWSIZECHANGED:
+        DIMENSÕES_TELA_NOVA = (event.w, event.h)
+        for lista_player in players.sprites(DIMENSÕES_TELA_NOVA):
+          lista_player.reposicionar()
+        DIMENSÕES_TELA=DIMENSÕES_TELA_NOVA
+      if event.type == pygame.KEYDOWN:
+        if event.key == pygame.K_ESCAPE:
+          running = False
+        if event.key == pygame.K_k:
+          player.index_mun += 1
+        if event.key == pygame.K_TAB:
+          player2.index_mun += 1
+        if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
+          janela.janela_atual = JANELAS[1]
+      if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:
+        if event.button == 1:
+          pass
+      
   janela.mudar_janela(MOUSE_POS)
   pygame.display.flip()
 

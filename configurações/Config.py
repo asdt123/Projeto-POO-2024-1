@@ -5,12 +5,8 @@ relogio = pygame.time.Clock()
 
 # Definições da janela
 
-LARGURA = 900
-ALTURA = 600
-
-DIMENSÕES_TELA = (LARGURA,ALTURA)
-
 TÍTULO = "Space Fighters"
+DIMENSÕES_TELA = (900,600)
 
 FPS = 30
 pygame.display.set_caption(TÍTULO)
@@ -90,7 +86,7 @@ def CAIXA(nome_caixa:str):
         return (int(0.3854*screen.get_width()),int(0.8480*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
       
       case "VIDA1":
-        return (int(0.0278*LARGURA),int(0.1111*LARGURA),int(0.0417*ALTURA),int(0.0167*ALTURA))
+        return (int(0.0278*screen.get_width()),int(0.1111*screen.get_height()),int(0.0417*screen.get_width()),int(0.0167*screen.get_height()))
       
       case _:
         return (0,0,0,0)
