@@ -10,7 +10,6 @@ DIMENSÕES_TELA = screen.get_size()
 janela = Janelas()
 
 #definição do background
-aliens = pygame.sprite.Group() 
 
 #loop principal
 running = True
@@ -88,10 +87,8 @@ while running:
       for lista_player in players.sprites():
         lista_player.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       for lista_aliens in aliens.sprites():
-        print('cu')
         lista_aliens.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       DIMENSÕES_TELA=DIMENSÕES_TELA_NOVA
-      print(DIMENSÕES_TELA, DIMENSÕES_TELA_NOVA)
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
         running = False

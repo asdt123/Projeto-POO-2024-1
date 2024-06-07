@@ -11,6 +11,7 @@ FPS = 30
 pygame.display.set_caption(TÍTULO)
 screen = pygame.display.set_mode((900,600))
 
+
 #definições sprites
 #players
 players = pygame.sprite.Group()

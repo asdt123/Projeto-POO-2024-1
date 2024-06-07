@@ -10,7 +10,6 @@ player = Player(0, 17)
 player2 = Player(1, 16)
 players.add(player)
 players.add(player2)
- 
 
 class Janelas:
     def __init__(self)->None:
