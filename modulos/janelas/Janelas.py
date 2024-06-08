@@ -23,20 +23,20 @@ class Janelas:
         match self.janela_atual:
             case "Menu Inicial 1":
                 
-                self.screen.fill(CORES["Azul Escuro"])
+                self.screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("TÍTULO"),2)
                 screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
 
             case "Menu Inicial 2":
 
-                self.screen.fill(CORES["Azul Escuro"])
+                self.screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("CAMPANHA"),2)
-                screen.blit(MENSAGEM("CAMPANHA")[0],MENSAGEM("CAMPANHA")[1])
-                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("VERSUS"),2)
-                screen.blit(MENSAGEM("VERSUS")[0],MENSAGEM("VERSUS")[1])
-                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("SAIR"),2)
-                screen.blit(MENSAGEM("SAIR")[0],MENSAGEM("SAIR")[1])
+                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("CAMPANHA:Branco"),2)
+                screen.blit(MENSAGEM("CAMPANHA:Branco")[0],MENSAGEM("CAMPANHA:Branco")[1])
+                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("VERSUS:Branco"),2)
+                screen.blit(MENSAGEM("VERSUS:Branco")[0],MENSAGEM("VERSUS:Branco")[1])
+                pygame.draw.rect(self.screen,CORES["Branco"],CAIXA("SAIR:Branco"),2)
+                screen.blit(MENSAGEM("SAIR:Branco")[0],MENSAGEM("SAIR:Branco")[1])
 
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
@@ -63,17 +63,26 @@ class Janelas:
 
     def mudar_janela(self,mouse:tuple)->None:
 
-        if self.janela_atual == JANELAS[1]:    
-            if (mouse[0] >= CAIXA("CAMPANHA")[0] and mouse[0] <= (CAIXA("CAMPANHA")[0]+CAIXA("CAMPANHA")[2])) and (mouse[1] >= CAIXA("CAMPANHA")[1] and mouse[1] <= (CAIXA("CAMPANHA")[1]+CAIXA("CAMPANHA")[3])):
-                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("CAMPANHA"),2)
+        if self.janela_atual == JANELAS[1]:
+
+            # Botão CAMPANHA
+            if(mouse[0] >= CAIXA("CAMPANHA:Branco")[0] and mouse[0] <= (CAIXA("CAMPANHA:Branco")[0]+CAIXA("CAMPANHA:Branco")[2])) and (mouse[1] >= CAIXA("CAMPANHA:Branco")[1] and mouse[1] <= (CAIXA("CAMPANHA:Branco")[1]+CAIXA("CAMPANHA:Branco")[3])):
+                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("CAMPANHA:Vermelho"),2)
+                screen.blit(MENSAGEM("CAMPANHA:Vermelho")[0],MENSAGEM("CAMPANHA:Vermelho")[1])
                 if pygame.mouse.get_pressed()[0]:
                     self.janela_atual = JANELAS[2]
-            if (mouse[0] >= CAIXA("VERSUS")[0] and mouse[0] <= (CAIXA("VERSUS")[0]+CAIXA("VERSUS")[2])) and (mouse[1] >= CAIXA("VERSUS")[1] and mouse[1] <= (CAIXA("VERSUS")[1]+CAIXA("VERSUS")[3])):
-                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("VERSUS"),2)
-
-            elif (mouse[0] >= CAIXA("SAIR")[0] and mouse[0] <= (CAIXA("SAIR")[0]+CAIXA("SAIR")[2])) and (mouse[1] >= CAIXA("SAIR")[1] and mouse[1] <= (CAIXA("SAIR")[1]+CAIXA("SAIR")[3])):
-                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("SAIR"),2)
+        
+            # Botão VERSUS
+            elif(mouse[0] >= CAIXA("VERSUS:Branco")[0] and mouse[0] <= (CAIXA("VERSUS:Branco")[0]+CAIXA("VERSUS:Branco")[2])) and (mouse[1] >= CAIXA("VERSUS:Branco")[1] and mouse[1] <= (CAIXA("VERSUS:Branco")[1]+CAIXA("VERSUS:Branco")[3])):
+                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("VERSUS:Vermelho"),2)
+                screen.blit(MENSAGEM("VERSUS:Vermelho")[0],MENSAGEM("VERSUS:Vermelho")[1])
+            
+            # Botão SAIR
+            elif(mouse[0] >= CAIXA("SAIR:Branco")[0] and mouse[0] <= (CAIXA("SAIR:Branco")[0]+CAIXA("SAIR:Branco")[2])) and (mouse[1] >= CAIXA("SAIR:Branco")[1] and mouse[1] <= (CAIXA("SAIR:Branco")[1]+CAIXA("SAIR:Branco")[3])):
+                pygame.draw.rect(self.screen,CORES["Vermelho"],CAIXA("SAIR:Vermelho"),2)
+                screen.blit(MENSAGEM("SAIR:Vermelho")[0],MENSAGEM("SAIR:Vermelho")[1])
                 if pygame.mouse.get_pressed()[0]:
                     self.janela_atual = JANELAS[0]
+        
         else:
             pass
