@@ -33,6 +33,7 @@ municao_aliens = "imagens/armamento/munições.png"
 background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
+# função para atualização do tamanho e posicionamento dos sprites
 def tamanho_nave():
   return (screen.get_height()//6,screen.get_height()//6)
 

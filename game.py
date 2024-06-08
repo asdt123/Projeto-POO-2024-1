@@ -80,7 +80,7 @@ while running:
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
         running = False
-    if event.type == pygame.WINDOWSIZECHANGED:
+    if event.type == pygame.WINDOWSIZECHANGED: #verfica se a tela mudou de tamanho
       DIMENSÕES_TELA_NOVA = (event.x, event.y)
       for lista_player in players.sprites():
         lista_player.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)

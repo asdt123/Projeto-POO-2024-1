@@ -119,12 +119,16 @@ class Player(Nave):
         self.rect.move_ip(velocidade)
 
   def reposicionar(self, dimensões_antigas, dimensões_novas):
+    #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
     for lista_tiros in self.tiros.sprites():
         lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
 
-        
+  def receber_dano(self,dano:int)->None:
+    #recebe dano, deixei pra mover pra tras so pra gente visualizar
+    super().receber_dano(dano)
+          
   def update(self,aliens:pygame.sprite.Group)->None:
     #mostra na tela a vida do jogador
     self.boxVida.update(barra_vida(self.tipo_player, self.vida))

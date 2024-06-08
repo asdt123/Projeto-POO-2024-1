@@ -13,18 +13,26 @@ players.add(player2)
 
 class Janelas:
     def __init__(self)->None:
-
+        #atributos para acompanhamento dos eventos
+        self.ciclo = 0
         self.janela_atual = JANELAS[0]
         self.scroll = 0
         
     def atualizar_janela(self,mouse:tuple,key)->None:
 
+        self.ciclo+=1
+        if self.ciclo>100:
+            self.ciclo=0
         match self.janela_atual:
             case "Menu Inicial 1":
-                
+                tempo_oscilação = 30
                 screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
+                #texto oscila de 15 em 15 ciclos
+                if self.ciclo%tempo_oscilação<(tempo_oscilação//2):
+                  screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
+                else:
+                  pass
 
             case "Menu Inicial 2":
 

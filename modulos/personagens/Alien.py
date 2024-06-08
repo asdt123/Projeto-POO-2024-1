@@ -30,9 +30,8 @@ class Alien(Nave):
       if len(self.tiros.sprites())<3:
         self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
 
-  def receber_dano(self,dano:int)->None:
-    #recebe dano, deixei pra mover pra tras so pra gente visualizar
-    self.rect.move_ip(0,-5)
+  def receber_dano(self,dano:int)->int:
+    #recebe dano e fica vermelho por um curto periodo
     super().receber_dano(dano)
     if self.vida<=0:
       return self.pontos
@@ -42,6 +41,7 @@ class Alien(Nave):
     pass
 
   def reposicionar(self, dimensões_antigas, dimensões_novas):
+    #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
     for lista_tiros in self.tiros.sprites():
@@ -63,6 +63,7 @@ class Alien(Nave):
 
     #verifica se acertou o jogador
     self.tiros.update(player)
+
     #verifica se colidiu com o jogador pra tirar a vida dele
     inimigos_atingidos = pygame.sprite.spritecollide(self,player,0)
     for inimigo in inimigos_atingidos:
