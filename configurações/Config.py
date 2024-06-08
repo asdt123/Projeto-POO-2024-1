@@ -46,10 +46,10 @@ def tamanho_municao():
 def barra_vida(tipo_player, vida):
   #vida player 1
   if tipo_player==0:
-    return (screen.get_width()//36,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
+    return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
   #vida player 2
   else:
-    return (screen.get_width()//1.25,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
+    return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
 
 ## Cores ##
 
