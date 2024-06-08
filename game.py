@@ -24,8 +24,6 @@ while running:
   key = pygame.key.get_pressed()
   MOUSE_POS = pygame.mouse.get_pos()
 
-  janela.atualizar_janela()
-
   if key[pygame.K_1]:   # atacar
     player2.vida=0
   
@@ -101,8 +99,8 @@ while running:
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:
       if event.button == 1:
         pass
-      
-  janela.mudar_janela(MOUSE_POS)
+  
+  janela.atualizar_janela(MOUSE_POS,key)
   pygame.display.flip()
 
 pygame.quit()

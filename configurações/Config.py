@@ -64,6 +64,7 @@ CORES = {"Preto":(0,0,0),
 
 JANELAS = ["Menu Inicial 1",
            "Menu Inicial 2",
+           "Menu Seleção Skins",
            "Fase 1"]
 
 MOUSE_POS = (0,0)
@@ -94,7 +95,29 @@ def CAIXA(nome_caixa:str):
       case "SAIR:Vermelho":
         return (int(0.3770*screen.get_width()),int(0.8328*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
       
+      case "DIVISORIA":
+        return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
+      
+      case "JOGAR_PLAYER_1":
+        return (int(0.1210*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+
+      case "JOGAR_PLAYER_2":
+        return (int(0.6275*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+
+      case "BOTAO_A":
+        return (int(0.0747*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+
+      case "BOTAO_D":
+        return (int(0.3550*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+
+      case "BOTAO_<":
+        return (int(0.5770*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+
+      case "BOTAO_>":
+        return (int(0.8292*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+
       case _:
+        # Retorno: (x,y,x_size,y_size)
         return (0,0,0,0)
 
 # Atualiza os tamanhos de todas as mensagens
@@ -164,5 +187,59 @@ def MENSAGEM(nome_mensagem:str):
 
       return [texto,texto_rect]
 
+    case "JOGADOR_1":
+
+      size = int((0.1210*screen.get_width()+0.2547*screen.get_width()+0.1277*screen.get_height()+0.1080*screen.get_height())/10)
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",size)
+      texto = fonte.render("Jogador A",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.1210*screen.get_width()+0.2547*screen.get_width()//2),int(0.1277*screen.get_height()+0.1080*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
+    case "JOGADOR_2":
+
+      size = int((0.6275*screen.get_width()+0.2547*screen.get_width()+0.1277*screen.get_height()+0.1080*screen.get_height())/20)
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",size)
+      texto = fonte.render("Jogador B",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.6275*screen.get_width()+0.2547*screen.get_width()//2),int(0.1277*screen.get_height()+0.1080*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
+    case "A":
+
+      size = int((0.0747*screen.get_width()+0.0923*screen.get_width()+0.7475*screen.get_height()+0.1449*screen.get_height())/7)
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",size)
+      texto = fonte.render("A",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.0747*screen.get_width()+0.0923*screen.get_width()//2),int(0.7475*screen.get_height()+0.1449*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
+    case "D":
+
+      size = int((0.3550*screen.get_width()+0.0923*screen.get_width()+0.7475*screen.get_height()+0.1449*screen.get_height())/7.5)
+      fonte = pygame.font.Font("fontes/Star_figthers-Regular.ttf",size)
+      texto = fonte.render("D",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.3550*screen.get_width()+0.0923*screen.get_width()//2),int(0.7475*screen.get_height()+0.1449*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
+    case "<":
+
+      size = int((0.5770*screen.get_width()+0.0923*screen.get_width()+0.7475*screen.get_height()+0.1449*screen.get_height())/7)
+      fonte = pygame.font.Font(None,size)
+      texto = fonte.render("<",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.5770*screen.get_width()+0.0923*screen.get_width()//2),int(0.7475*screen.get_height()+0.1449*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
+    case ">":
+
+      size = int((0.8292*screen.get_width()+0.0923*screen.get_width()+0.7475*screen.get_height()+0.1449*screen.get_height())/7)
+      fonte = pygame.font.Font(None,size)
+      texto = fonte.render(">",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(0.8292*screen.get_width()+0.0923*screen.get_width()//2),int(0.7475*screen.get_height()+0.1449*screen.get_height()//2)))
+
+      return [texto,texto_rect]
+    
     case _:
       pass
