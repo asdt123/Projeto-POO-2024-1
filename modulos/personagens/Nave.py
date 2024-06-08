@@ -11,8 +11,8 @@ class Nave(ABC,pygame.sprite.Sprite):
     self.vida = vida
 
   def receber_dano(self,dano:int)->None:
-    #atualiza o valor da vida
-    self.image.fill((125,0,0,100),special_flags=pygame.BLEND_ADD)
+    #atualiza o valor da vida 
+    self.image.fill((100,0,0,70),special_flags=pygame.BLEND_ADD)
     self.vida -= dano
 
   @abstractmethod

@@ -30,7 +30,7 @@ class Alien(Nave):
       if len(self.tiros.sprites())<3:
         self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
 
-  def receber_dano(self,dano:int)->None:
+  def receber_dano(self,dano:int)->int:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
     super().receber_dano(dano)
     if self.vida<=0:
