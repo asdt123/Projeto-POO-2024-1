@@ -149,10 +149,11 @@ class Player(Nave):
     self.tiros.update(aliens,self)
 
     #imprime a pontuação
-    fonte = pygame.font.SysFont("Monospace", 18, True, True)
+    fonte = pygame.font.SysFont("Monospace", screen.get_height()//30, True, True)
+    print(screen.get_height()//30)
     mensagem = f"Pontuação: {self.pontos}"
     format_text = fonte.render(mensagem, False, (255,255,255))
-    screen.blit(format_text,(self.boxVida.left,60))
+    screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+10))
 
     self.alternar_skin = 0
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
