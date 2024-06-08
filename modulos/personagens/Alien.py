@@ -32,7 +32,6 @@ class Alien(Nave):
 
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
-    self.rect.move_ip(0,-5)
     super().receber_dano(dano)
     if self.vida<=0:
       return self.pontos
