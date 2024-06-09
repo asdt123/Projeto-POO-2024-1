@@ -49,9 +49,8 @@ class Player(Nave):
     
     #sprites pros modelos com animação de tiro
     self.tipo_mun_spr = []
-    for i in range(2):
+    for i in range(4):
       self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,i*64),(64,64)).convert_alpha())
-      self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,64),(64,64)).convert_alpha())
 
     #escolha da munição
     self.tipo_mun = ['inf', 60, 60, 60]

@@ -24,7 +24,7 @@ imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
 #aliens
 aliens = pygame.sprite.Group()
 VIDA_ALIEN = [100, 75, 100, 50]
-DANO_ALIEN = [20, 20, 20, 20]
+DANO_ALIEN = [2, 2, 2, 2]
 imagens_aliens = "imagens/inimigos/inimigos.png"
 morte_aliens = ""
 municao_aliens = "imagens/armamento/munições.png"
