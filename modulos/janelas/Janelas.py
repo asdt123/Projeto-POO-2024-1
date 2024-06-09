@@ -105,7 +105,7 @@ class Janelas:
                 
                 #gera os aliens
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
-                    aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,1)))
+                    aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,3)))
 
                 players.draw(screen)
                 players.update(aliens)

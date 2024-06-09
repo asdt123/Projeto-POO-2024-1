@@ -13,7 +13,7 @@ class Alien(Nave):
     self.tipo_alien = tipo_alien
     self.index = 0
     self.img_anim = []
-    for i in range(8):
+    for i in range(2):
       self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
     #grupo pra sprites de tiro
@@ -26,16 +26,28 @@ class Alien(Nave):
     self.ciclo+=1
     if self.ciclo>100:
       self.ciclo=0
-    if self.tipo_alien == 1:
-      #tiro duplo
-      if self.ciclo%6 == 0:
-        for i in range(2):
-          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), municao_aliens, 0, 1, 180+30-60*i ))
-    else:  
-      #tiro aleatorio
-      if self.ciclo%5 == 0:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, 1, 1, random.randint(165,195)))  
+    match self.tipo_alien:
+      case 0:
+        if self.ciclo%6 == 0:
+          for i in range(2):
+            self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180+30-60*i ))
+      
+      case 1:
+        if self.ciclo%5 == 0:
+          self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], random.randint(165,195)))  
+          
+      case 2:
+        if self.ciclo%5 == 0:
+          self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180))  
 
+      case 3:
+        if self.ciclo%10 == 0:
+          for i in range(3):
+            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(-1+i), self.rect.bottom-screen.get_height()//30),  municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180))
+
+
+        
+    
   def receber_dano(self,dano:int)->int:
     #recebe dano e fica vermelho por um curto periodo
     super().receber_dano(dano)
@@ -60,8 +72,8 @@ class Alien(Nave):
     self.rect.move_ip(0,screen.get_height()//100)
 
     #cicla atraves das sprites e define a escala do sprite
-    self.index+=0.5
-    if self.index > 7:
+    self.index+=0.2
+    if self.index >= 2:
       self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
 
