@@ -55,9 +55,6 @@ class Player(Nave):
   def atacar(self)->None:
     #analisa se o jogador está vivo, a munição ativa, cria objetos do tiro e adiciona ao grupo
     if self.vida>0:
-      self.ciclo+=1
-      if self.ciclo>100:
-        self.ciclo=0
       if self.skin < 8:
         self.alternar_skin = 10
       #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
@@ -153,18 +150,24 @@ class Player(Nave):
     while self.tipo_mun[self.mun_ativ]==0:
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
-  def adicionar_munição(self, id_tiro):
+  def receber_drop(self, id_drop):
+    if pygame.time.get_ticks()%30 == 0 and self.vida<40 and self.vida>0:
+      self.vida += 3
     if self.tipo_mun[id_tiro]!='inf':
       self.tipo_mun[id_tiro]+=60
           
   def update(self,aliens:pygame.sprite.Group)->None:
+    self.ciclo+=1
+    if self.ciclo>100:
+      self.ciclo=0
+
     #mostra na tela a vida do jogador
     self.boxVida.update(barra_vida(self.tipo_player, self.vida))
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
 
     #recupera a vida ate 40% mais ou menos, uma mamata
-    if pygame.time.get_ticks()%30 == 0 and self.vida<40 and self.vida>0:
-      self.vida += 3
+    if self.ciclo%10==5 and self.vida<40 and self.vida>0:
+      self.vida += 1
 
     #desenha os tiros na tela e verifica se acertou um alien
     self.tiros.draw(screen)
