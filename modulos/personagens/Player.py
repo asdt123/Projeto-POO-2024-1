@@ -22,7 +22,7 @@ class Player(Nave):
     else:
       for i in range(10):
         self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
-    
+
     #sprites de morte
     self.index_morte = 0
     self.img_anim_morte = []
@@ -47,6 +47,12 @@ class Player(Nave):
     #total de pontos do jogador
     self.pontos = 0
     
+    #sprites pros modelos com animação de tiro
+    self.tipo_mun_spr = []
+    for i in range(2):
+      self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,i*64),(64,64)).convert_alpha())
+      self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,64),(64,64)).convert_alpha())
+
     #escolha da munição
     self.tipo_mun = ['inf', 60, 60, 60]
     self.mun_ativ = 0
@@ -176,11 +182,19 @@ class Player(Nave):
     self.tiros.draw(screen)
     self.tiros.update(aliens,self)
 
-    #imprime a pontuação
+    #imprime a pontuação e a arma usada, temporario
     fonte = pygame.font.SysFont("Monospace", screen.get_width()//45, True, True)
-    mensagem = f"Pontuação: {self.pontos}"
-    format_text = fonte.render(mensagem, False, (255,255,255))
+    mensagem1 = f"Pontuação: {self.pontos}"
+    mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
+    format_text = fonte.render(mensagem1, False, (255,255,255))
+    format_text2 = fonte.render(mensagem2, False, (255,255,255))
+
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+10))
+    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+50))
+
+    screen.blit(self.tipo_mun_spr[self.mun_ativ], (self.boxVida.left,self.boxVida.bottom+80) )
+
+
 
     self.alternar_skin = 0
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
