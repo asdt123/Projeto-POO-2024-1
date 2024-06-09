@@ -24,11 +24,14 @@ imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
 
 #aliens
 aliens = pygame.sprite.Group()
-VIDA_ALIEN = [100, 50]
-DANO_PLAYER = [20,20]
+VIDA_ALIEN = [100, 75, 100, 50]
+DANO_ALIEN = [2, 2, 2, 2]
 imagens_aliens = "imagens/inimigos/inimigos.png"
 morte_aliens = ""
 municao_aliens = "imagens/armamento/munições.png"
+
+#drops
+drops = pygame.sprite.Group()
 
 # backgorund 
 background = "imagens/cenário/Cenarios.png"
@@ -36,21 +39,21 @@ background_altura, background_largura = 2500, 128
 
 # função para atualização do tamanho e posicionamento dos sprites
 def tamanho_nave():
-  return (screen.get_height()//6,screen.get_height()//6)
+  return (screen.get_height()//7,screen.get_height()//7)
 
 def tamanho_alien():
-  return (screen.get_height()//4.6875,screen.get_height()//4.6875)
+  return (screen.get_height()//5,screen.get_height()//5)
 
 def tamanho_municao():
-  return (screen.get_height()//25,screen.get_height()//25)
+  return (screen.get_height()//30,screen.get_height()//30)
 
 def barra_vida(tipo_player, vida):
   #vida player 1
   if tipo_player==0:
-    return (screen.get_width()//36,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
+    return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
   #vida player 2
   else:
-    return (screen.get_width()//1.2,screen.get_height()//24,(screen.get_width()//900)*vida, screen.get_height()//30)
+    return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
 
 ## Cores ##
 

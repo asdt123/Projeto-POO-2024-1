@@ -50,6 +50,7 @@ while running:
     player2 = Player(25,0)
     players.add(player2)
 
+
   if key[pygame.K_l]:   # atacar
     player.atacar()
 
@@ -86,14 +87,16 @@ while running:
         lista_player.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       for lista_aliens in aliens.sprites():
         lista_aliens.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
+      for lista_drops in drops.sprites():
+        lista_drops.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       DIMENSÕES_TELA=DIMENSÕES_TELA_NOVA
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
         running = False
       if event.key == pygame.K_k:
-        player.index_mun += 1
+        player.trocar_munição(1)
       if event.key == pygame.K_TAB:
-        player2.index_mun += 1
+        player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
         janela.janela_atual = JANELAS[1]
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:

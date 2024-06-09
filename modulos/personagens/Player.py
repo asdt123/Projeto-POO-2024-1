@@ -22,7 +22,7 @@ class Player(Nave):
     else:
       for i in range(10):
         self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
-    
+
     #sprites de morte
     self.index_morte = 0
     self.img_anim_morte = []
@@ -47,9 +47,16 @@ class Player(Nave):
     #total de pontos do jogador
     self.pontos = 0
     
+    #sprites pros modelos com animação de tiro
+    self.tipo_mun_spr = []
+    for i in range(4):
+      self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,i*64),(64,64)).convert_alpha())
+
     #escolha da munição
-    self.tipo_mun = [True, False, False, False, False]
-    self.index_mun = 0
+    self.tipo_mun = ['inf', 60, 60, 60]
+    self.mun_ativ = 0
+    self.cadencia = [2, 5, 1, 3]
+    self.dano = [5, 5, 5, 5]
     
 
   def atacar(self)->None:
@@ -57,19 +64,30 @@ class Player(Nave):
     if self.vida>0:
       if self.skin < 8:
         self.alternar_skin = 10
-      if self.tipo_mun[0]:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((0,0),(24,24)).convert_alpha(), 5))
-      elif self.tipo_mun[1]:
-        if len(self.tiros.sprites())<9:
-          for i in range(3):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
-      elif self.tipo_mun[2]:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
-      elif self.tipo_mun[3]:
-        if len(self.tiros.sprites())<12:
-          for i in range(2):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((24,0),(24,24)).convert_alpha(), 5))
-
+      #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
+      #tiro unico
+      if self.ciclo%self.cadencia[self.mun_ativ]==0 and self.tipo_mun[self.mun_ativ]!=0:
+        match self.mun_ativ:
+          #tiro unico basico
+          case 0:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          #tiro triplo
+          case 1:
+            for i in range(3):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ], -30+30*i ))
+          #tiro aleatorio
+          case 2:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ], random.randint(-30,30) ))
+          #tiro duplo
+          case 3:
+            for i in range(2):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          
+      if self.tipo_mun[self.mun_ativ]!='inf':
+        self.tipo_mun[self.mun_ativ]-=1
+      
+      if self.tipo_mun[self.mun_ativ]==0:
+        self.trocar_munição(1)
 
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
@@ -128,31 +146,53 @@ class Player(Nave):
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
     super().receber_dano(dano)
+
+  def trocar_munição(self, rumo):
+    #troca munição ativ para um que tem carga
+    self.mun_ativ=((self.mun_ativ+rumo))%4
+    while self.tipo_mun[self.mun_ativ]==0:
+      self.mun_ativ=((self.mun_ativ+rumo))%4
+
+  def receber_drop(self, id_drop):
+    #verifica se o item recebido é vida ou mais munição
+    if id_drop==100:
+      self.vida += 30
+      if self.vida > 100:
+        self.vida = 100
+        return None
+    elif self.tipo_mun[id_drop]!='inf':
+      self.tipo_mun[id_drop]+=60
           
   def update(self,aliens:pygame.sprite.Group)->None:
+    self.ciclo+=1
+    if self.ciclo>100:
+      self.ciclo=0
+
     #mostra na tela a vida do jogador
     self.boxVida.update(barra_vida(self.tipo_player, self.vida))
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
-    
-    #ativa apenas uma munição
-    for i in range(len(self.tipo_mun)):
-        self.tipo_mun[i] = False
-        if i == self.index_mun%5:
-          self.tipo_mun[i] = True
 
     #recupera a vida ate 40% mais ou menos, uma mamata
-    if pygame.time.get_ticks()%30 == 0 and self.vida<40 and self.vida>0:
-      self.vida += 3
+    if self.ciclo%10==5 and self.vida<40 and self.vida>0:
+      self.vida += 1
 
     #desenha os tiros na tela e verifica se acertou um alien
     self.tiros.draw(screen)
     self.tiros.update(aliens,self)
 
-    #imprime a pontuação
-    fonte = pygame.font.SysFont("Monospace", 18, True, True)
-    mensagem = f"Pontuação: {self.pontos}"
-    format_text = fonte.render(mensagem, False, (255,255,255))
-    screen.blit(format_text,(self.boxVida.left,60))
+    #imprime a pontuação e a arma usada, temporario
+    fonte = pygame.font.SysFont("Monospace", screen.get_width()//45, True, True)
+    mensagem1 = f"Pontuação: {self.pontos}"
+    mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
+    format_text = fonte.render(mensagem1, False, (255,255,255))
+    format_text2 = fonte.render(mensagem2, False, (255,255,255))
+
+    screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
+    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
+    escala_x, escala_y = tamanho_municao()
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], (2*escala_x, 2*escala_y)), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
+
+
 
     self.alternar_skin = 0
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial

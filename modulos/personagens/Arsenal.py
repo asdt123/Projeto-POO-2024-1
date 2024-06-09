@@ -3,12 +3,15 @@ import math
 from configurações.Config import *
 
 class Arsenal(pygame.sprite.Sprite):
-  def __init__(self,posição_nave:tuple,imagem_tiro:str,poder:int,angulo = 0,velocidade = -25)->None:
+  def __init__(self,posição_nave:tuple,endereço_tiro:str, id_tiro: int,poder:int,angulo = 0)->None:
     pygame.sprite.Sprite.__init__(self)
     
     #carrega imagem do tiro, escala ela a partir do tamanho da janela e rotaciona ela a partir do angulo
-    self.image = pygame.transform.scale(imagem_tiro,tamanho_municao())
-    self.image = pygame.transform.rotate(self.image,angulo)
+    self.index=0
+    self.img_anim=[]
+    for i in range(4):
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,id_tiro*64),(64,64)).convert_alpha(), tamanho_municao()))
+    self.image = pygame.transform.rotate(self.img_anim[self.index], angulo)
     self.rect = self.image.get_rect()
     self.rect.center = posição_nave
     
@@ -23,6 +26,14 @@ class Arsenal(pygame.sprite.Sprite):
 
   
   def update(self,inimigos,aliado = None)->None:
+    self.index+=0.7
+    if self.index > 3:
+      self.index=0
+    self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_municao())
+    self.image = pygame.transform.rotate(self.img_anim[int(self.index)], self.angulo)
+    self.rect.w, self.rect.h = tamanho_municao()
+
+
     #movimenta o tiro dependendo do angulo e da velocidade
     
     self.velocidade=-1*(tamanho_municao()[0]+1)
