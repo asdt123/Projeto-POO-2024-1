@@ -38,13 +38,13 @@ background_altura, background_largura = 2500, 128
 
 # função para atualização do tamanho e posicionamento dos sprites
 def tamanho_nave():
-  return (screen.get_height()//6,screen.get_height()//6)
+  return (screen.get_height()//7,screen.get_height()//7)
 
 def tamanho_alien():
-  return (screen.get_height()//4.6875,screen.get_height()//4.6875)
+  return (screen.get_height()//5,screen.get_height()//5)
 
 def tamanho_municao():
-  return (screen.get_height()//25,screen.get_height()//25)
+  return (screen.get_height()//30,screen.get_height()//30)
 
 def barra_vida(tipo_player, vida):
   #vida player 1
