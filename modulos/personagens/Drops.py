@@ -2,14 +2,19 @@ from configurações.Config import *
 import pygame
 
 class Drops(pygame.sprite.Sprite):
-    def __init__(self, endereço_tiro, posição_alien, id_tiro ) -> None:
+    def __init__(self, endereço_tiro, posição_alien, id_drop ) -> None:
         pygame.sprite.Sprite.__init__(self)
-        self.id_tiro = id_tiro
+        self.id_drop = id_drop
         self.index=0
         self.img_anim=[]
-        for i in range(4):
-            self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,self.id_tiro*64),(64,64)).convert_alpha(), tamanho_municao()))
+        if self.id_drop!=100:
+            for i in range(4):
+                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,self.id_drop*64),(64,64)).convert_alpha(), tamanho_municao()))
+        else:
+            for i in range(4):
+                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,2*64),(64,64)).convert_alpha(), tamanho_municao()))
         self.image = self.img_anim[self.index]
+
         self.rect = self.image.get_rect()
         self.rect.center = posição_alien
     
@@ -28,7 +33,7 @@ class Drops(pygame.sprite.Sprite):
         player_atingidos = pygame.sprite.spritecollide(self,player,0)
         for player in player_atingidos:
             self.kill()
-            player.adicionar_munição(self.id_tiro)
+            player.receber_drop(self.id_drop)
 
         if self.rect.top>screen.get_height():
             self.kill()

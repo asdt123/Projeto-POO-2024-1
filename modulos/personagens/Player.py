@@ -151,10 +151,13 @@ class Player(Nave):
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
   def receber_drop(self, id_drop):
-    if pygame.time.get_ticks()%30 == 0 and self.vida<40 and self.vida>0:
-      self.vida += 3
-    if self.tipo_mun[id_tiro]!='inf':
-      self.tipo_mun[id_tiro]+=60
+    if id_drop==100:
+      self.vida += 30
+      if self.vida > 100:
+        self.vida = 100
+        return None
+    elif self.tipo_mun[id_drop]!='inf':
+      self.tipo_mun[id_drop]+=60
           
   def update(self,aliens:pygame.sprite.Group)->None:
     self.ciclo+=1

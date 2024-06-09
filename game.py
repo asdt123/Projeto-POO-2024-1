@@ -87,6 +87,8 @@ while running:
         lista_player.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       for lista_aliens in aliens.sprites():
         lista_aliens.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
+      for lista_drops in drops.sprites():
+        lista_drops.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       DIMENSÕES_TELA=DIMENSÕES_TELA_NOVA
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
