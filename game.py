@@ -50,6 +50,7 @@ while running:
     player2 = Player(25,0)
     players.add(player2)
 
+
   if key[pygame.K_l]:   # atacar
     player.atacar()
 
@@ -91,9 +92,9 @@ while running:
       if event.key == pygame.K_ESCAPE:
         running = False
       if event.key == pygame.K_k:
-        player.index_mun += 1
+        player.trocar_munição(1)
       if event.key == pygame.K_TAB:
-        player2.index_mun += 1
+        player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
         janela.janela_atual = JANELAS[1]
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:

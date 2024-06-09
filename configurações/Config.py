@@ -29,6 +29,9 @@ imagens_aliens = "imagens/inimigos/inimigos.png"
 morte_aliens = ""
 municao_aliens = "imagens/armamento/munições.png"
 
+#drops
+drops = pygame.sprite.Group()
+
 # backgorund 
 background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128

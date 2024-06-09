@@ -2,6 +2,7 @@ from configurações.Config import *
 from .Nave import Nave
 from .Arsenal import Arsenal
 from .Player import Player
+from .Drops import Drops
 import pygame
 import random
 
@@ -39,6 +40,8 @@ class Alien(Nave):
     #recebe dano e fica vermelho por um curto periodo
     super().receber_dano(dano)
     if self.vida<=0:
+      if random.randint(0,10)/1<3:
+        drops.add(Drops(municao_aliens, self.rect.center, random.randint(0,1)))
       return self.pontos
     return 0
       
@@ -58,7 +61,7 @@ class Alien(Nave):
 
     #cicla atraves das sprites e define a escala do sprite
     self.index+=0.5
-    if self.index > 8:
+    if self.index > 7:
       self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
 

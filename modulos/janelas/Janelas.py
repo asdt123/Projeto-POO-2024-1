@@ -111,6 +111,8 @@ class Janelas:
                 players.update(aliens)
                 aliens.draw(screen)
                 aliens.update(players)
+                drops.draw(screen)
+                drops.update(players)
 
             case _:
                 pass

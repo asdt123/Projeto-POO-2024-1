@@ -48,8 +48,8 @@ class Player(Nave):
     self.pontos = 0
     
     #escolha da munição
-    self.tipo_mun = [True, False, False, False]
-    self.index_mun = 0
+    self.tipo_mun = ['inf', 60, 60, 60]
+    self.mun_ativ = 0
     
 
   def atacar(self)->None:
@@ -60,25 +60,35 @@ class Player(Nave):
         self.ciclo=0
       if self.skin < 8:
         self.alternar_skin = 10
+      #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
       #tiro unico energia
-      if self.tipo_mun[0]:
-        if self.ciclo%2==0:
+      if self.mun_ativ==0:
+        if self.ciclo%2==0 and self.tipo_mun[self.mun_ativ]!=0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, 0, 5))
+          if self.tipo_mun[self.mun_ativ]!='inf':
+            self.tipo_mun[self.mun_ativ]-=1
       #tiro triplo
-      elif self.tipo_mun[1]:
-        if self.ciclo%5==0:
+      elif self.mun_ativ==1:
+        if self.ciclo%5==0 and self.tipo_mun[self.mun_ativ]!=0:
           for i in range(3):
             self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30),  municao_aliens, 1, 5, -30+30*i ))
+            if self.tipo_mun[self.mun_ativ]!='inf':
+              self.tipo_mun[self.mun_ativ]-=1
       #tiro metralhadora
-      elif self.tipo_mun[2]:
-        if self.ciclo%1==0:
+      elif self.mun_ativ==2:
+        if self.ciclo%1==0 and self.tipo_mun[self.mun_ativ]!=0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_aliens, 1, 5, random.randint(-30,30) ))
+          if self.tipo_mun[self.mun_ativ]!='inf':
+            self.tipo_mun[self.mun_ativ]-=1
       #tiro duplo
-      elif self.tipo_mun[3]:
-        if self.ciclo%3==0:
+      elif self.mun_ativ==3:
+        if self.ciclo%3==0 and self.tipo_mun[self.mun_ativ]!=0:
           for i in range(2):
             self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), municao_aliens, 1, 5))
-
+            if self.tipo_mun[self.mun_ativ]!='inf':
+              self.tipo_mun[self.mun_ativ]-=1
+    if self.tipo_mun[self.mun_ativ]==0:
+      self.trocar_munição(1)
 
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
@@ -137,17 +147,20 @@ class Player(Nave):
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
     super().receber_dano(dano)
+
+  def trocar_munição(self, rumo):
+    self.mun_ativ=((self.mun_ativ+rumo))%4
+    while self.tipo_mun[self.mun_ativ]==0:
+      self.mun_ativ=((self.mun_ativ+rumo))%4
+
+  def adicionar_munição(self, id_tiro):
+    if self.tipo_mun[id_tiro]!='inf':
+      self.tipo_mun[id_tiro]+=60
           
   def update(self,aliens:pygame.sprite.Group)->None:
     #mostra na tela a vida do jogador
     self.boxVida.update(barra_vida(self.tipo_player, self.vida))
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
-    
-    #ativa apenas uma munição
-    for i in range(len(self.tipo_mun)):
-        self.tipo_mun[i] = False
-        if i == self.index_mun%5:
-          self.tipo_mun[i] = True
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if pygame.time.get_ticks()%30 == 0 and self.vida<40 and self.vida>0:
