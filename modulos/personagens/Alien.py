@@ -68,15 +68,16 @@ class Alien(Nave):
         lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
 
   def update(self,player:Player)->None:
-    #movimenta pra baixo
-    self.rect.move_ip(0,screen.get_height()//100)
 
     #cicla atraves das sprites e define a escala do sprite
     self.index+=0.2
     if self.index >= 2:
       self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
-    self.rect = self.image.get_rect()
+    self.rect.w, self.rect.h = tamanho_alien()
+
+    #movimenta pra baixo
+    self.rect.move_ip(0,screen.get_height()//100)
 
     #ajusta hitbox
     self.rect.w=self.image.get_width()
