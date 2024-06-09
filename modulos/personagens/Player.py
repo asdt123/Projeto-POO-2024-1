@@ -56,6 +56,8 @@ class Player(Nave):
     #escolha da munição
     self.tipo_mun = ['inf', 60, 60, 60]
     self.mun_ativ = 0
+    self.cadencia = [2, 5, 1, 3]
+    self.dano = [5, 5, 5, 5]
     
 
   def atacar(self)->None:
@@ -64,34 +66,29 @@ class Player(Nave):
       if self.skin < 8:
         self.alternar_skin = 10
       #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
-      #tiro unico energia
-      if self.mun_ativ==0:
-        if self.ciclo%2==0 and self.tipo_mun[self.mun_ativ]!=0:
-          self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, 0, 5))
-          if self.tipo_mun[self.mun_ativ]!='inf':
-            self.tipo_mun[self.mun_ativ]-=1
-      #tiro triplo
-      elif self.mun_ativ==1:
-        if self.ciclo%5==0 and self.tipo_mun[self.mun_ativ]!=0:
-          for i in range(3):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30),  municao_aliens, 1, 5, -30+30*i ))
-            if self.tipo_mun[self.mun_ativ]!='inf':
-              self.tipo_mun[self.mun_ativ]-=1
-      #tiro metralhadora
-      elif self.mun_ativ==2:
-        if self.ciclo%1==0 and self.tipo_mun[self.mun_ativ]!=0:
-          self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_aliens, 1, 5, random.randint(-30,30) ))
-          if self.tipo_mun[self.mun_ativ]!='inf':
-            self.tipo_mun[self.mun_ativ]-=1
-      #tiro duplo
-      elif self.mun_ativ==3:
-        if self.ciclo%3==0 and self.tipo_mun[self.mun_ativ]!=0:
-          for i in range(2):
-            self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30), municao_aliens, 1, 5))
-            if self.tipo_mun[self.mun_ativ]!='inf':
-              self.tipo_mun[self.mun_ativ]-=1
-    if self.tipo_mun[self.mun_ativ]==0:
-      self.trocar_munição(1)
+      #tiro unico
+      if self.ciclo%self.cadencia[self.mun_ativ]==0 and self.tipo_mun[self.mun_ativ]!=0:
+        match self.mun_ativ:
+          #tiro unico basico
+          case 0:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          #tiro triplo
+          case 1:
+            for i in range(3):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ], -30+30*i ))
+          #tiro aleatorio
+          case 2:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ], random.randint(-30,30) ))
+          #tiro duplo
+          case 3:
+            for i in range(2):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          
+      if self.tipo_mun[self.mun_ativ]!='inf':
+        self.tipo_mun[self.mun_ativ]-=1
+      
+      if self.tipo_mun[self.mun_ativ]==0:
+        self.trocar_munição(1)
 
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
@@ -152,11 +149,13 @@ class Player(Nave):
     super().receber_dano(dano)
 
   def trocar_munição(self, rumo):
+    #troca munição ativ para um que tem carga
     self.mun_ativ=((self.mun_ativ+rumo))%4
     while self.tipo_mun[self.mun_ativ]==0:
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
   def receber_drop(self, id_drop):
+    #verifica se o item recebido é vida ou mais munição
     if id_drop==100:
       self.vida += 30
       if self.vida > 100:
@@ -189,10 +188,10 @@ class Player(Nave):
     format_text = fonte.render(mensagem1, False, (255,255,255))
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
 
-    screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+10))
-    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+50))
+    screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
+    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
 
-    screen.blit(self.tipo_mun_spr[self.mun_ativ], (self.boxVida.left,self.boxVida.bottom+80) )
+    screen.blit(self.tipo_mun_spr[self.mun_ativ], (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
 
 
 

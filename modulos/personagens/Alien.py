@@ -28,12 +28,12 @@ class Alien(Nave):
       self.ciclo=0
     if self.tipo_alien == 1:
       #tiro duplo
-      if self.ciclo%6==0:
+      if self.ciclo%6 == 0:
         for i in range(2):
           self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), municao_aliens, 0, 1, 180+30-60*i ))
     else:  
       #tiro aleatorio
-      if self.ciclo%5==0:
+      if self.ciclo%5 == 0:
         self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, 1, 1, random.randint(165,195)))  
 
   def receber_dano(self,dano:int)->int:

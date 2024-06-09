@@ -3,7 +3,7 @@ import math
 from configurações.Config import *
 
 class Arsenal(pygame.sprite.Sprite):
-  def __init__(self,posição_nave:tuple,endereço_tiro:str, id_tiro: int,poder:int,angulo = 0,velocidade = -25)->None:
+  def __init__(self,posição_nave:tuple,endereço_tiro:str, id_tiro: int,poder:int,angulo = 0)->None:
     pygame.sprite.Sprite.__init__(self)
     
     #carrega imagem do tiro, escala ela a partir do tamanho da janela e rotaciona ela a partir do angulo
