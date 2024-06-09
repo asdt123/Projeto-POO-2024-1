@@ -76,6 +76,7 @@ class Alien(Nave):
     if self.index >= 2:
       self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
+    self.rect = self.image.get_rect()
 
     #ajusta hitbox
     self.rect.w=self.image.get_width()

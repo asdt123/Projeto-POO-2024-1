@@ -31,6 +31,7 @@ class Arsenal(pygame.sprite.Sprite):
       self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_municao())
     self.image = pygame.transform.rotate(self.img_anim[int(self.index)], self.angulo)
+    self.rect = self.image.get_rect()
 
 
     #movimenta o tiro dependendo do angulo e da velocidade
