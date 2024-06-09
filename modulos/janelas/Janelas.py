@@ -4,6 +4,7 @@ from configurações.Config import *
 from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
 
+
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
 player = Player(0, 17)
@@ -17,12 +18,14 @@ class Janelas:
         self.ciclo = 0
         self.janela_atual = JANELAS[0]
         self.scroll = 0
+        self.aux = 0
         
     def atualizar_janela(self,mouse:tuple,key)->None:
 
         self.ciclo+=1
         if self.ciclo>100:
             self.ciclo=0
+            
         match self.janela_atual:
             case "Menu Inicial 1":
                 tempo_oscilação = 30
@@ -87,10 +90,22 @@ class Janelas:
                 
                 pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_>"),2)
                 screen.blit(MENSAGEM(">")[0],MENSAGEM(">")[1])
+                
+                # Índice da skin
+                self.skin = 0
+                # Guarda todas as animações dessa skin
+                self.imgs = []
+                for i in range(14):
+                    self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
 
-                screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
-                if key[pygame.K_SPACE]:
-                    self.janela_atual = JANELAS[3]
+                screen.blit(self.imgs[self.aux],(300,300))
+                
+                #screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
+
+
+                if key[pygame.K_LEFT]:
+                    self.aux += 1
+                    #self.janela_atual = JANELAS[3]
 
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
