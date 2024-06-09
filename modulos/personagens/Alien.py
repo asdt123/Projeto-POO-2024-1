@@ -29,11 +29,11 @@ class Alien(Nave):
       #tiro duplo
       if self.ciclo%6==0:
         for i in range(2):
-          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, 180+30-60*i ))
+          self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), municao_aliens, 0, 1, 180+30-60*i ))
     else:  
       #tiro aleatorio
       if self.ciclo%5==0:
-        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
+        self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, 1, 1, random.randint(165,195)))  
 
   def receber_dano(self,dano:int)->int:
     #recebe dano e fica vermelho por um curto periodo
@@ -57,9 +57,9 @@ class Alien(Nave):
     self.rect.move_ip(0,screen.get_height()//100)
 
     #cicla atraves das sprites e define a escala do sprite
-    if self.index >= 7:
-      self.index=0
     self.index+=0.5
+    if self.index > 8:
+      self.index=0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
 
     #ajusta hitbox
