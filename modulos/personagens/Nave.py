@@ -9,6 +9,7 @@ class Nave(ABC,pygame.sprite.Sprite):
     self.rect = self.image.get_rect()
     self.rect.midbottom = posição_nave
     self.vida = vida
+    self.ciclo = 0
 
   def receber_dano(self,dano:int)->None:
     #atualiza o valor da vida e deixa vermelho
