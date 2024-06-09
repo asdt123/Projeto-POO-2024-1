@@ -22,12 +22,17 @@ class Alien(Nave):
 
   def atacar(self)->None:
     #sai um tiro a cada 5ms, não dá muito certo isso aqui mas ta bom por enquanto
+    self.ciclo+=1
+    if self.ciclo>100:
+      self.ciclo=0
     if self.tipo_alien == 1:
-      if len(self.tiros.sprites()) < 2:
+      #tiro duplo
+      if self.ciclo%6==0:
         for i in range(2):
           self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, 180+30-60*i ))
     else:  
-      if len(self.tiros.sprites())<3:
+      #tiro aleatorio
+      if self.ciclo%5==0:
         self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), pygame.image.load(municao_aliens).subsurface((0,0),(24,24)).convert_alpha(), 1, random.randint(165,195)))  
 
   def receber_dano(self,dano:int)->int:

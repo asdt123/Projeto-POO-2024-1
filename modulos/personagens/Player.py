@@ -54,22 +54,26 @@ class Player(Nave):
 
   def atacar(self)->None:
     #analisa se o jogador está vivo, a munição ativa, cria objetos do tiro e adiciona ao grupo
-    self.ciclo+=1
-    if self.ciclo>100:
-      self.ciclo=0
     if self.vida>0:
+      self.ciclo+=1
+      if self.ciclo>100:
+        self.ciclo=0
       if self.skin < 8:
         self.alternar_skin = 10
+      #tiro unico energia
       if self.tipo_mun[0]:
         if self.ciclo%2==0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((0,0),(24,24)).convert_alpha(), 5))
+      #tiro triplo
       elif self.tipo_mun[1]:
         if self.ciclo%5==0:
           for i in range(3):
             self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((24,0),(24,24)).convert_alpha(), 5, -30+30*i ))
+      #tiro metralhadora
       elif self.tipo_mun[2]:
         if self.ciclo%1==0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), pygame.image.load(municao_naves).subsurface((48,0),(24,24)).convert_alpha(), 5, random.randint(-30,30) ))
+      #tiro duplo
       elif self.tipo_mun[3]:
         if self.ciclo%3==0:
           for i in range(2):
