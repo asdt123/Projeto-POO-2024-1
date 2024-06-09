@@ -189,8 +189,8 @@ class Player(Nave):
 
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
     screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
-
-    screen.blit(self.tipo_mun_spr[self.mun_ativ], (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
+    escala_x, escala_y = tamanho_municao()
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], (2*escala_x, 2*escala_y)), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
 
 
 
