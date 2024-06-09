@@ -38,13 +38,13 @@ background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
 # função para atualização do tamanho e posicionamento dos sprites
-def tamanho_nave():
+def tamanho_nave()->tuple[int,int]:
   return (screen.get_height()//7,screen.get_height()//7)
 
-def tamanho_alien():
+def tamanho_alien()->tuple[int,int]:
   return (screen.get_height()//5,screen.get_height()//5)
 
-def tamanho_municao():
+def tamanho_municao()->tuple[int,int]:
   return (screen.get_height()//30,screen.get_height()//30)
 
 def barra_vida(tipo_player, vida):
@@ -75,7 +75,7 @@ JANELAS = ["Menu Inicial 1",
 MOUSE_POS = (0,0)
 
 # Atualiza os tamanhos de todos os botões
-def CAIXA(nome_caixa:str):
+def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
     
     # Retorno: (x,y,x_size,y_size)
     match nome_caixa:
@@ -104,29 +104,35 @@ def CAIXA(nome_caixa:str):
         return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
       
       case "JOGAR_PLAYER_1":
-        return (int(0.1210*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (int(0.1254*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
       case "JOGAR_PLAYER_2":
-        return (int(0.6275*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (int(0.6208*screen.get_width()),int(0.1277*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
+      case "NAVE_SELECAO_1":
+        return (int(0.1441*screen.get_width()),int(0.3438*screen.get_height()),int(0.0*screen.get_width()),int(0.0*screen.get_height()))
+      
+      case "NAVE_SELECAO_2":
+        return (int(0.6399*screen.get_width()),int(0.3438*screen.get_height()),int(0.0*screen.get_width()),int(0.0*screen.get_height()))
+      
       case "BOTAO_A":
-        return (int(0.0747*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (int(0.0570*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
       case "BOTAO_D":
-        return (int(0.3550*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (int(0.3528*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
       case "BOTAO_<":
-        return (int(0.5770*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (int(0.5615*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
       case "BOTAO_>":
-        return (int(0.8292*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (int(0.8448*screen.get_width()),int(0.7475*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
       case _:
         # Retorno: (x,y,x_size,y_size)
         return (0,0,0,0)
 
 # Atualiza os tamanhos de todas as mensagens
-def MENSAGEM(nome_mensagem:str):
+def MENSAGEM(nome_mensagem:str)->list:
 
   match nome_mensagem:
     case "ESPAÇO":

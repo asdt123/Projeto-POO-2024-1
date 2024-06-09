@@ -18,7 +18,8 @@ class Janelas:
         self.ciclo = 0
         self.janela_atual = JANELAS[0]
         self.scroll = 0
-        self.aux = 0
+        self.skin1 = 0
+        self.skin2 = 0
         
     def atualizar_janela(self,mouse:tuple,key)->None:
 
@@ -27,7 +28,9 @@ class Janelas:
             self.ciclo=0
             
         match self.janela_atual:
+
             case "Menu Inicial 1":
+
                 tempo_oscilação = 30
                 screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
@@ -90,22 +93,40 @@ class Janelas:
                 
                 pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_>"),2)
                 screen.blit(MENSAGEM(">")[0],MENSAGEM(">")[1])
+
+                if self.skin1 < 0 or self.skin1 > 13:
+                    self.skin1 = 0
                 
-                # Índice da skin
-                self.skin = 0
-                # Guarda todas as animações dessa skin
+                if self.skin2 < 0 or self.skin2 > 13:
+                    self.skin2 = 0
+
+                # Guarda todas as skins disponíveis para seleção
                 self.imgs = []
                 for i in range(14):
-                    self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
-
-                screen.blit(self.imgs[self.aux],(300,300))
+                    self.imgs.append(pygame.transform.scale(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha(), tuple(a*b for a,b in zip((3,3),tamanho_nave()))))
                 
-                #screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
-
-
+                screen.blit(self.imgs[self.skin1],(CAIXA("NAVE_SELECAO_1")[0],CAIXA("NAVE_SELECAO_1")[1]))
+                screen.blit(self.imgs[self.skin2],(CAIXA("NAVE_SELECAO_2")[0],CAIXA("NAVE_SELECAO_2")[1]))
+                
+                
                 if key[pygame.K_LEFT]:
-                    self.aux += 1
-                    #self.janela_atual = JANELAS[3]
+                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_<"),2)
+                    self.skin2 += 1
+                
+                if key[pygame.K_RIGHT]:
+                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_>"),2)
+                    self.skin2 -= 1
+
+                if key[pygame.K_d]:
+                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_D"),2)
+                    self.skin1 += 1
+                
+                if key[pygame.K_a]:
+                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_A"),2)
+                    self.skin1 -= 1
+
+                if key[pygame.K_SPACE]:
+                    self.janela_atual = JANELAS[3]
 
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
