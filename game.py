@@ -23,7 +23,6 @@ while running:
   #analise do teclado para controle do personagem
   key = pygame.key.get_pressed()
   MOUSE_POS = pygame.mouse.get_pos()
-  key1 = pygame.key.get_pressed()
   
   if key[pygame.K_1]:   # atacar
     player2.vida=0
@@ -98,15 +97,15 @@ while running:
         player.trocar_munição(1)
       if event.key == pygame.K_TAB:
         player.trocar_munição(-1)
-      if event.key == pygame.K_SPACE and janela.janela_atual == JANELAS[0]:
-        janela.janela_atual = JANELAS[1]
-      if event.key == pygame.K_d:
-        key1 = pygame.key.get_pressed()
-    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != JANELAS[0]:
+      if event.key == pygame.K_SPACE and janela.janela_atual == 0:
+        janela.janela_atual = 1
+
+    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
       if event.button == 1:
         pass
   
-  janela.atualizar_janela(MOUSE_POS,key1)
+  
+  janela.atualizar_janela(MOUSE_POS,key)
   pygame.display.flip()
 
 pygame.quit()
