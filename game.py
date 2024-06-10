@@ -101,6 +101,7 @@ while running:
         janela.janela_atual = 1
 
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
+      #alterar aqui
       if event.button == 1:
         pass
   

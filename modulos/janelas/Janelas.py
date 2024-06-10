@@ -12,11 +12,14 @@ player2 = Player(1, 17)
 players.add(player)
 players.add(player2)
 
+#acho que as caixas de mensagens poderiam ser classes e objetos da janelas. seria mais facil de modular elas e comparar atributos
+
 class Janelas:
     def __init__(self)->None:
         #atributos para acompanhamento dos eventos
         self.ciclo = 0
-        self.janela_atual = 0
+        self.janela_atual = 0 #definir metodo para setar e pegar essa variavel no game.py. a partir dela verificar quais 
+                                #controles funcionam em cada janela, definindo a função de cada em cada caso
         self.scroll = 0
         self.skin1 = 0
         self.skin2 = 0
@@ -44,8 +47,16 @@ class Janelas:
 
                 screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-    
+                
+                #isso tem que passar na game mas so receber o valor do mouse quando rolar um evento de click
+                #pega as coordenadas e o botão usado. Ai´verifica as condições aqui
+                #deve impedir o click duplo
+
+                #para mudar de cor, pode usar o evento pygame.MOUSEMOTION
+
+                #mas pygame.mouse.get_pressed é so para eventos que se repetem
                 if(mouse[0] >= CAIXA("CAMPANHA:Branco")[0] and mouse[0] <= (CAIXA("CAMPANHA:Branco")[0]+CAIXA("CAMPANHA:Branco")[2])) and (mouse[1] >= CAIXA("CAMPANHA:Branco")[1] and mouse[1] <= (CAIXA("CAMPANHA:Branco")[1]+CAIXA("CAMPANHA:Branco")[3])):
+
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("CAMPANHA:Vermelho"),2)
                     screen.blit(MENSAGEM("CAMPANHA:Vermelho")[0],MENSAGEM("CAMPANHA:Vermelho")[1])
                     if pygame.mouse.get_pressed()[0]:
@@ -74,6 +85,7 @@ class Janelas:
                     pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR:Branco"),2)
                     screen.blit(MENSAGEM("VOLTAR:Branco")[0],MENSAGEM("VOLTAR:Branco")[1])
             
+            #mesmo ponto acima
             case 2: # Menu número de jogadores
 
                 screen.fill(CORES["Azul do ceu"])
@@ -108,8 +120,13 @@ class Janelas:
                     pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR:Branco"),2)
                     screen.blit(MENSAGEM("VOLTAR:Branco")[0],MENSAGEM("VOLTAR:Branco")[1])
 
-            
-            case 3: # Menu selseção de jogador
+            #olhar o uso do pygame.key, novamente so pra quando se repete. criar evento que verifica buttonDown
+
+            #alem disso, as 4 primeiras skins tem o dobro de sprites do resto. olhar esses casos. #adicionar 4 se o valor da variavel
+            #self.skin1 for maior que 3
+
+            #vai rolar apenas uma vez. serve pro caso 4 tbm
+            case 3: # Menu seleção de jogador unico
 
                 screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("JOGADOR_CENTRO"),2)
@@ -142,7 +159,7 @@ class Janelas:
                 if key[pygame.K_SPACE]:
                     self.janela_atual = 5
             
-            case 4: # Menu selseção de jogadores
+            case 4: # Menu selseção de dois jogadores
 
                 screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("DIVISORIA"))
@@ -196,7 +213,9 @@ class Janelas:
 
                 if key[pygame.K_SPACE]:
                     self.janela_atual = 5
-                
+
+            #criar os players aqui para não ser possivel criar antes. alem disso, ver a criação de um menu pause para retornar
+            #ao menu inicial por exemplo mas pode voltar pra menus diferentes
             case 5: # Fases do jogo
            
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
