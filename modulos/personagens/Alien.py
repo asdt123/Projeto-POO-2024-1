@@ -70,9 +70,9 @@ class Alien(Nave):
   def update(self,player:Player)->None:
 
     #cicla atraves das sprites e define a escala do sprite
-    self.index+=0.2
+    self.index += 0.2
     if self.index >= 2:
-      self.index=0
+      self.index = 0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_alien())
     self.rect.w, self.rect.h = tamanho_alien()
 
@@ -80,8 +80,8 @@ class Alien(Nave):
     self.rect.move_ip(0,screen.get_height()//100)
 
     #ajusta hitbox
-    self.rect.w=self.image.get_width()
-    self.rect.h=self.image.get_height()
+    self.rect.w = self.image.get_width()
+    self.rect.h = self.image.get_height()
 
     #verifica se acertou o jogador
     self.tiros.update(player)
@@ -92,12 +92,12 @@ class Alien(Nave):
         inimigo.receber_dano(0.5)
     
     #atira
-    if len(inimigos_atingidos)==0:
+    if len(inimigos_atingidos) == 0:
        self.atacar()
 
     #desenha na tela
     self.tiros.draw(screen)
 
     #morre se sair da tela ou se perder a vida, colocar animação de explosão aqui
-    if self.vida <= 0 or self.rect.top>screen.get_height():
+    if self.vida <= 0 or self.rect.top > screen.get_height():
         self.kill()

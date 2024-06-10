@@ -108,7 +108,6 @@ class Janelas:
                 screen.blit(self.imgs[self.skin1],(CAIXA("NAVE_SELECAO_1")[0],CAIXA("NAVE_SELECAO_1")[1]))
                 screen.blit(self.imgs[self.skin2],(CAIXA("NAVE_SELECAO_2")[0],CAIXA("NAVE_SELECAO_2")[1]))
                 
-                
                 if key[pygame.K_LEFT]:
                     pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_<"),2)
                     self.skin2 += 1
@@ -127,7 +126,7 @@ class Janelas:
 
                 if key[pygame.K_SPACE]:
                     self.janela_atual = JANELAS[3]
-
+                
             case "Fase 1":
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
