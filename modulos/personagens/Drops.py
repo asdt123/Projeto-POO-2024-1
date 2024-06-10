@@ -13,7 +13,7 @@ class Drops(pygame.sprite.Sprite):
                 self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,self.id_drop*64),(64,64)).convert_alpha(), tamanho_municao()))
         else:
             for i in range(4):
-                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,2*64),(64,64)).convert_alpha(), tamanho_municao()))
+                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,len(VIDA_ALIEN)*64),(64,64)).convert_alpha(), tamanho_municao()))
         self.image = self.img_anim[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = posição_alien

@@ -25,7 +25,7 @@ while running:
   MOUSE_POS = pygame.mouse.get_pos()
   
   if key[pygame.K_1]:   # atacar
-    player2.vida=0
+    player2.atacar()
   
   if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
     player2.mover((velocidade,-velocidade))
@@ -47,7 +47,7 @@ while running:
     player2.mover((0,0))
 
   if key[pygame.K_2] and not players.has(player2):   # renascer
-    player2 = Player(25,0)
+    player2 = Player(1,17)
     players.add(player2)
 
 
@@ -74,7 +74,7 @@ while running:
     player.mover((0,0))
 
   if key[pygame.K_j] and not players.has(player):   # renascer
-    player = Player(650, 1)
+    player = Player(0, 0)
     players.add(player)
 
   #analise dos demais eventos

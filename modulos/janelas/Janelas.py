@@ -7,8 +7,8 @@ from modulos.personagens.Player import Player
 
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
-player = Player(0, 17)
-player2 = Player(1, 16)
+player = Player(0, 0)
+player2 = Player(1, 17)
 players.add(player)
 players.add(player2)
 
