@@ -45,13 +45,7 @@ def tamanho_alien()->tuple[int,int]:
 def tamanho_municao()->tuple[int,int]:
   return (screen.get_height()//30,screen.get_height()//30)
 
-def barra_vida(tipo_player, vida):
-  #vida player 1
-  if tipo_player==0:
-    return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
-  #vida player 2
-  else:
-    return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*vida*1.5), screen.get_height()//30)
+
 
 ## Cores ##
 

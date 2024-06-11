@@ -42,7 +42,7 @@ class Player(Nave):
     self.tiros = pygame.sprite.Group()
     
     #auxilio visual para vida
-    self.boxVida = pygame.Rect(barra_vida(self.tipo_player, self.vida))
+    self.boxVida = pygame.Rect(self.barra_vida())
     
     #total de pontos do jogador
     self.pontos = 0
@@ -165,14 +165,22 @@ class Player(Nave):
 
   def tamanho_nave()->tuple[int,int]:
     return (screen.get_height()//7,screen.get_height()//7)
-          
+  
+  def barra_vida(self):
+    #vida player 1
+    if self.tipo_player==0:
+      return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
+    #vida player 2
+    else:
+      return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
+            
   def update(self,aliens:pygame.sprite.Group)->None:
     self.ciclo+=1
     if self.ciclo>100:
       self.ciclo=0
 
     #mostra na tela a vida do jogador
-    self.boxVida.update(barra_vida(self.tipo_player, self.vida))
+    self.boxVida.update(self.barra_vida())
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
 
     #recupera a vida ate 40% mais ou menos, uma mamata
