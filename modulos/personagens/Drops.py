@@ -10,10 +10,10 @@ class Drops(pygame.sprite.Sprite):
         self.img_anim=[]
         if self.id_drop!=100:
             for i in range(4):
-                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,self.id_drop*64),(64,64)).convert_alpha(), tamanho_municao()))
+                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,self.id_drop*64),(64,64)).convert_alpha(), self.tamanho_drop()))
         else:
             for i in range(4):
-                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,len(VIDA_ALIEN)*64),(64,64)).convert_alpha(), tamanho_municao()))
+                self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,len(VIDA_ALIEN)*64),(64,64)).convert_alpha(), self.tamanho_drop()))
         self.image = self.img_anim[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = posição_alien
@@ -21,6 +21,9 @@ class Drops(pygame.sprite.Sprite):
     def reposicionar(self, dimensões_antigas, dimensões_novas):
         self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
         self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+
+    def tamanho_drop()->tuple[int,int]:
+        return (screen.get_height()//30,screen.get_height()//30)
 
     def update(self, player):
         #movimenta o longo da tela para não ficar disponivel eternamente
@@ -30,7 +33,7 @@ class Drops(pygame.sprite.Sprite):
         self.index+=0.7
         if self.index > 3:
             self.index=0
-        self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_municao())
+        self.image = pygame.transform.scale(self.img_anim[int(self.index)], self.tamanho_drop())
 
         #verifica colisão com player ou com fim da tela
         player_atingidos = pygame.sprite.spritecollide(self,player,0)
