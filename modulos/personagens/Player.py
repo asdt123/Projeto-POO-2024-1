@@ -210,8 +210,7 @@ class Player(Nave):
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
     screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
-    escala_x, escala_y = self.tamanho_municao()
-    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], (2*escala_x, 2*escala_y)), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
 
     #volta o estado da skin para normal se não estiver atacando
     self.alternar_skin = 0
