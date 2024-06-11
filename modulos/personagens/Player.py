@@ -4,8 +4,6 @@ from configurações.Config import *
 import pygame
 import random
 
-
-
 class Player(Nave):
   def __init__(self,tipo_player:int,skin:int)->None:
     #adicionando os sprites de animação
@@ -57,38 +55,8 @@ class Player(Nave):
     self.mun_ativ = 0
     self.cadencia = [2, 5, 1, 3]
     self.dano = [5, 5, 5, 5]
-    
 
-  def atacar(self)->None:
-    #analisa se o jogador está vivo, a munição ativa, cria objetos do tiro e adiciona ao grupo
-    if self.vida>0:
-      if self.skin < 8:
-        self.alternar_skin = 10
-      #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
-      #tiro unico
-      if self.ciclo%self.cadencia[self.mun_ativ]==0 and self.tipo_mun[self.mun_ativ]!=0:
-        match self.mun_ativ:
-          #tiro unico basico
-          case 0:
-            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
-          #tiro triplo
-          case 1:
-            for i in range(3):
-              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ], -30+30*i ))
-          #tiro aleatorio
-          case 2:
-            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ], random.randint(-30,30) ))
-          #tiro duplo
-          case 3:
-            for i in range(2):
-              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
-          
-      if self.tipo_mun[self.mun_ativ]!='inf':
-        self.tipo_mun[self.mun_ativ]-=1
-      
-      if self.tipo_mun[self.mun_ativ]==0:
-        self.trocar_munição(1)
-
+  #metodo para deslocamento do sprite
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
     if self.vida>0:
@@ -136,23 +104,43 @@ class Player(Nave):
       else:
         self.rect.move_ip(velocidade)
 
-  def reposicionar(self, dimensões_antigas, dimensões_novas):
-    #reposiciona os sprites dos aliens e dos tiros
-    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
-    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
-    for lista_tiros in self.tiros.sprites():
-        lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
+  #metodo para realizar ataque
+  def atacar(self)->None:
+    #analisa se o jogador está vivo, a munição ativa, cria objetos do tiro e adiciona ao grupo
+    if self.vida>0:
+      if self.skin < 8:
+        self.alternar_skin = 10
+      #depois troco isso, quando acabar de fazer mais munição. da pra otimizar muito
+      #tiro unico
+      if self.ciclo%self.cadencia[self.mun_ativ]==0 and self.tipo_mun[self.mun_ativ]!=0:
+        match self.mun_ativ:
+          #tiro unico basico
+          case 0:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          #tiro triplo
+          case 1:
+            for i in range(3):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//60*(1-i), self.rect.top-screen.get_height()//30), municao_naves, self.mun_ativ, self.dano[self.mun_ativ], -30+30*i ))
+          #tiro aleatorio
+          case 2:
+            self.tiros.add(Arsenal((self.rect.centerx, self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ], random.randint(-30,30) ))
+          #tiro duplo
+          case 3:
+            for i in range(2):
+              self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(1-i*2), self.rect.top-screen.get_height()//30),  municao_naves, self.mun_ativ, self.dano[self.mun_ativ]))
+          
+      if self.tipo_mun[self.mun_ativ]!='inf':
+        self.tipo_mun[self.mun_ativ]-=1
+      
+      if self.tipo_mun[self.mun_ativ]==0:
+        self.trocar_munição(1)
 
+  #metodo para receber dano
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar
     super().receber_dano(dano)
-
-  def trocar_munição(self, rumo):
-    #troca munição ativ para um que tem carga
-    self.mun_ativ=((self.mun_ativ+rumo))%4
-    while self.tipo_mun[self.mun_ativ]==0:
-      self.mun_ativ=((self.mun_ativ+rumo))%4
-
+  
+  #metodo para receber drop
   def receber_drop(self, id_drop):
     #verifica se o item recebido é vida ou mais munição
     if id_drop==100:
@@ -163,9 +151,18 @@ class Player(Nave):
     elif self.tipo_mun[id_drop]!='inf':
       self.tipo_mun[id_drop]+=60
 
+  #metodo para trocar munição
+  def trocar_munição(self, rumo):
+    #troca munição ativ para um que tem carga
+    self.mun_ativ=((self.mun_ativ+rumo))%4
+    while self.tipo_mun[self.mun_ativ]==0:
+      self.mun_ativ=((self.mun_ativ+rumo))%4
+
+  #metodo para ajustar dimensão do sprite para mudança de tela
   def tamanho_nave()->tuple[int,int]:
     return (screen.get_height()//7,screen.get_height()//7)
   
+  #metodo para ajustar dimensão do bloco de vida para mudança de tela
   def barra_vida(self):
     #vida player 1
     if self.tipo_player==0:
@@ -174,10 +171,21 @@ class Player(Nave):
     else:
       return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
 
+  #metodo para ajustar dimensão do sprite munição para mudança de tela
   def tamanho_municao()->tuple[int,int]:
     return (screen.get_height()//30,screen.get_height()//30)
-     
+
+  #metodo para ajustar localização do sprite para mudança de tela
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
+    #reposiciona os sprites dos aliens e dos tiros
+    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
+    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+    for lista_tiros in self.tiros.sprites():
+        lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
+
+  #metodo para atualizar sprite ao longo da compilação
   def update(self,aliens:pygame.sprite.Group)->None:
+    #variavel que acompanha ciclos de jogo
     self.ciclo+=1
     if self.ciclo>100:
       self.ciclo=0
@@ -200,15 +208,14 @@ class Player(Nave):
     mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
     format_text = fonte.render(mensagem1, False, (255,255,255))
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
-
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
     screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
     escala_x, escala_y = self.tamanho_municao()
     screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], (2*escala_x, 2*escala_y)), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
 
-
-
+    #volta o estado da skin para normal se não estiver atacando
     self.alternar_skin = 0
+   
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       self.index_morte+=0.37
