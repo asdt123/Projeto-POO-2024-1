@@ -20,34 +20,30 @@ class Alien(Nave):
     self.tiros = pygame.sprite.Group()
     self.pontos = 100
     
-
+  #define o tipo de ataque e arma a partir do tipo de alien
   def atacar(self)->None:
     #sai um tiro a cada 5ms, não dá muito certo isso aqui mas ta bom por enquanto
-    self.ciclo+=1
-    if self.ciclo>100:
-      self.ciclo=0
     match self.tipo_alien:
+      #tiro duplo
       case 0:
         if self.ciclo%6 == 0:
           for i in range(2):
             self.tiros.add(Arsenal((self.rect.centerx+15-i*15, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180+30-60*i ))
-      
+      #tiro metralhadora
       case 1:
         if self.ciclo%5 == 0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], random.randint(165,195)))  
-          
+      #tiro unico 
       case 2:
         if self.ciclo%5 == 0:
           self.tiros.add(Arsenal((self.rect.centerx, self.rect.bottom), municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180))  
-
+      #tiro triplo
       case 3:
         if self.ciclo%10 == 0:
           for i in range(3):
             self.tiros.add(Arsenal((self.rect.centerx+screen.get_height()//30*(-1+i), self.rect.bottom-screen.get_height()//30),  municao_aliens, self.tipo_alien, DANO_ALIEN[self.tipo_alien], 180))
 
-
-        
-    
+  #metodo para atualizar a vida
   def receber_dano(self,dano:int)->int:
     #recebe dano e fica vermelho por um curto periodo
     super().receber_dano(dano)
@@ -56,10 +52,16 @@ class Alien(Nave):
         drops.add(Drops(municao_aliens, self.rect.center,random.choice([self.tipo_alien, 100])))
       return self.pontos
     return 0
-      
+
+  #metodo para definir movimento a partir do tipo de alien (em construção)  
   def mover(self)->None:
     pass
 
+  #metodo para ajustar tamanho do sprite apos mudança de tela
+  def tamanho_alien()->tuple[int,int]:
+    return (screen.get_height()//5,screen.get_height()//5)
+  
+  #metodo para reposicionar apos mudança de tela
   def reposicionar(self, dimensões_antigas, dimensões_novas):
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
@@ -67,11 +69,11 @@ class Alien(Nave):
     for lista_tiros in self.tiros.sprites():
         lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
 
-  def tamanho_alien()->tuple[int,int]:
-    return (screen.get_height()//5,screen.get_height()//5)
-
   def update(self,player:Player)->None:
-
+    #variavel que acompanha ciclos de jogo
+    self.ciclo+=1
+    if self.ciclo>100:
+      self.ciclo=0
     #cicla atraves das sprites e define a escala do sprite
     self.index += 0.2
     if self.index >= 2:
