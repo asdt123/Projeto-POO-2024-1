@@ -94,23 +94,23 @@ class Player(Nave):
     if self.vida>0:
       #ajusta a animação dependendo do movimento
       if velocidade[0] < 0 and velocidade[1] < 0:
-        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], tamanho_nave())
+        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], self.tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], self.tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], self.tamanho_nave())
       if velocidade[0] < 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], self.tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], self.tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], self.tamanho_nave())
       if velocidade[0] < 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], self.tamanho_nave())
       if velocidade[0] > 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], self.tamanho_nave())
       if velocidade[0] == 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], tamanho_nave())
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], self.tamanho_nave())
 
       #ajusta hitbox
       self.rect.w=self.image.get_width()
@@ -162,6 +162,9 @@ class Player(Nave):
         return None
     elif self.tipo_mun[id_drop]!='inf':
       self.tipo_mun[id_drop]+=60
+
+  def tamanho_nave()->tuple[int,int]:
+    return (screen.get_height()//7,screen.get_height()//7)
           
   def update(self,aliens:pygame.sprite.Group)->None:
     self.ciclo+=1
@@ -198,7 +201,7 @@ class Player(Nave):
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       self.index_morte+=0.37
-      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], tamanho_nave())
+      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
       if self.index_morte>=3.6:
         self.kill()
     

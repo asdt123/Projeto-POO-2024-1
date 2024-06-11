@@ -37,8 +37,7 @@ background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
 # função para atualização do tamanho e posicionamento dos sprites
-def tamanho_nave()->tuple[int,int]:
-  return (screen.get_height()//7,screen.get_height()//7)
+
 
 def tamanho_alien()->tuple[int,int]:
   return (screen.get_height()//5,screen.get_height()//5)
