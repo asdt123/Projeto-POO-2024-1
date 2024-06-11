@@ -10,15 +10,18 @@ class Arsenal(pygame.sprite.Sprite):
     self.index=0
     self.img_anim=[]
     for i in range(4):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,id_tiro*64),(64,64)).convert_alpha(), tamanho_municao()))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(endereço_tiro).subsurface((i*64,id_tiro*64),(64,64)).convert_alpha(), self.tamanho_municao()))
     self.image = pygame.transform.rotate(self.img_anim[self.index], angulo)
     self.rect = self.image.get_rect()
     self.rect.center = posição_nave
     
     #definição do dano, da velocidade e do angulo do tiro
     self.poder = poder 
-    self.velocidade = -1*(tamanho_municao()[0]+1)
+    self.velocidade = -1*(self.tamanho_municao()[0]+1)
     self.angulo = angulo
+
+  def tamanho_municao()->tuple[int,int]:
+    return (screen.get_height()//30,screen.get_height()//30)
 
   def reposicionar(self, dimensões_antigas, dimensões_novas):
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
@@ -29,14 +32,14 @@ class Arsenal(pygame.sprite.Sprite):
     self.index+=0.7
     if self.index > 3:
       self.index=0
-    self.image = pygame.transform.scale(self.img_anim[int(self.index)], tamanho_municao())
+    self.image = pygame.transform.scale(self.img_anim[int(self.index)], self.tamanho_municao())
     self.image = pygame.transform.rotate(self.img_anim[int(self.index)], self.angulo)
-    self.rect.w, self.rect.h = tamanho_municao()
+    self.rect.w, self.rect.h = self.tamanho_municao()
 
 
     #movimenta o tiro dependendo do angulo e da velocidade
     
-    self.velocidade=-1*(tamanho_municao()[0]+1)
+    self.velocidade=-1*(self.tamanho_municao()[0]+1)
     self.rect.move_ip(math.sin(math.radians(self.angulo))*self.velocidade, math.cos(math.radians(self.angulo))*self.velocidade)
     #verifica se atingiu algum inimigo, dando dano nele e matando o sprite
     inimigos_atingidos = pygame.sprite.spritecollide(self,inimigos, 0)

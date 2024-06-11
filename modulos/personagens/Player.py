@@ -173,7 +173,10 @@ class Player(Nave):
     #vida player 2
     else:
       return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
-            
+
+  def tamanho_municao()->tuple[int,int]:
+    return (screen.get_height()//30,screen.get_height()//30)
+     
   def update(self,aliens:pygame.sprite.Group)->None:
     self.ciclo+=1
     if self.ciclo>100:
@@ -200,7 +203,7 @@ class Player(Nave):
 
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
     screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
-    escala_x, escala_y = tamanho_municao()
+    escala_x, escala_y = self.tamanho_municao()
     screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], (2*escala_x, 2*escala_y)), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
 
 
