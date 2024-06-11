@@ -58,7 +58,7 @@ class Alien(Nave):
     pass
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
-  def tamanho_alien()->tuple[int,int]:
+  def tamanho_alien(self)->tuple[int,int]:
     return (screen.get_height()//5,screen.get_height()//5)
   
   #metodo para reposicionar apos mudança de tela

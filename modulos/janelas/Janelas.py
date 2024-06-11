@@ -95,7 +95,7 @@ class Janelas:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("1_JOGADOR:Vermelho"),2)
                     screen.blit(MENSAGEM("1_JOGADOR:Vermelho")[0],MENSAGEM("1_JOGADOR:Vermelho")[1])
                     if pygame.mouse.get_pressed()[0]:
-                        self.janela_atual = 3
+                        self.janela_atual = 5
                 else:
                     pygame.draw.rect(screen,CORES["Branco"],CAIXA("1_JOGADOR:Branco"),2)
                     screen.blit(MENSAGEM("1_JOGADOR:Branco")[0],MENSAGEM("1_JOGADOR:Branco")[1])
@@ -104,7 +104,7 @@ class Janelas:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("2_JOGADORES:Vermelho"),2)
                     screen.blit(MENSAGEM("2_JOGADORES:Vermelho")[0],MENSAGEM("2_JOGADORES:Vermelho")[1])
                     if pygame.mouse.get_pressed()[0]:
-                        self.janela_atual = 4
+                        self.janela_atual = 5
                 
                 else:
                     pygame.draw.rect(screen,CORES["Branco"],CAIXA("2_JOGADORES:Branco"),2)
@@ -143,8 +143,8 @@ class Janelas:
                 
                 # Guarda todas as skins disponíveis para seleção
                 self.imgs = []
-                for i in range(14):
-                    self.imgs.append(pygame.transform.scale(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha(),tuple(a*b for a,b in zip((4,4),tamanho_nave()))))
+                #for i in range(14):
+                    #self.imgs.append(pygame.transform.scale(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha(),tuple(a*b for a,b in zip((4,4),tamanho_nave()))))
                 
                 screen.blit(self.imgs[self.skin1],(CAIXA("NAVE_SELECAO_CENTRO")[0],CAIXA("NAVE_SELECAO_CENTRO")[1]))
     

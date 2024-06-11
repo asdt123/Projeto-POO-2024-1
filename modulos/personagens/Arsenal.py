@@ -21,7 +21,7 @@ class Arsenal(pygame.sprite.Sprite):
     self.angulo = angulo
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
-  def tamanho_arsenal()->tuple[int,int]:
+  def tamanho_arsenal(self)->tuple[int,int]:
     return (screen.get_height()//30,screen.get_height()//30)
 
   #metodo para reposicionar apos mudança de tela

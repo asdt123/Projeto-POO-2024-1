@@ -159,7 +159,7 @@ class Player(Nave):
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
   #metodo para ajustar dimensão do sprite para mudança de tela
-  def tamanho_nave()->tuple[int,int]:
+  def tamanho_nave(self)->tuple[int,int]:
     return (screen.get_height()//7,screen.get_height()//7)
   
   #metodo para ajustar dimensão do bloco de vida para mudança de tela
@@ -172,7 +172,7 @@ class Player(Nave):
       return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
 
   #metodo para ajustar dimensão do sprite munição para mudança de tela
-  def tamanho_municao()->tuple[int,int]:
+  def tamanho_municao(self)->tuple[int,int]:
     return (screen.get_height()//30,screen.get_height()//30)
 
   #metodo para ajustar localização do sprite para mudança de tela
