@@ -69,6 +69,7 @@ class Alien(Nave):
     for lista_tiros in self.tiros.sprites():
         lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
 
+  #metodo para atualizar sprite ao longo da compilação
   def update(self,player:Player)->None:
     #variavel que acompanha ciclos de jogo
     self.ciclo+=1
