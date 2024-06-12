@@ -27,6 +27,11 @@ class Janelas:
         self.mouse_pres = [False,False]
         self.tecla_pres = [False,False,pygame.K_0]
         
+        # Guarda todas as skins disponíveis para seleção
+        self.imgs = []
+        for i in range(14):
+            self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha())
+
 
     def atualizar_janela(self,mouse:tuple)->None:
 
