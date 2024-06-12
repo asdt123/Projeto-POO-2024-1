@@ -135,6 +135,60 @@ class Player(Nave):
       if self.tipo_mun[self.mun_ativ]==0:
         self.trocar_munição(1)
 
+  def mover(self,velocidade:list[int,int])->None:
+    #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
+    if self.vida>0:
+      #ajusta a animação dependendo do movimento
+      if velocidade[0] < 0 and velocidade[1] < 0:
+        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], tamanho_nave())
+      if velocidade[0] > 0 and velocidade[1] < 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], tamanho_nave())
+      if velocidade[0] == 0 and velocidade[1] < 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], tamanho_nave())
+      if velocidade[0] < 0 and velocidade[1] == 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], tamanho_nave())
+      if velocidade[0] > 0 and velocidade[1] == 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], tamanho_nave())
+      if velocidade[0] == 0 and velocidade[1] == 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], tamanho_nave())
+      if velocidade[0] < 0 and velocidade[1] > 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], tamanho_nave())
+      if velocidade[0] > 0 and velocidade[1] > 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], tamanho_nave())
+      if velocidade[0] == 0 and velocidade[1] > 0:
+        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], tamanho_nave())
+
+      #ajusta hitbox
+      self.rect.w=self.image.get_width()
+      self.rect.h=self.image.get_height()
+
+      #verifica se o jogador não ultrapassou os limites da tela
+      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<0 and velocidade[0]<0:
+        self.rect.move_ip((0, 0))
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<0 and velocidade[0]<0:
+        self.rect.move_ip((0, 0))
+      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-2 and velocidade[0]>0:
+        self.rect.move_ip((0, 0))
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-5  and velocidade[0]>0:
+        self.rect.move_ip((0, 0))
+      elif self.rect.left<0 and velocidade[0]<0:
+        self.rect.move_ip((0,velocidade[1]))
+      elif self.rect.right>screen.get_width()-5 and velocidade[0]>0:
+        self.rect.move_ip((0,velocidade[1]))
+      elif self.rect.top<0 and velocidade[1]<0:
+        self.rect.move_ip((velocidade[0], 0))
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0:
+        self.rect.move_ip((velocidade[0], 0))
+      else:
+        self.rect.move_ip(velocidade)
+
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
+    #reposiciona os sprites dos aliens e dos tiros
+    self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
+    self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
+    for lista_tiros in self.tiros.sprites():
+        lista_tiros.reposicionar(dimensões_antigas,dimensões_novas)
+
   #metodo para receber dano
   def receber_dano(self,dano:int)->None:
     #recebe dano, deixei pra mover pra tras so pra gente visualizar

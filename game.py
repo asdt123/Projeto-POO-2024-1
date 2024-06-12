@@ -9,8 +9,6 @@ DIMENSÕES_TELA = screen.get_size()
 
 janela = Janelas()
 
-#definição do background
-
 #loop principal
 running = True
 while running:
@@ -90,6 +88,7 @@ while running:
       for lista_drops in drops.sprites():
         lista_drops.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       DIMENSÕES_TELA=DIMENSÕES_TELA_NOVA
+    
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_ESCAPE:
         running = False
@@ -99,14 +98,59 @@ while running:
         player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and janela.janela_atual == 0:
         janela.janela_atual = 1
+      if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[0] = True
+        TECLAS_APERTADAS[2] = pygame.K_SPACE
+      if event.key == pygame.K_RIGHT and janela.janela_atual == 4:
+        TECLAS_APERTADAS[0] = True
+        TECLAS_APERTADAS[2] = pygame.K_RIGHT
+      if event.key == pygame.K_LEFT and janela.janela_atual == 4:
+        TECLAS_APERTADAS[0] = True
+        TECLAS_APERTADAS[2] = pygame.K_LEFT
+      if event.key == pygame.K_d and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[0] = True
+        TECLAS_APERTADAS[2] = pygame.K_d
+      if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[0] = True
+        TECLAS_APERTADAS[2] = pygame.K_a
+
+    if event.type == pygame.KEYUP:
+      if event.key == pygame.K_k:
+        player.trocar_munição(1)
+      if event.key == pygame.K_TAB:
+        player.trocar_munição(-1)
+      if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[1] = True
+      if event.key == pygame.K_RIGHT and janela.janela_atual == 4:
+        TECLAS_APERTADAS[1] = True
+      if event.key == pygame.K_LEFT and janela.janela_atual == 4:
+        TECLAS_APERTADAS[1] = True
+      if event.key == pygame.K_d and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[1] = True
+      if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
+        TECLAS_APERTADAS[1] = True
 
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
       #alterar aqui
       if event.button == 1:
+        MOUSE_APERTADO[0] = True
+        pass
+        
+    if event.type == pygame.MOUSEBUTTONUP and janela.janela_atual != 0:
+      if event.button == 1:
+        MOUSE_APERTADO[1] = True
         pass
   
-  
-  janela.atualizar_janela(MOUSE_POS,key)
+    if MOUSE_APERTADO[0] == True and MOUSE_APERTADO[1] == True:
+      MOUSE_APERTADO = [False,False]
+
+    if TECLAS_APERTADAS[0] == True and TECLAS_APERTADAS[1] == True:
+      TECLAS_APERTADAS = [False,False,pygame.K_0]
+
+  janela.atualizar_janela(MOUSE_POS)
+  janela.pegar_mouse_click(MOUSE_APERTADO)
+  janela.pegar_tecla_apertada(TECLAS_APERTADAS)
+
   pygame.display.flip()
 
 pygame.quit()
