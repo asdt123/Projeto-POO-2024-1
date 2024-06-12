@@ -89,7 +89,7 @@ class Player(Nave):
       if self.tipo_mun[self.mun_ativ]==0:
         self.trocar_munição(1)
 
-  def mover(self,velocidade:int)->None:
+  def mover(self,velocidade:list[int,int])->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
     if self.vida>0:
       #ajusta a animação dependendo do movimento

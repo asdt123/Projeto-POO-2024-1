@@ -66,7 +66,11 @@ CORES = {"Preto":(0,0,0),
 
 ## Janelas ##
 
-MOUSE_POS = (0,0)
+#definição de parâmetros que definem quando o mouse ou uma tecla estão 
+#apertados (para a classe Janela)
+
+MOUSE_APERTADO = [False,False]
+TECLAS_APERTADAS = [False,False,pygame.K_0]
 
 # Atualiza os tamanhos de todos os botões
 def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
@@ -159,6 +163,7 @@ def MENSAGEM(nome_mensagem:str)->list:
   box = CAIXA(nome_mensagem)
   
   match nome_mensagem:
+
     case "ESPAÇO":
       
       size = int((box[0]+box[2]+box[1]+box[3])/30)
@@ -168,6 +173,15 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       return [texto,texto_rect]
 
+    case "TÍTULO":
+      
+      size = int((box[0]+box[2]+box[1]+box[3])/12)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Space Fighters",True,CORES["Verde"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+    
     case "CAMPANHA:Branco":
 
       
@@ -263,7 +277,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/10)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("JOGADOR",True,CORES["Vermelho"])
+      texto = fonte.render("JOGADOR",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -272,7 +286,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/10)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("JOGADOR 1",True,CORES["Vermelho"])
+      texto = fonte.render("JOGADOR 1",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -281,7 +295,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/20)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("JOGADOR 2",True,CORES["Vermelho"])
+      texto = fonte.render("JOGADOR 2",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -290,16 +304,16 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/7)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("A",True,CORES["Vermelho"])
+      texto = fonte.render("A",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
     case "BOTAO_D":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
+      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("D",True,CORES["Vermelho"])
+      texto = fonte.render("D",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -308,16 +322,16 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/7)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("A",True,CORES["Vermelho"])
+      texto = fonte.render("A",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
     case "BOTAO_D_CENTRO":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
+      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("D",True,CORES["Vermelho"])
+      texto = fonte.render("D",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -326,7 +340,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/7)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("a",True,CORES["Vermelho"])
+      texto = fonte.render("!",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
@@ -335,7 +349,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       size = int((box[0]+box[2]+box[1]+box[3])/7)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("a",True,CORES["Vermelho"])
+      texto = fonte.render("?",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
