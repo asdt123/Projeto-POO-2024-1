@@ -14,7 +14,7 @@ running = True
 while running:
   #frames
   relogio.tick(FPS)
-
+  
   #determinação da velocidade dependente do tamanho da tela(temporario)
   velocidade = screen.get_height()//46.15
 

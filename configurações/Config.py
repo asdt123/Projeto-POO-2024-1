@@ -105,7 +105,7 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
         return (int(0.3724*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
       case "NAVE_SELECAO_CENTRO":
-        return (int(0.3381*screen.get_width()),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
+        return (int(screen.get_width()//2-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
       
       case "DIVISORIA":
         return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
