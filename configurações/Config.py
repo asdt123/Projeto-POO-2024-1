@@ -105,7 +105,7 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
         return (int(0.3724*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
       case "NAVE_SELECAO_CENTRO":
-        return (int(screen.get_width()//2-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(screen.get_width()//70),int(screen.get_width()//70))
+        return (int(0.3381*screen.get_width()),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
       
       case "DIVISORIA":
         return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
@@ -117,10 +117,10 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
         return (int(0.6208*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
       case "NAVE_SELECAO_1":
-        return (int(0.1441*screen.get_width()),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
+        return (int(screen.get_width()//4-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
       
       case "NAVE_SELECAO_2":
-        return (int(0.6399*screen.get_width()),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
+        return (int(screen.get_width()//2+screen.get_width()//4-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
       
       case "BOTAO_A":
         return (int(0.0570*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
