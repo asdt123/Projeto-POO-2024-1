@@ -163,17 +163,17 @@ class Player(Nave):
       self.rect.h=self.image.get_height()
 
       #verifica se o jogador não ultrapassou os limites da tela
-      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<0 and velocidade[0]<0:
+      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<150 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<0 and velocidade[0]<0:
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<150 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
-      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-2 and velocidade[0]>0:
+      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-150 and velocidade[0]>0:
         self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-5  and velocidade[0]>0:
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-150  and velocidade[0]>0:
         self.rect.move_ip((0, 0))
-      elif self.rect.left<0 and velocidade[0]<0:
+      elif self.rect.left<150 and velocidade[0]<0:
         self.rect.move_ip((0,velocidade[1]))
-      elif self.rect.right>screen.get_width()-5 and velocidade[0]>0:
+      elif self.rect.right>screen.get_width()-150 and velocidade[0]>0:
         self.rect.move_ip((0,velocidade[1]))
       elif self.rect.top<0 and velocidade[1]<0:
         self.rect.move_ip((velocidade[0], 0))
@@ -182,6 +182,11 @@ class Player(Nave):
       else:
         self.rect.move_ip(velocidade)
 
+      #ajuste posição lateral
+      if self.rect.left<150:
+        self.rect.left=150
+      if self.rect.right>screen.get_width()-150:
+        self.rect.right=screen.get_width()-150
   def reposicionar(self, dimensões_antigas, dimensões_novas):
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])

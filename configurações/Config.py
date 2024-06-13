@@ -11,6 +11,9 @@ FPS = 30
 pygame.display.set_caption(TÍTULO)
 screen = pygame.display.set_mode((900,600))
 
+# Logo para a janela do jogo
+#screen = pygame.display.set_icon()
+
 #definições sprites
 #players
 players = pygame.sprite.Group()
@@ -36,11 +39,6 @@ drops = pygame.sprite.Group()
 background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
-# função para atualização do tamanho e posicionamento dos sprites
-
-
-
-
 ## Cores ##
 
 CORES = {"Preto":(0,0,0),
@@ -52,12 +50,6 @@ CORES = {"Preto":(0,0,0),
          "Azul do ceu":(135,206,235)}
 
 ## Janelas ##
-
-#definição de parâmetros que definem quando o mouse ou uma tecla estão 
-#apertados (para a classe Janela)
-
-MOUSE_APERTADO = [False,False]
-TECLAS_APERTADAS = [False,False,pygame.K_0]
 
 # Atualiza os tamanhos de todos os botões
 def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
@@ -105,7 +97,7 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
         return (int(0.3724*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
 
       case "NAVE_SELECAO_CENTRO":
-        return (int(0.3381*screen.get_width()),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
+        return (int(screen.get_width()//2-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
       
       case "DIVISORIA":
         return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
