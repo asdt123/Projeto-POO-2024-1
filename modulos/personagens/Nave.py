@@ -7,11 +7,13 @@ class Nave(ABC,pygame.sprite.Sprite):
     #carrega imagem da nave
     self.image = imagem_nave
     self.rect = self.image.get_rect()
-    self.rect.center = posição_nave
+    self.rect.midbottom = posição_nave
     self.vida = vida
+    self.ciclo = 0
 
   def receber_dano(self,dano:int)->None:
-    #atualiza o valor da vida
+    #atualiza o valor da vida e deixa vermelho
+    self.image.fill((100,0,0,70),special_flags=pygame.BLEND_ADD)
     self.vida -= dano
 
   @abstractmethod
