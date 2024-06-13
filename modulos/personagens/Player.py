@@ -187,7 +187,6 @@ class Player(Nave):
         self.rect.left=150
       if self.rect.right>screen.get_width()-150:
         self.rect.right=screen.get_width()-150
-
   def reposicionar(self, dimensões_antigas, dimensões_novas):
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
