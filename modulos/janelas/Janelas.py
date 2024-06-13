@@ -29,7 +29,7 @@ class Janelas:
         # Guarda todas as skins disponíveis para seleção
         self.imgs = []
         for i in range(14):
-            self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha())
+            self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i*64,0),(64,64)).convert_alpha())
 
 
         # Carregar a imagem de fundo
@@ -204,17 +204,14 @@ class Janelas:
                 screen.blit(MENSAGEM("BOTAO_D_CENTRO")[0],MENSAGEM("BOTAO_D_CENTRO")[1])
 
                 if self.skin1 < 0:
-                    self.skin1 = 13
-                elif self.skin1 > 13:
+                    self.skin1 = len(self.imgs)-1
+                elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
-
+                self.imgs[self.skin1].fill((100,0,0,70),special_flags=pygame.BLEND_RGBA_ADD)
                 # Guarda todas as skins disponíveis para seleção
-                self.imgs = []
-                for i in range(14):
-                    self.imgs.append(pygame.transform.scale(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha(),tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))))
-
-                screen.blit(self.imgs[self.skin1],(CAIXA("NAVE_SELECAO_CENTRO")[0],CAIXA("NAVE_SELECAO_CENTRO")[1]))
-    
+                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
+                print(CAIXA("NAVE_SELECAO_CENTRO"), self.imgs[self.skin1].get_rect())
+                
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D_CENTRO"),2)
                     self.skin1 += 1
@@ -249,23 +246,19 @@ class Janelas:
                 screen.blit(MENSAGEM("BOTAO_>")[0],MENSAGEM("BOTAO_>")[1])
 
                 if self.skin1 < 0:
-                    self.skin1 = 13
-                elif self.skin1 > 13:
+                    self.skin1 = len(self.imgs)-1
+                elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
                 
                 if self.skin2 < 0:
-                    self.skin2 = 13
-                elif self.skin2 > 13:
+                    self.skin2 = len(self.imgs)-1
+                elif self.skin2 > len(self.imgs)-1:
                     self.skin2 = 0
 
                 # Guarda todas as skins disponíveis para seleção
-                self.imgs = []
-                for i in range(14):
-                    self.imgs.append(pygame.transform.scale(pygame.image.load(imagens_naves_selecao).subsurface((i%10*64,0),(64,64)).convert_alpha(), tuple(a*b for a,b in zip((3,3),(screen.get_height()//7,screen.get_height()//7)))))
-                
-                screen.blit(self.imgs[self.skin1],(CAIXA("NAVE_SELECAO_1")[0],CAIXA("NAVE_SELECAO_1")[1]))
-                screen.blit(self.imgs[self.skin2],(CAIXA("NAVE_SELECAO_2")[0],CAIXA("NAVE_SELECAO_2")[1]))
-                
+                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_1")[0],CAIXA("NAVE_SELECAO_1")[1]))
+                screen.blit(pygame.transform.scale(self.imgs[self.skin2],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_2")[0],CAIXA("NAVE_SELECAO_2")[1]))
+
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_LEFT:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_<"),2)
                     self.skin2 -= 1
@@ -302,7 +295,8 @@ class Janelas:
                     self.scroll = 0
                 info_width = 150
                 cenario_width = screen.get_width() - 2 * info_width
-
+                
+                self.background = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
                 screen.blit(pygame.transform.scale(self.background, (cenario_width, screen.get_height())), (info_width, 0))
 
                 if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
