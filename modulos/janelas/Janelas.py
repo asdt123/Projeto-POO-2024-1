@@ -35,6 +35,9 @@ class Janelas:
     
 
     def desenhar_info_jogadores(self):
+        #deixa a largura da informação baseada na largura do jogo
+        #assim ela não varia se mudar o tamanho da tela
+
         # Calcular áreas dinâmicas
         screen_width = screen.get_width()
         screen_height = screen.get_height()
