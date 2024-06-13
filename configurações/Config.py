@@ -11,6 +11,9 @@ FPS = 30
 pygame.display.set_caption(TÍTULO)
 screen = pygame.display.set_mode((900,600))
 
+# Logo para a janela do jogo
+#screen = pygame.display.set_icon()
+
 #definições sprites
 #players
 players = pygame.sprite.Group()
@@ -19,7 +22,6 @@ imagens_naves = "imagens/jogadores/naves.png"
 morte_naves = "imagens/morte/morte_naves.png"
 municao_naves = "imagens/armamento/munições.png"
 imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
-
 
 
 #aliens
@@ -37,11 +39,6 @@ drops = pygame.sprite.Group()
 background = "imagens/cenário/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
-# função para atualização do tamanho e posicionamento dos sprites
-
-
-
-
 ## Cores ##
 
 CORES = {"Preto":(0,0,0),
@@ -53,12 +50,6 @@ CORES = {"Preto":(0,0,0),
          "Azul do ceu":(135,206,235)}
 
 ## Janelas ##
-
-#definição de parâmetros que definem quando o mouse ou uma tecla estão 
-#apertados (para a classe Janela)
-
-MOUSE_APERTADO = [False,False]
-TECLAS_APERTADAS = [False,False,pygame.K_0]
 
 # Atualiza os tamanhos de todos os botões
 def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:

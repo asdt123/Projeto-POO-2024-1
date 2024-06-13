@@ -20,8 +20,9 @@ while running:
 
   #analise do teclado para controle do personagem
   key = pygame.key.get_pressed()
-  MOUSE_POS = pygame.mouse.get_pos()
+
   if janela.janela_atual == 6:
+    
     if key[pygame.K_1]:   # atacar
       janela.player2.atacar()
     
@@ -75,6 +76,7 @@ while running:
       janela.player = Player(0, 0)
       players.add(janela.player)
 
+
   #analise dos demais eventos
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
@@ -96,25 +98,24 @@ while running:
         janela.player.trocar_munição(1)
       if event.key == pygame.K_TAB:
         janela.player.trocar_munição(-1)
-        #melhora o tratamento de eventos pra janela.
-        #usa os metodos de pegar tecla aqui ou la em cima no controle de personagem
+
       if event.key == pygame.K_SPACE and janela.janela_atual == 0:
         janela.janela_atual = 1
+
       if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[0] = True
-        TECLAS_APERTADAS[2] = pygame.K_SPACE
+        janela.pegar_tecla_apertada([True,False,pygame.K_SPACE])
+
       if event.key == pygame.K_RIGHT and janela.janela_atual == 4:
-        TECLAS_APERTADAS[0] = True
-        TECLAS_APERTADAS[2] = pygame.K_RIGHT
+        janela.pegar_tecla_apertada([True,False,pygame.K_RIGHT])
+
       if event.key == pygame.K_LEFT and janela.janela_atual == 4:
-        TECLAS_APERTADAS[0] = True
-        TECLAS_APERTADAS[2] = pygame.K_LEFT
+        janela.pegar_tecla_apertada([True,False,pygame.K_LEFT])
+
       if event.key == pygame.K_d and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[0] = True
-        TECLAS_APERTADAS[2] = pygame.K_d
+        janela.pegar_tecla_apertada([True,False,pygame.K_d])
+
       if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[0] = True
-        TECLAS_APERTADAS[2] = pygame.K_a
+        janela.pegar_tecla_apertada([True,False,pygame.K_a])
 
     if event.type == pygame.KEYUP:
       if event.key == pygame.K_k:
@@ -122,36 +123,30 @@ while running:
       if event.key == pygame.K_TAB:
         janela.player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[1] = True
+        janela.pegar_tecla_apertada([True,True,pygame.K_SPACE])
+
       if event.key == pygame.K_RIGHT and janela.janela_atual == 4:
-        TECLAS_APERTADAS[1] = True
+        janela.pegar_tecla_apertada([True,True,pygame.K_RIGHT])
+
       if event.key == pygame.K_LEFT and janela.janela_atual == 4:
-        TECLAS_APERTADAS[1] = True
+        janela.pegar_tecla_apertada([True,True,pygame.K_LEFT])
+
       if event.key == pygame.K_d and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[1] = True
+        janela.pegar_tecla_apertada([True,True,pygame.K_d])
+
       if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
-        TECLAS_APERTADAS[1] = True
+        janela.pegar_tecla_apertada([True,True,pygame.K_a])
 
     if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
-      #alterar aqui
       if event.button == 1:
-        MOUSE_APERTADO[0] = True
-        pass
+        janela.pegar_mouse_click([True,False])
         
     if event.type == pygame.MOUSEBUTTONUP and janela.janela_atual != 0:
       if event.button == 1:
-        MOUSE_APERTADO[1] = True
-        pass
-  
-    if MOUSE_APERTADO[0] == True and MOUSE_APERTADO[1] == True:
-      MOUSE_APERTADO = [False,False]
+        janela.pegar_mouse_click([True,True])
 
-    if TECLAS_APERTADAS[0] == True and TECLAS_APERTADAS[1] == True:
-      TECLAS_APERTADAS = [False,False,pygame.K_0]
 
-  janela.atualizar_janela(MOUSE_POS)
-  janela.pegar_mouse_click(MOUSE_APERTADO)
-  janela.pegar_tecla_apertada(TECLAS_APERTADAS)
+  janela.atualizar_janela()
 
   pygame.display.flip()
 
