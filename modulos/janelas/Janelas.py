@@ -7,11 +7,6 @@ from modulos.personagens.Player import Player
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
 
-player = Player(0, 0)
-player2 = Player(1, 17)
-players.add(player)
-players.add(player2)
-
 #acho que as caixas de mensagens poderiam ser classes e objetos da janelas. seria mais facil de modular elas e comparar atributos
 
 class Janelas:
@@ -26,6 +21,8 @@ class Janelas:
         self.mouse_pres = [False,False]
         self.tecla_pres = [False,False,pygame.K_0]
         
+        self.player = Player(0,0)
+        self.player2 = Player(1,0)
         # Guarda todas as skins disponíveis para seleção
         self.imgs = []
         for i in range(14):
@@ -35,6 +32,7 @@ class Janelas:
         # Carregar a imagem de fundo
         self.informacao_bg = pygame.image.load("imagens/cenário/informacao.png").convert_alpha()
         self.background = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
+    
 
     def desenhar_info_jogadores(self):
         # Calcular áreas dinâmicas
@@ -210,7 +208,6 @@ class Janelas:
                 self.imgs[self.skin1].fill((100,0,0,70),special_flags=pygame.BLEND_RGBA_ADD)
                 # Guarda todas as skins disponíveis para seleção
                 screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
-                print(CAIXA("NAVE_SELECAO_CENTRO"), self.imgs[self.skin1].get_rect())
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D_CENTRO"),2)
@@ -283,9 +280,8 @@ class Janelas:
                 # Criação da nave com a skin selecionada. Pode ser bom tirar o selecionador de skins do construtor
                 # da classe Player e colocá-lo em um método para que seja possível mudar após o construtor ser 
                 # instanciado pela primeira vez
-
-                
-                player.skin = self.selecionar_skin() # Não funciona, porque a skin é selecionada no construtor 
+                self.player = Player(0,self.skin1)
+                players.add(self.player)
                 self.janela_atual = 6
 
             case 6: # Fases do jogo
