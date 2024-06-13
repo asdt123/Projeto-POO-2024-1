@@ -96,6 +96,8 @@ while running:
         janela.player.trocar_munição(1)
       if event.key == pygame.K_TAB:
         janela.player.trocar_munição(-1)
+        #melhora o tratamento de eventos pra janela.
+        #usa os metodos de pegar tecla aqui ou la em cima no controle de personagem
       if event.key == pygame.K_SPACE and janela.janela_atual == 0:
         janela.janela_atual = 1
       if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
