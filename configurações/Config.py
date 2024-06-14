@@ -58,7 +58,7 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
     match nome_caixa:
 
       case "ESPAÇO":
-        return (int(0.3013*screen.get_width()),int(0.7398*screen.get_height()),int(0.4047*screen.get_width()),int(0.1107*screen.get_height()))
+        return (int(0.3013*screen.get_width()),int(0.5398*screen.get_height()),int(0.4047*screen.get_width()),int(0.1107*screen.get_height()))
 
       case "TÍTULO":
         return (int(0.2453*screen.get_width()),int(0.0467*screen.get_height()),int(0.5193*screen.get_width()),int(0.3860*screen.get_height()))
@@ -131,6 +131,30 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
 
       case "BOTAO_>":
         return (int(0.8448*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+
+      case "VOLTAR_SELECAO:Branco":
+        return (int(0.0191*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+
+      case "VOLTAR_SELECAO:Vermelho":
+        return (int(0.0123*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+
+      case "PRESSIONE_SELECAO:Branco":
+        return (int(0.4389*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+
+      case "PRESSIONE_SELECAO:Vermelho":
+        return (int(0.4389*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+
+      case "PRESSIONE_1_SELECAO:Branco":
+        return (int(0.3402*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+
+      case "PRESSIONE_1_SELECAO:Vermelho":
+        return (int(0.3333*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+
+      case "PRESSIONE_2_SELECAO:Branco":
+        return (int(0.5535*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+
+      case "PRESSIONE_2_SELECAO:Vermelho":
+        return (int(0.5467*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
 
       case _:
         # Retorno: (x,y,x_size,y_size)
@@ -333,5 +357,76 @@ def MENSAGEM(nome_mensagem:str)->list:
 
       return [texto,texto_rect]
     
+    case "VOLTAR_SELECAO:Branco":
+
+      size = int((box[0]+box[2]+box[1]+box[3])/20)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Voltar",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+
+    case "VOLTAR_SELECAO:Vermelho":
+    
+      size = int((box[0]+box[2]+box[1]+box[3])/15)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Voltar",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+
+    case "PRESSIONE_SELECAO:Branco":
+
+      size = int((box[0]+box[2]+box[1]+box[3])/40)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+
+    case "PRESSIONE_SELECAO:Vermelho":
+    
+      size = int((box[0]+box[2]+box[1]+box[3])/35)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+    
+    case "PRESSIONE_1_SELECAO:Branco":
+
+      size = int((box[0]+box[2]+box[1]+box[3])/40)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+
+    case "PRESSIONE_1_SELECAO:Vermelho":
+    
+      size = int((box[0]+box[2]+box[1]+box[3])/35)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+    
+    case "PRESSIONE_2_SELECAO:Branco":
+
+      size = int((box[0]+box[2]+box[1]+box[3])/40)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Branco"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
+
+    case "PRESSIONE_2_SELECAO:Vermelho":
+    
+      size = int((box[0]+box[2]+box[1]+box[3])/35)
+      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      texto = fonte.render("Pressione",True,CORES["Vermelho"])
+      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+
+      return [texto,texto_rect]
     case _:
       pass
