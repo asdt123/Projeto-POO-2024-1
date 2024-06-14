@@ -5,6 +5,7 @@ import pygame
 import random
 
 class Player(Nave):
+
   def __init__(self,tipo_player:int,skin:int)->None:
     #adicionando os sprites de animação
     self.skin = skin
@@ -57,8 +58,10 @@ class Player(Nave):
     self.dano = [5, 5, 5, 5]
 
   #metodo para deslocamento do sprite
+  
   def mover(self,velocidade:int)->None:
     #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
+
     if self.vida>0:
       #ajusta a animação dependendo do movimento
       if velocidade[0] < 0 and velocidade[1] < 0:
@@ -84,7 +87,6 @@ class Player(Nave):
       self.rect.w=self.image.get_width()
       self.rect.h=self.image.get_height()
 
-      print(screen.get_width()//6,screen.get_width()-screen.get_width()//6)
       #verifica se o jogador não ultrapassou os limites da tela
       if self.rect.top<0 and velocidade[1]<0 and self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
@@ -141,58 +143,6 @@ class Player(Nave):
       if self.tipo_mun[self.mun_ativ]==0:
         self.trocar_munição(1)
 
-  def mover(self,velocidade:list[int,int])->None:
-    #analisa se o jogador ta vivo e faz o movimento mudando a sprite conforme movimento
-    if self.vida>0:
-      #ajusta a animação dependendo do movimento
-      if velocidade[0] < 0 and velocidade[1] < 0:
-        self.image = pygame.transform.scale(self.img_anim[self.alternar_skin+9], self.tamanho_nave())
-      if velocidade[0] > 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+8], self.tamanho_nave())
-      if velocidade[0] == 0 and velocidade[1] < 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+7], self.tamanho_nave())
-      if velocidade[0] < 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+6], self.tamanho_nave())
-      if velocidade[0] > 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+5], self.tamanho_nave())
-      if velocidade[0] == 0 and velocidade[1] == 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+4], self.tamanho_nave())
-      if velocidade[0] < 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+3], self.tamanho_nave())
-      if velocidade[0] > 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+2], self.tamanho_nave())
-      if velocidade[0] == 0 and velocidade[1] > 0:
-        self.image =  pygame.transform.scale(self.img_anim[self.alternar_skin+1], self.tamanho_nave())
-
-      #ajusta hitbox
-      self.rect.w=self.image.get_width()
-      self.rect.h=self.image.get_height()
-
-      #verifica se o jogador não ultrapassou os limites da tela
-      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<150 and velocidade[0]<0:
-        self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<150 and velocidade[0]<0:
-        self.rect.move_ip((0, 0))
-      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-150 and velocidade[0]>0:
-        self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-150  and velocidade[0]>0:
-        self.rect.move_ip((0, 0))
-      elif self.rect.left<150 and velocidade[0]<0:
-        self.rect.move_ip((0,velocidade[1]))
-      elif self.rect.right>screen.get_width()-150 and velocidade[0]>0:
-        self.rect.move_ip((0,velocidade[1]))
-      elif self.rect.top<0 and velocidade[1]<0:
-        self.rect.move_ip((velocidade[0], 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0:
-        self.rect.move_ip((velocidade[0], 0))
-      else:
-        self.rect.move_ip(velocidade)
-
-      #ajuste posição lateral
-      if self.rect.left<150:
-        self.rect.left=150
-      if self.rect.right>screen.get_width()-150:
-        self.rect.right=screen.get_width()-150
   def reposicionar(self, dimensões_antigas, dimensões_novas):
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
