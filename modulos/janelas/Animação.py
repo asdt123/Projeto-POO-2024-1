@@ -48,6 +48,8 @@ class Animação(pygame.sprite.Sprite):
     self.image = pygame.transform.scale(self.image, self.tamanho_animação())
     self.rect.w, self.rect.h = self.tamanho_animação()
 
+    self.mover()
+
     #ajusta hitbox
     self.rect.w = self.image.get_width()
     self.rect.h = self.image.get_height()
