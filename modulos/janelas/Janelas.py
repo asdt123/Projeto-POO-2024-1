@@ -3,6 +3,7 @@ import random
 from configurações.Config import *
 from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
+from .Animação import Animação
 
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
@@ -12,6 +13,7 @@ from modulos.personagens.Player import Player
 class Janelas:
     def __init__(self)->None:
         #atributos para acompanhamento dos eventos
+        self.animações = pygame.sprite.Group()
         self.ciclo = 0
         self.janela_atual = 0 #definir metodo para setar e pegar essa variavel no game.py. a partir dela verificar quais 
                                 #controles funcionam em cada janela, definindo a função de cada em cada caso
@@ -311,10 +313,14 @@ class Janelas:
                     self.scroll += 1
                 else:
                     self.scroll = 0
+                
                 # Calcular áreas dinâmicas
                 
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
+                
+                if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
+                    self.animações.add(Animação((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 3)))
 
                 self.background.clear()
                 self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
@@ -341,6 +347,8 @@ class Janelas:
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,3)))
 
+                self.animações.draw(screen)
+                self.animações.update()
                 players.draw(screen)
                 players.update(aliens)
                 aliens.draw(screen)

@@ -5,6 +5,8 @@ import random
 
 class Animação(pygame.sprite.Sprite):
   def __init__(self,posição_inicial:tuple,tipo_animação:int)->None:
+    pygame.sprite.Sprite.__init__(self)
+
     #definição da animação e qual animação vai ser gerado(0 pra ufo e 1 pro roxo)
     self.tipo_animação = tipo_animação
     self.index = 0
@@ -13,7 +15,7 @@ class Animação(pygame.sprite.Sprite):
     #for i in range(2):
       #self.img_anim.append(pygame.transform.scale(, (64*2,64*2)))
 
-    self.image = pygame.image.load('imagens/animaçãos/nuvens').subsurface((64,self.tipo_animação*64),(64,64))
+    self.image = pygame.image.load('imagens/animação/nuvens.png').subsurface((0,self.tipo_animação*64),(64,64))
     self.rect = self.image.get_rect()
     self.rect.midbottom = posição_inicial
 
@@ -40,7 +42,7 @@ class Animação(pygame.sprite.Sprite):
     #self.index += 0.2
     #if self.index >= 2:
      # self.index = 0
-     
+
     self.image = pygame.transform.scale(self.image, self.tamanho_animação())
     self.rect.w, self.rect.h = self.tamanho_animação()
 
