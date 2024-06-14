@@ -90,6 +90,8 @@ class Alien(Nave):
     #verifica se acertou o jogador
     self.tiros.update(player)
 
+    self.mover()
+
     #verifica se colidiu com o jogador pra tirar a vida dele
     inimigos_atingidos = pygame.sprite.spritecollide(self,player,0)
     for inimigo in inimigos_atingidos:
