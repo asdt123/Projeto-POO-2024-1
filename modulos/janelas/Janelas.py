@@ -215,11 +215,11 @@ class Janelas:
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_CENTRO"),2)
                 screen.blit(MENSAGEM("JOGADOR_CENTRO")[0],MENSAGEM("JOGADOR_CENTRO")[1])
 
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_A_CENTRO"),2)
-                screen.blit(MENSAGEM("BOTAO_A_CENTRO")[0],MENSAGEM("BOTAO_A_CENTRO")[1])
+                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_<_CENTRO"),2)
+                screen.blit(MENSAGEM("BOTAO_<_CENTRO")[0],MENSAGEM("BOTAO_<_CENTRO")[1])
                 
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_D_CENTRO"),2)
-                screen.blit(MENSAGEM("BOTAO_D_CENTRO")[0],MENSAGEM("BOTAO_D_CENTRO")[1])
+                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_>_CENTRO"),2)
+                screen.blit(MENSAGEM("BOTAO_>_CENTRO")[0],MENSAGEM("BOTAO_>_CENTRO")[1])
 
                 if(pygame.mouse.get_pos()[0] >= CAIXA("VOLTAR_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VOLTAR_SELECAO:Branco")[0]+CAIXA("VOLTAR_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VOLTAR_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VOLTAR_SELECAO:Branco")[1]+CAIXA("VOLTAR_SELECAO:Branco")[3])):
                     
@@ -256,18 +256,18 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D_CENTRO"),2)
+                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_>_CENTRO"),2)
                     self.skin1 += 1
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_a:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_A_CENTRO"),2)
+                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_<_CENTRO"),2)
                     self.skin1 -= 1
             
             case 4: # Menu selseção de dois jogadores
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
                 #screen.fill(CORES["Azul do ceu"])
-                pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("DIVISORIA"))
+                pygame.draw.rect(screen,CORES["Branco"],CAIXA("DIVISORIA"))
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_1_ESQUERDA"),2)
                 screen.blit(MENSAGEM("JOGADOR_1_ESQUERDA")[0],MENSAGEM("JOGADOR_1_ESQUERDA")[1])
 
@@ -433,6 +433,9 @@ class Janelas:
         if self.mouse_pres == [True,True]:
             self.mouse_pres = [False,False]
         
+        if self.janela_atual != 3 and self.janela_atual != 4:
+            self.skin1 = 0
+            self.skin2 = 0 
 
     def pegar_mouse_click(self,MOUSE_APERTADO:list[bool,bool]):
         self.mouse_pres = MOUSE_APERTADO

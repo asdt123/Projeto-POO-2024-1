@@ -120,10 +120,10 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
       case "BOTAO_D":
         return (int(0.3528*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
-      case "BOTAO_A_CENTRO":
+      case "BOTAO_<_CENTRO":
         return (int(0.2094*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
-      case "BOTAO_D_CENTRO":
+      case "BOTAO_>_CENTRO":
         return (int(0.6917*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
 
       case "BOTAO_<":
@@ -314,45 +314,45 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_D":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
+      size = int((box[0]+box[2]+box[1]+box[3])/10)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
       texto = fonte.render("D",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
-    case "BOTAO_A_CENTRO":
+    case "BOTAO_<_CENTRO":
 
       size = int((box[0]+box[2]+box[1]+box[3])/7)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("A",True,CORES["Branco"])
+      texto = fonte.render("<",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
-    case "BOTAO_D_CENTRO":
+    case "BOTAO_>_CENTRO":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
+      size = int((box[0]+box[2]+box[1]+box[3])/10)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("D",True,CORES["Branco"])
+      texto = fonte.render(">",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
     case "BOTAO_<":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
+      size = int((box[0]+box[2]+box[1]+box[3])/10)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("!",True,CORES["Branco"])
+      texto = fonte.render("<",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
     
     case "BOTAO_>":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
+      size = int((box[0]+box[2]+box[1]+box[3])/15)
       fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("?",True,CORES["Branco"])
+      texto = fonte.render(">",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
       return [texto,texto_rect]
