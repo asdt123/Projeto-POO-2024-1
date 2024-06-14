@@ -21,7 +21,9 @@ class Animação(pygame.sprite.Sprite):
 
   #metodo para definir movimento a partir do tipo de animação (em construção)  
   def mover(self)->None:
-    pass
+    #movimenta pra baixo
+    if self.tipo_animação<3:
+        self.rect.move_ip(0,screen.get_height()//100)
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
   def tamanho_animação(self)->tuple[int,int]:
@@ -45,9 +47,6 @@ class Animação(pygame.sprite.Sprite):
 
     self.image = pygame.transform.scale(self.image, self.tamanho_animação())
     self.rect.w, self.rect.h = self.tamanho_animação()
-
-    #movimenta pra baixo
-    self.rect.move_ip(0,screen.get_height()//100)
 
     #ajusta hitbox
     self.rect.w = self.image.get_width()
