@@ -55,7 +55,8 @@ class Alien(Nave):
 
   #metodo para definir movimento a partir do tipo de alien (em construção)  
   def mover(self)->None:
-    pass
+    #movimenta pra baixo
+    self.rect.move_ip(0,screen.get_height()//100)
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
   def tamanho_alien(self)->tuple[int,int]:
@@ -81,9 +82,6 @@ class Alien(Nave):
       self.index = 0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], self.tamanho_alien())
     self.rect.w, self.rect.h = self.tamanho_alien()
-
-    #movimenta pra baixo
-    self.rect.move_ip(0,screen.get_height()//100)
 
     #ajusta hitbox
     self.rect.w = self.image.get_width()
