@@ -84,18 +84,19 @@ class Player(Nave):
       self.rect.w=self.image.get_width()
       self.rect.h=self.image.get_height()
 
+      print(screen.get_width()//6,screen.get_width()-screen.get_width()//6)
       #verifica se o jogador não ultrapassou os limites da tela
-      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<0 and velocidade[0]<0:
+      if self.rect.top<0 and velocidade[1]<0 and self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<0 and velocidade[0]<0:
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
-      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-2 and velocidade[0]>0:
+      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-screen.get_width()//6 and velocidade[0]>0:
         self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-5  and velocidade[0]>0:
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-screen.get_width()//6  and velocidade[0]>0:
         self.rect.move_ip((0, 0))
-      elif self.rect.left<0 and velocidade[0]<0:
+      elif self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0,velocidade[1]))
-      elif self.rect.right>screen.get_width()-5 and velocidade[0]>0:
+      elif self.rect.right>screen.get_width()-screen.get_width()//6 and velocidade[0]>0:
         self.rect.move_ip((0,velocidade[1]))
       elif self.rect.top<0 and velocidade[1]<0:
         self.rect.move_ip((velocidade[0], 0))
@@ -103,6 +104,11 @@ class Player(Nave):
         self.rect.move_ip((velocidade[0], 0))
       else:
         self.rect.move_ip(velocidade)
+
+        if self.rect.left<screen.get_width()//6:
+          self.rect.left=screen.get_width()//6
+        if self.rect.right>screen.get_width()-screen.get_width()//6:
+          self.rect.right=screen.get_width()-screen.get_width()//6
 
   #metodo para realizar ataque
   def atacar(self)->None:
