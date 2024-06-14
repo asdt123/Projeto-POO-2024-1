@@ -3,6 +3,7 @@ import random
 from configurações.Config import *
 from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
+from .Animação import Animação
 
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
@@ -12,6 +13,7 @@ from modulos.personagens.Player import Player
 class Janelas:
     def __init__(self)->None:
         #atributos para acompanhamento dos eventos
+        self.animações = pygame.sprite.Group()
         self.ciclo = 0
         self.janela_atual = 0 #definir metodo para setar e pegar essa variavel no game.py. a partir dela verificar quais 
                                 #controles funcionam em cada janela, definindo a função de cada em cada caso
@@ -32,8 +34,11 @@ class Janelas:
 
         # Carregar a imagem de fundo
         self.informacao_bg = pygame.image.load("imagens/cenário/informacao.png").convert_alpha()
-        self.background = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
 
+        self.background = []
+        for i in range(4):
+            self.background.append(pygame.image.load("imagens/cenário/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
+        self.index_b = 0
     def desenhar_info_jogadores(self):
         #deixa a largura da informação baseada na largura do jogo
         #assim ela não varia se mudar o tamanho da tela
@@ -41,7 +46,7 @@ class Janelas:
         # Calcular áreas dinâmicas
         screen_width = screen.get_width()
         screen_height = screen.get_height()
-        info_width = 150
+        info_width = screen.get_width()//6
         cenario_width = screen_width - 2 * info_width
 
         # Desenha a imagem de fundo nas áreas de informações dos jogadores
@@ -90,13 +95,16 @@ class Janelas:
         self.ciclo += 1
         if self.ciclo > 100:
             self.ciclo = 0
-            
+        
+        self.index_b += 0.05
+        if self.index_b > len(self.background):
+            self.index_b = 0    
         match self.janela_atual:
 
             case 0: # Menu inical
 
                 tempo_oscilação = 30
-                screen.fill(CORES["Azul do ceu"])
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
                 screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
 
@@ -107,8 +115,9 @@ class Janelas:
                   pass
 
             case 1: # Menu Principal
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
-                screen.fill(CORES["Azul do ceu"])
+                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
                 screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
                 
@@ -151,8 +160,9 @@ class Janelas:
             
 
             case 2: # Menu número de jogadores
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
-                screen.fill(CORES["Azul do ceu"])
+                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
                 screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
                 
@@ -197,8 +207,9 @@ class Janelas:
 
             #vai rolar apenas uma vez. serve pro caso 4 tbm
             case 3: # Menu seleção de jogador unico
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 
-                screen.fill(CORES["Azul do ceu"])
+                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_CENTRO"),2)
                 screen.blit(MENSAGEM("JOGADOR_CENTRO")[0],MENSAGEM("JOGADOR_CENTRO")[1])
 
@@ -212,7 +223,6 @@ class Janelas:
                     self.skin1 = len(self.imgs)-1
                 elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
-                self.imgs[self.skin1].fill((100,0,0,70),special_flags = pygame.BLEND_RGBA_ADD)
 
                 # Guarda todas as skins disponíveis para seleção
                 screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
@@ -229,8 +239,9 @@ class Janelas:
                     self.janela_atual = 5
             
             case 4: # Menu selseção de dois jogadores
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
-                screen.fill(CORES["Azul do ceu"])
+                #screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("DIVISORIA"))
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_1_ESQUERDA"),2)
                 screen.blit(MENSAGEM("JOGADOR_1_ESQUERDA")[0],MENSAGEM("JOGADOR_1_ESQUERDA")[1])
@@ -288,9 +299,13 @@ class Janelas:
                 # Criação da nave com a skin selecionada. Pode ser bom tirar o selecionador de skins do construtor
                 # da classe Player e colocá-lo em um método para que seja possível mudar após o construtor ser 
                 # instanciado pela primeira vez
+                screen.fill(CORES["Azul do ceu"])
                 self.player = Player(0,self.skin1)
                 players.add(self.player)
                 self.janela_atual = 6
+                
+                self.background.clear()
+                self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
 
             case 6: # Fases do jogo
 
@@ -298,11 +313,18 @@ class Janelas:
                     self.scroll += 1
                 else:
                     self.scroll = 0
-                info_width = 150
+                
+                # Calcular áreas dinâmicas
+                
+                info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 
-                self.background = pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
-                screen.blit(pygame.transform.scale(self.background, (cenario_width, screen.get_height())), (info_width, 0))
+                if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
+                    self.animações.add(Animação((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 3)))
+
+                self.background.clear()
+                self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
+                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
 
                 if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
                     aliens.add(Alien((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 1)))
@@ -325,6 +347,8 @@ class Janelas:
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,3)))
 
+                self.animações.draw(screen)
+                self.animações.update()
                 players.draw(screen)
                 players.update(aliens)
                 aliens.draw(screen)
