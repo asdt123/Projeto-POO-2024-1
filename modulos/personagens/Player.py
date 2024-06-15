@@ -12,6 +12,8 @@ class Player(Nave):
     self.alternar_skin = 0
     self.tipo_player = tipo_player
 
+    self.vidas = 3
+
     #sprites normais
     #até a 4 skin tem animação de tiro diferente, o resto não
     self.img_anim = []
@@ -210,7 +212,9 @@ class Player(Nave):
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
     ponto_medio_inf=self.tipo_player*5*screen.get_width()//6+screen.get_width()//12
     screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (ponto_medio_inf-screen.get_height()//30,screen.get_height()//2.5) )
-    screen.blit(pygame.transform.scale(self.img_anim[0],self.tamanho_nave()), (ponto_medio_inf-screen.get_height()//14,screen.get_height()//1.5) )
+    for i in range(-1,self.vidas-1):
+      print(ponto_medio_inf+i*screen.get_width()//18,i)
+      screen.blit(pygame.transform.scale(self.img_anim[0],(screen.get_width()//18,screen.get_width()//18)), (ponto_medio_inf+i*screen.get_width()//18-screen.get_width()//36,screen.get_height()//1.5) )
 
 
     #recupera a vida ate 40% mais ou menos, uma mamata
@@ -235,8 +239,13 @@ class Player(Nave):
    
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
-      self.index_morte+=0.37
-      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-      if self.index_morte>=3.6:
-        self.kill()
+      print(self.vidas)
+      if self.vidas>1:
+        self.vidas-=1
+        self.vida=100
+      else:
+        self.index_morte+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
+        if self.index_morte>=3.6:
+          self.kill()
     
