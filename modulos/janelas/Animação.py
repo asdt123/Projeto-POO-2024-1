@@ -4,7 +4,7 @@ import random
 
 
 class Animação(pygame.sprite.Sprite):
-  def __init__(self,posição_inicial:tuple,tipo_animação:int)->None:
+  def __init__(self,posição_inicial:int,tipo_animação:int)->None:
     pygame.sprite.Sprite.__init__(self)
 
     #definição da animação e qual animação vai ser gerado(0 pra ufo e 1 pro roxo)
@@ -17,7 +17,8 @@ class Animação(pygame.sprite.Sprite):
 
     self.image = pygame.image.load('imagens/animação/nuvens.png').subsurface((0,self.tipo_animação*64),(64,64)).convert_alpha()
     self.rect = self.image.get_rect()
-    self.rect.bottomleft = posição_inicial
+    self.rect.left = posição_inicial+self.rect.w
+    self.rect.bottom = -30
 
   #metodo para definir movimento a partir do tipo de animação (em construção)  
   def mover(self)->None:

@@ -8,7 +8,7 @@ import random
 
 
 class Alien(Nave):
-  def __init__(self,posição_inicial:tuple,tipo_alien:int)->None:
+  def __init__(self,posição_inicial:int,tipo_alien:int)->None:
     #definição da animação e qual alien vai ser gerado(0 pra ufo e 1 pro roxo)
     self.tipo_alien = tipo_alien
     self.index = 0
@@ -16,6 +16,7 @@ class Alien(Nave):
     for i in range(2):
       self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), (64*2,64*2)))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
+    self.rect.bottom = -30
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
     self.pontos = 100

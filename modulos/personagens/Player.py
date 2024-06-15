@@ -35,8 +35,8 @@ class Player(Nave):
         self.img_anim_morte.append(pygame.image.load(morte_naves).subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
     
     #definindo o sprite inicial
-    super().__init__(VIDA_PLAYER,(250,250),self.img_anim[0])
-    
+    super().__init__(VIDA_PLAYER,250,self.img_anim[0])
+    self.rect.bottom = 250
     #grupo de sprites tiro
     self.tiros = pygame.sprite.Group()
     

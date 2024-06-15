@@ -7,7 +7,7 @@ class Nave(ABC,pygame.sprite.Sprite):
     #carrega imagem da nave
     self.image = imagem_nave
     self.rect = self.image.get_rect()
-    self.rect.midbottom = posição_nave
+    self.rect.left = posição_nave+self.rect.w
     self.vida = vida
     self.ciclo = 0
 

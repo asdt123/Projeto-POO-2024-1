@@ -352,22 +352,19 @@ class Janelas:
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 
-                if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
-                    self.animações.add(Animação((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 3)))
-
                 self.background[0]=pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
-                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
+
+
+                if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
+                    self.animações.add(Animação(random.randint(info_width, cenario_width), random.randint(0, 1)))
 
                 if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
-                    aliens.add(Alien((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 1)))
+                    aliens.add(Alien(random.randint(info_width, cenario_width), random.randint(0, 1)))
                 
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
-                
-                #gera os aliens
-                if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
-                    aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,3)))
 
+                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
                 self.desenhar_info_jogadores()
 
                 self.animações.draw(screen)
