@@ -18,8 +18,8 @@ class Janelas:
         self.janela_atual = 0 #definir metodo para setar e pegar essa variavel no game.py. a partir dela verificar quais 
                                 #controles funcionam em cada janela, definindo a função de cada em cada caso
         self.scroll = 0
-        self.skin1 = 0
-        self.skin2 = 0
+        self.skin1 = 20
+        self.skin2 = 20
         self.mouse_pres = [False,False]
         self.tecla_pres = [False,False,pygame.K_0]
         self.jogadores_prontos = [False,False]
@@ -333,8 +333,19 @@ class Janelas:
                 # da classe Player e colocá-lo em um método para que seja possível mudar após o construtor ser 
                 # instanciado pela primeira vez
                 screen.fill(CORES["Azul do ceu"])
-                self.player = Player(0,self.skin1)
+                if self.skin1<4:
+                    self.player = Player(0,self.skin1*2)
+                else:
+                    self.player = Player(0,self.skin1+4)
                 players.add(self.player)
+
+                if self.skin2!=20:
+                    if self.skin2<4:
+                        self.player2 = Player(1,self.skin2*2)
+                    else:
+                        self.player2 = Player(1,self.skin2+4)
+                    players.add(self.player2)
+
                 self.janela_atual = 6
                 
                 self.background.clear()

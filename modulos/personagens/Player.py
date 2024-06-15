@@ -184,7 +184,7 @@ class Player(Nave):
       return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
     #vida player 2
     else:
-      return (screen.get_width()//7.2,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
+      return (screen.get_width()//1.16,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
 
   #metodo para ajustar dimensão do sprite munição para mudança de tela
   def tamanho_municao(self)->tuple[int,int]:
@@ -208,7 +208,10 @@ class Player(Nave):
     #mostra na tela a vida e a munição do jogador
     self.boxVida.update(self.barra_vida())
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
-    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left+int((screen.get_width()/900)*35),screen.get_height()//2.5) )
+    ponto_medio_inf=self.tipo_player*5*screen.get_width()//6+screen.get_width()//12
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (ponto_medio_inf-screen.get_height()//30,screen.get_height()//2.5) )
+    screen.blit(pygame.transform.scale(self.img_anim[0],self.tamanho_nave()), (ponto_medio_inf-screen.get_height()//14,screen.get_height()//1.5) )
+
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if self.ciclo%10==5 and self.vida<40 and self.vida>0:
