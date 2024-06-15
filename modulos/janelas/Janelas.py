@@ -356,10 +356,10 @@ class Janelas:
 
 
                 if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
-                    self.animações.add(Animação(random.randint(info_width, cenario_width), random.randint(0, 1)))
+                    self.animações.add(Animação(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
 
-                if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
-                    aliens.add(Alien(random.randint(info_width, cenario_width), random.randint(0, 1)))
+                if len(aliens) < random.randint(2, 3) and self.ciclo%5==0:
+                    aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
                 
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.

@@ -14,9 +14,12 @@ class Alien(Nave):
     self.index = 0
     self.img_anim = []
     for i in range(2):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), (64*2,64*2)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), self.tamanho_alien()))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
     self.rect.bottom = -30
+
+    if self.rect.left+self.rect.w>screen.get_width() - screen.get_width()//6: 
+      self.rect.left = screen.get_width() - screen.get_width()//6 - self.rect.w
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
     self.pontos = 100
@@ -82,11 +85,11 @@ class Alien(Nave):
     if self.index >= 2:
       self.index = 0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], self.tamanho_alien())
-    self.rect.w, self.rect.h = self.tamanho_alien()
 
     #ajusta hitbox
     self.rect.w = self.image.get_width()
     self.rect.h = self.image.get_height()
+    
 
     #verifica se acertou o jogador
     self.tiros.update(player)

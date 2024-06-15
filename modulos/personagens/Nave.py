@@ -1,13 +1,14 @@
 from abc import ABC, abstractmethod
+from configurações.Config import *
 import pygame
 
 class Nave(ABC,pygame.sprite.Sprite):
-  def __init__(self,vida:int,posição_nave:tuple,imagem_nave:str)->None:
+  def __init__(self,vida:int,posição_nave:int,imagem_nave:str)->None:
     pygame.sprite.Sprite.__init__(self)
     #carrega imagem da nave
     self.image = imagem_nave
     self.rect = self.image.get_rect()
-    self.rect.left = posição_nave+self.rect.w
+    self.rect.left = posição_nave
     self.vida = vida
     self.ciclo = 0
 
