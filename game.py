@@ -140,7 +140,7 @@ while running:
     if event.type == pygame.MOUSEBUTTONUP and janela.janela_atual != 0:
       if event.button == 1:
         janela.pegar_mouse_click([True,True])
-
+  
 
   janela.atualizar_janela()
 

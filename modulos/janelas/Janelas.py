@@ -52,9 +52,10 @@ class Janelas:
         info_width = screen.get_width()//6
 
         # Desenha a imagem de fundo nas áreas de informações dos jogadores
-        for i in range(2):
-            self.informacao_bg[i] = pygame.transform.scale(self.informacao_bg[i], (info_width, screen_height))
-            screen.blit(self.informacao_bg[i], (i*(screen_width - info_width), 0))
+        self.informacao_bg[0] = pygame.transform.scale(self.informacao_bg[0], (info_width, screen_height))
+        self.informacao_bg[1] = pygame.transform.scale(self.informacao_bg[1], (info_width, screen_height))
+        screen.blit(self.informacao_bg[0], (0, 0))
+        screen.blit(self.informacao_bg[1], ((screen_width - info_width), 0))
 
            
 

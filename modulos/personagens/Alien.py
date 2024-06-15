@@ -14,7 +14,7 @@ class Alien(Nave):
     self.index = 0
     self.img_anim = []
     for i in range(2):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), (64*2,64*2)))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()

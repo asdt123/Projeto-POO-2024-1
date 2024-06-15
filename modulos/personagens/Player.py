@@ -208,7 +208,7 @@ class Player(Nave):
     #mostra na tela a vida e a munição do jogador
     self.boxVida.update(self.barra_vida())
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
-    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left+int((screen.get_width()/900)*35),screen.get_height()//2.25) )
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left+int((screen.get_width()/900)*35),screen.get_height()//2.5) )
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if self.ciclo%10==5 and self.vida<40 and self.vida>0:
@@ -219,7 +219,7 @@ class Player(Nave):
     self.tiros.update(aliens,self)
 
     #imprime a pontuação e a arma usada, temporario
-    fonte = pygame.font.SysFont("Monospace", screen.get_width()//60, True, True)
+    fonte = pygame.font.SysFont("fontes/Star_fonte_completa-Regular.ttf", screen.get_width()//35, True, True)
     mensagem1 = f"Pontuação: {self.pontos}"
     mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
     format_text = fonte.render(mensagem1, False, (255,255,255))
