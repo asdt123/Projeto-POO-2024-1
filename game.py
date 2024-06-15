@@ -118,10 +118,6 @@ while running:
         janela.pegar_tecla_apertada([True,False,pygame.K_a])
 
     if event.type == pygame.KEYUP:
-      if event.key == pygame.K_k:
-        janela.player.trocar_munição(1)
-      if event.key == pygame.K_TAB:
-        janela.player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
         janela.pegar_tecla_apertada([True,True,pygame.K_SPACE])
 

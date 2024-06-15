@@ -33,7 +33,9 @@ class Janelas:
 
 
         # Carregar a imagem de fundo
-        self.informacao_bg = pygame.image.load("imagens/cenário/informacao.png").convert_alpha()
+        self.informacao_bg = []
+        for i in range(2):
+            self.informacao_bg.append(pygame.image.load("imagens/cenário/informacao.png").convert_alpha())
 
         self.background = []
         for i in range(4):
@@ -48,48 +50,13 @@ class Janelas:
         screen_width = screen.get_width()
         screen_height = screen.get_height()
         info_width = screen.get_width()//6
-        cenario_width = screen_width - 2 * info_width
 
         # Desenha a imagem de fundo nas áreas de informações dos jogadores
-        info_bg_left = pygame.transform.scale(self.informacao_bg, (info_width, screen_height))
-        info_bg_right = pygame.transform.scale(self.informacao_bg, (info_width, screen_height))
-        screen.blit(info_bg_left, (0, 0))
-        screen.blit(info_bg_right, (screen_width - info_width, 0))
+        for i in range(2):
+            self.informacao_bg[i] = pygame.transform.scale(self.informacao_bg[i], (info_width, screen_height))
+            screen.blit(self.informacao_bg[i], (i*(screen_width - info_width), 0))
 
-        # Informações do jogador 1 (esquerda)
-        font = pygame.font.Font(None, 25)
-        player1_info = font.render("Jogador 1", True, CORES["Branco"])
-        screen.blit(player1_info, (20, 50))
-
-        # Retângulos para representar as informações do jogador 1
-        vida_rect = pygame.Rect(40, 100, 50, 50)  # Vida
-        pygame.draw.rect(screen, CORES["Branco"], vida_rect, 2)
-
-        score_rect = pygame.Rect(40, 170, 50, 50)  # Score
-        pygame.draw.rect(screen, CORES["Branco"], score_rect, 2)
-
-        nave_rect = pygame.Rect(40, 380, 50, 50)  # Nave Atual
-        pygame.draw.rect(screen, CORES["Branco"], nave_rect, 2)
-
-        municao_rect = pygame.Rect(40, 450, 50, 50)  # Munição Atual
-        pygame.draw.rect(screen, CORES["Branco"], municao_rect, 2)
-
-        # Informações do jogador 2 (direita)
-        player2_info = font.render("Jogador 2", True, CORES["Branco"])
-        screen.blit(player2_info, (screen_width - info_width + 20, 50))
-
-        # Retângulos para representar as informações do jogador 2
-        vida2_rect = pygame.Rect(screen_width - info_width + 40, 100, 50, 50)  # Vida
-        pygame.draw.rect(screen, CORES["Branco"], vida2_rect, 2)
-
-        score2_rect = pygame.Rect(screen_width - info_width + 40, 170, 50, 50)  # Score
-        pygame.draw.rect(screen, CORES["Branco"], score2_rect, 2)
-
-        nave2_rect = pygame.Rect(screen_width - info_width + 40, 380, 50, 50)  # Nave Atual
-        pygame.draw.rect(screen, CORES["Branco"], nave2_rect, 2)
-
-        municao2_rect = pygame.Rect(screen_width - info_width + 40, 450, 50, 50)  # Munição Atual
-        pygame.draw.rect(screen, CORES["Branco"], municao2_rect, 2)                
+           
 
     def atualizar_janela(self)->None:
 
@@ -393,17 +360,6 @@ class Janelas:
 
                 if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
                     aliens.add(Alien((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 1)))
-                '''
-                # Atualizar a posição dos jogadores para que fiquem dentro do cenário
-                for player in players:
-                    if player.rect.left < info_width:
-                        player.rect.left = info_width
-                    if player.rect.right > info_width + cenario_width:
-                        player.rect.right = info_width + cenario_width
-                    if player.rect.top < 0:
-                        player.rect.top = 0
-                    if player.rect.bottom > screen_height:
-                        player.rect.bottom = screen_height '''
                 
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
@@ -412,16 +368,17 @@ class Janelas:
                 if len(aliens) < random.randint(2,3) and pygame.time.get_ticks()%50 > 45:
                     aliens.add(Alien((random.randint(150,screen.get_width()-150),-30), random.randint(0,3)))
 
+                self.desenhar_info_jogadores()
+
                 self.animações.draw(screen)
                 self.animações.update()
                 players.draw(screen)
-                players.update(aliens)
+                players.update(aliens, self.informacao_bg)
                 aliens.draw(screen)
                 aliens.update(players)
                 drops.draw(screen)
                 drops.update(players)
 
-                self.desenhar_info_jogadores()
 
             case _:
                 pass
