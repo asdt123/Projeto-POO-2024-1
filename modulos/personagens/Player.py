@@ -184,7 +184,7 @@ class Player(Nave):
       return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
     #vida player 2
     else:
-      return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
+      return (screen.get_width()//7.2,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
 
   #metodo para ajustar dimensão do sprite munição para mudança de tela
   def tamanho_municao(self)->tuple[int,int]:
@@ -208,7 +208,7 @@ class Player(Nave):
     #mostra na tela a vida e a munição do jogador
     self.boxVida.update(self.barra_vida())
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
-    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left+int((screen.get_width()/900)*35),screen.get_height()//2.25) )
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if self.ciclo%10==5 and self.vida<40 and self.vida>0:
@@ -219,13 +219,13 @@ class Player(Nave):
     self.tiros.update(aliens,self)
 
     #imprime a pontuação e a arma usada, temporario
-    fonte = pygame.font.SysFont("Monospace", screen.get_width()//45, True, True)
+    fonte = pygame.font.SysFont("Monospace", screen.get_width()//60, True, True)
     mensagem1 = f"Pontuação: {self.pontos}"
     mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
     format_text = fonte.render(mensagem1, False, (255,255,255))
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
     screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
-    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
+    screen.blit(format_text2,(self.boxVida.left,screen.get_height()//2 ))
 
     #volta o estado da skin para normal se não estiver atacando
     self.alternar_skin = 0

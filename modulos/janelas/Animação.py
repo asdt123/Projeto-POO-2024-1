@@ -22,7 +22,7 @@ class Animação(pygame.sprite.Sprite):
   #metodo para definir movimento a partir do tipo de animação (em construção)  
   def mover(self)->None:
     #movimenta pra baixo
-    if self.tipo_animação<3:
+    if self.tipo_animação<4:
         self.rect.move_ip(0,screen.get_height()//100)
 
   #metodo para ajustar tamanho do sprite apos mudança de tela

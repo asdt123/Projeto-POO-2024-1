@@ -354,8 +354,7 @@ class Janelas:
                 if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:
                     self.animações.add(Animação((random.randint(info_width + 50, info_width + cenario_width - 50), -30), random.randint(0, 3)))
 
-                self.background.clear()
-                self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
+                self.background[0]=pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
 
                 if len(aliens) < random.randint(2, 3) and pygame.time.get_ticks() % 50 > 45:
@@ -373,7 +372,7 @@ class Janelas:
                 self.animações.draw(screen)
                 self.animações.update()
                 players.draw(screen)
-                players.update(aliens, self.informacao_bg)
+                players.update(aliens)
                 aliens.draw(screen)
                 aliens.update(players)
                 drops.draw(screen)
