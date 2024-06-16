@@ -213,7 +213,7 @@ class Player(Nave):
     ponto_medio_inf=self.tipo_player*5*screen.get_width()//6+screen.get_width()//12
     screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (ponto_medio_inf-screen.get_height()//30,screen.get_height()//2.5) )
     for i in range(-1,self.vidas-1):
-      screen.blit(pygame.transform.scale(self.img_anim[0],(screen.get_width()//18,screen.get_width()//18)), (ponto_medio_inf+i*screen.get_width()//18-screen.get_width()//36,screen.get_height()//1.5) )
+      screen.blit(pygame.transform.scale(self.img_anim[0],(screen.get_width()//20,screen.get_width()//20)), (ponto_medio_inf+i*screen.get_width()//20-screen.get_width()//40,screen.get_height()//1.5) )
 
 
     #recupera a vida ate 40% mais ou menos, uma mamata
