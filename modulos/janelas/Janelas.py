@@ -80,13 +80,11 @@ class Janelas:
         self.botoes[12].alterar_texto("D")
         self.botoes[13].alterar_texto("Pressione", 'ESTATICO')
         self.botoes[14].alterar_texto("JOGADOR 2", 'NORMAL')
-        self.botoes[15].alterar_texto("A")
-        self.botoes[16].alterar_texto("D")
+        self.botoes[15].alterar_texto("!")
+        self.botoes[16].alterar_texto("?")
         self.botoes[17].alterar_texto("Pressione", 'ESTATICO')
         self.botoes[18].alterar_texto("Voltar")
-        self.botoes[19].alterar_texto("", 'BOX')
-
-        
+        self.botoes[19].alterar_texto("", 'BOX')     
 
         self.ciclo += 1
         if self.ciclo > 100:
@@ -96,9 +94,7 @@ class Janelas:
         if self.index_b > len(self.background):
             self.index_b = 0    
         match self.janela_atual:
-            
             case 0: # Menu inical
-
                 tempo_oscilação = 30
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[1].update()
@@ -114,9 +110,7 @@ class Janelas:
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
-                self.botoes[4].update()
-                        
-
+                self.botoes[4].update()               
 
             case 2: # Menu número de jogadores
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
@@ -126,14 +120,7 @@ class Janelas:
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
-                self.botoes[4].update()
-                        
-        
-                
-            #alem disso, as 4 primeiras skins tem o dobro de sprites do resto. olhar esses casos. #adicionar 4 se o valor da variavel
-            #self.skin1 for maior que 3
-
-            #vai rolar apenas uma vez. serve pro caso 4 tbm
+                self.botoes[4].update()       
 
             case 3: # Menu seleção de jogador unico
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
@@ -152,11 +139,9 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(screen.get_width()//2-screen.get_height()//3.5,screen.get_height()//6))
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D_CENTRO"),2)
                     self.skin1 += 1
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_a:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_A_CENTRO"),2)
                     self.skin1 -= 1
             
             case 4: # Menu selseção de dois jogadores
@@ -175,14 +160,11 @@ class Janelas:
 
                 self.botoes[19].update()
 
-
                 if self.skin1 < 0:
                     self.skin1 = len(self.imgs)-1
                 elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
                 
-
-
                 if self.skin2 < 0:
                     self.skin2 = len(self.imgs)-1
                 elif self.skin2 > len(self.imgs)-1:
@@ -193,19 +175,15 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.imgs[self.skin2],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(3*screen.get_width()//4-screen.get_height()//3.5,screen.get_height()//6))
 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_LEFT:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_<"),2)
                     self.skin2 -= 1
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_RIGHT:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_>"),2)
                     self.skin2 += 1
 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D"),2)
                     self.skin1 += 1
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_a:
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_A"),2)
                     self.skin1 -= 1
                 
                 if self.jogadores_prontos == [True,True]:
@@ -213,11 +191,7 @@ class Janelas:
                     self.jogadores_prontos = [False,False]
 
             case 5:
-                
-                # Criação da nave com a skin selecionada. Pode ser bom tirar o selecionador de skins do construtor
-                # da classe Player e colocá-lo em um método para que seja possível mudar após o construtor ser 
-                # instanciado pela primeira vez
-                screen.fill(CORES["Azul do ceu"])
+                screen.fill(CORES["Preto"])
                 if self.skin1<4:
                     self.player = Player(0,self.skin1*2)
                 else:
@@ -230,7 +204,7 @@ class Janelas:
                     else:
                         self.player2 = Player(1,self.skin2+4)
                     players.add(self.player2)
-
+                    
                 self.janela_atual = 6
                 
                 self.background.clear()
@@ -306,6 +280,12 @@ class Janelas:
                             self.janela_atual-=1
                             break
                     elif self.janela_atual==3:
+                        if botões.id==6:
+                            self.skin1 -= 1
+                            break
+                        if botões.id==7:
+                            self.skin1 += 1
+                            break
                         if botões.id==8:
                             self.janela_atual+=2
                             break
@@ -313,10 +293,22 @@ class Janelas:
                             self.janela_atual-=1
                             break
                     elif self.janela_atual==4:
+                        if botões.id==11:
+                            self.skin1 -= 1
+                            break
                         if botões.id==12:
+                            self.skin1 += 1
+                            break
+                        if botões.id==13:
                             self.jogadores_prontos[0]= not self.jogadores_prontos[0]
                             break
+                        if botões.id==15:
+                            self.skin1 -= 1
+                            break
                         if botões.id==16:
+                            self.skin1 += 1
+                            break
+                        if botões.id==17:
                             self.jogadores_prontos[1]= not self.jogadores_prontos[1]
                             break
                         if botões.id==18:
