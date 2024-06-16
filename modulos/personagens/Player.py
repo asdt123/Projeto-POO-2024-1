@@ -218,7 +218,7 @@ class Player(Nave):
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if self.ciclo%10==5 and self.vida<40 and self.vida>0:
-      self.vida += 1
+      self.vida += 2
 
     #desenha os tiros na tela e verifica se acertou um alien
     self.tiros.draw(screen)

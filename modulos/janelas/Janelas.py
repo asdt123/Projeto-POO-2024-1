@@ -233,7 +233,7 @@ class Janelas:
 
             case 6: # Fases do jogo
                 if self.scroll < background_altura-background_largura-1:
-                    self.scroll += 0.4
+                    self.scroll += 0.5
                 else:
                     self.scroll = 0
                 
