@@ -99,13 +99,16 @@ class Janelas:
             self.ciclo = 0
         
         #atualização do fundo
-        self.index_b += 0.05
+        self.index_b += 0.07
         if self.index_b > len(self.background):
             self.index_b = 0    
         
         #impressão da janela
         match self.janela_atual:
             case 0: # Menu inical
+                self.background.clear()
+                for i in range(4):
+                    self.background.append(pygame.image.load("imagens/cenário/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
                 tempo_oscilação = 30
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[1].update()
@@ -218,7 +221,11 @@ class Janelas:
                     players.add(self.player2)
 
                 self.janela_atual = 6
-                
+                self.scroll = 0
+
+                aliens.empty()
+                self.animações.empty()
+
                 self.background.clear()
                 self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
 
@@ -243,6 +250,8 @@ class Janelas:
                 if len(aliens) < random.randint(2, 3) and self.ciclo%5==0:
                     aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
                 
+                if len(players)==0:
+                    self.janela_atual=7
                 #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                 #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
 
@@ -258,7 +267,16 @@ class Janelas:
                 drops.draw(screen)
                 drops.update(players)
 
-            case _:
+            case 7:    
+                info_width = screen.get_width()//6
+                cenario_width = screen.get_width() - 2 * info_width
+                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
+                self.botoes[1].alterar_texto("GAME OVER", 'NORMAL')
+                self.botoes[2].alterar_texto("Retentar")
+                self.botoes[3].alterar_texto("Voltar")
+                self.botoes[1].update()
+                self.botoes[2].update()
+                self.botoes[3].update()
                 pass
         
         # "Limpa" o mouse e o teclado para evitar clicks indevidos
@@ -269,12 +287,20 @@ class Janelas:
         for botões in self.botoes:
             if botões.mouse_porCima(pos):
                 if botões.mouse_click(botão):
-                    if botões.id==2 and (self.janela_atual==1 or self.janela_atual==2):
-                        self.janela_atual+=1
-                        break
-                    if botões.id==3 and self.janela_atual==2:
-                        self.janela_atual+=2
-                        break
+                    if botões.id==2:
+                        if self.janela_atual==1 or self.janela_atual==2:
+                            self.janela_atual+=1
+                            break
+                        elif self.janela_atual==7:
+                            self.janela_atual=5
+                            break
+                    if botões.id==3:
+                        if self.janela_atual==2:
+                            self.janela_atual+=2
+                            break
+                        elif self.janela_atual==7:
+                            self.janela_atual=0
+                            break
                     if botões.id==4 and (self.janela_atual==1 or self.janela_atual==2):
                         self.janela_atual-=1
                         break
