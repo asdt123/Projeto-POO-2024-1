@@ -5,8 +5,13 @@ from configurações.Config import *
 
 class Botões():
   def __init__(self, id_box, texto=None, flag=None):
+    #define como vai ser impresso na tela
     self.flag = flag
+
+    #o id para verificar colisão
     self.id = id_box
+
+    #informações de aparencia
     self.ressaltado = False
     self.rect= pygame.Rect(self.caixa())
     self.size = self.tamanho_letra()
@@ -22,7 +27,7 @@ class Botões():
     
     #titulo
     if self.id == 1:
-      return (screen.get_width()//4,screen.get_height()//10,screen.get_width()//2,screen.get_height()//6)
+      return (screen.get_width()//4,screen.get_height()//5,screen.get_width()//2,screen.get_height()//6)
     
     #botão 1
     if self.id == 2 and not self.ressaltado:

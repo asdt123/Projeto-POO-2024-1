@@ -16,17 +16,24 @@ class Janelas:
         #atributos para acompanhamento dos eventos
         self.animações = pygame.sprite.Group()
         self.ciclo = 0
-        self.janela_atual = 0 #definir metodo para setar e pegar essa variavel no game.py. a partir dela verificar quais 
-                                #controles funcionam em cada janela, definindo a função de cada em cada caso
+        self.janela_atual = 0
+
+        #atirbuto para atualização do cenario
         self.scroll = 0
+
+        #atirbuto para escolha de skins
         self.skin1 = 20
         self.skin2 = 20
-        self.mouse_pres = [False,False]
+
+        #verificação da tecla
         self.tecla_pres = [False,False,pygame.K_0]
+
+        #jogadores
         self.jogadores_prontos = [False,False]
         self.player = Player(0,0)
         self.player2 = Player(1,0)
 
+        #botoes utilizados
         self.botoes = []
         for i in range(20):
             self.botoes.append(Botões(i))
@@ -37,11 +44,12 @@ class Janelas:
             self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i*64,0),(64,64)).convert_alpha())
 
 
-        # Carregar a imagem de fundo
+        # Carregar a imagem lateral
         self.informacao_bg = []
         for i in range(2):
             self.informacao_bg.append(pygame.image.load("imagens/cenário/informacao.png").convert_alpha())
 
+        #carrega o backgorund
         self.background = []
         for i in range(4):
             self.background.append(pygame.image.load("imagens/cenário/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
@@ -62,9 +70,8 @@ class Janelas:
         screen.blit(self.informacao_bg[0], (0, 0))
         screen.blit(self.informacao_bg[1], ((screen_width - info_width), 0))
 
-           
-
     def atualizar_janela(self)->None:
+        #definição de botões
         self.botoes[0].alterar_texto("Pressione Espaço", 'ESPAÇO')
         self.botoes[1].alterar_texto("Star Fighters", 'TITULO')
         self.botoes[2].alterar_texto("Campanha")
@@ -86,13 +93,17 @@ class Janelas:
         self.botoes[18].alterar_texto("Voltar")
         self.botoes[19].alterar_texto("", 'BOX')     
 
+        #contagem de ciclos, a cada 30 frames conta um
         self.ciclo += 1
         if self.ciclo > 100:
             self.ciclo = 0
         
+        #atualização do fundo
         self.index_b += 0.05
         if self.index_b > len(self.background):
             self.index_b = 0    
+        
+        #impressão da janela
         match self.janela_atual:
             case 0: # Menu inical
                 tempo_oscilação = 30
@@ -116,7 +127,6 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[2].alterar_texto("1 jogador")
                 self.botoes[3].alterar_texto("2 jogadores")
-
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
@@ -124,6 +134,7 @@ class Janelas:
 
             case 3: # Menu seleção de jogador unico
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                #jogador
                 self.botoes[5].update()
                 self.botoes[6].update()
                 self.botoes[7].update()
@@ -146,18 +157,19 @@ class Janelas:
             
             case 4: # Menu selseção de dois jogadores
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                #jogador 1
                 self.botoes[10].update()
                 self.botoes[11].update()
                 self.botoes[12].update()
                 self.botoes[13].update()
-
+                #jogador 2
                 self.botoes[14].update()
                 self.botoes[15].update()
                 self.botoes[16].update()
                 self.botoes[17].update()
-
+                #voltar
                 self.botoes[18].update()
-
+                #divisoria
                 self.botoes[19].update()
 
                 if self.skin1 < 0:
@@ -204,7 +216,7 @@ class Janelas:
                     else:
                         self.player2 = Player(1,self.skin2+4)
                     players.add(self.player2)
-                    
+
                 self.janela_atual = 6
                 
                 self.background.clear()
@@ -246,7 +258,6 @@ class Janelas:
                 drops.draw(screen)
                 drops.update(players)
 
-
             case _:
                 pass
         
@@ -254,31 +265,19 @@ class Janelas:
         if self.tecla_pres[0:2] == [True,True]:
             self.tecla_pres = [False,False,pygame.K_0]
 
-        if self.mouse_pres == [True,True]:
-            self.mouse_pres = [False,False]
-        
-
     def pegar_mouse(self, pos, botão=None):
         for botões in self.botoes:
             if botões.mouse_porCima(pos):
                 if botões.mouse_click(botão):
-                    if self.janela_atual==1:
-                        if botões.id==2:
-                            self.janela_atual+=1
-                            break
-                        if botões.id==4:
-                            self.janela_atual-=1
-                            break
-                    elif self.janela_atual==2:
-                        if botões.id==2:
-                            self.janela_atual+=1
-                            break
-                        if botões.id==3:
-                            self.janela_atual+=2
-                            break
-                        if botões.id==4:
-                            self.janela_atual-=1
-                            break
+                    if botões.id==2 and (self.janela_atual==1 or self.janela_atual==2):
+                        self.janela_atual+=1
+                        break
+                    if botões.id==3 and self.janela_atual==2:
+                        self.janela_atual+=2
+                        break
+                    if botões.id==4 and (self.janela_atual==1 or self.janela_atual==2):
+                        self.janela_atual-=1
+                        break
                     elif self.janela_atual==3:
                         if botões.id==6:
                             self.skin1 -= 1
@@ -321,13 +320,3 @@ class Janelas:
 
     def selecionar_skin(self):
         return self.skin1    
-    
-"""    # getter
-    @property
-    def janela_atual(self)->int:
-        return self.janela_atual
-    
-    @janela_atual.setter
-    def janela_atual(self,id:int)->None:
-        self.janela_atual = id  
-"""
