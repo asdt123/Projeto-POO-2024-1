@@ -7,6 +7,7 @@ import pygame
 import random
 
 
+
 class Alien(Nave):
   def __init__(self,posição_inicial:int,tipo_alien:int)->None:
     #definição da animação e qual alien vai ser gerado(0 pra ufo e 1 pro roxo)
@@ -23,6 +24,9 @@ class Alien(Nave):
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
     self.pontos = 100
+
+    
+    self.vel_alien = [screen.get_height()//100,screen.get_height()//100]
     
   #define o tipo de ataque e arma a partir do tipo de alien
   def atacar(self)->None:
@@ -59,12 +63,32 @@ class Alien(Nave):
 
   #metodo para definir movimento a partir do tipo de alien (em construção)  
   def mover(self)->None:
-    #movimenta pra baixo
-    self.rect.move_ip(0,screen.get_height()//100)
+    if self.tipo_alien==0:
+      #movimenta pra baixo
+      self.rect.move_ip(0,self.vel_alien[1])
+    elif self.tipo_alien==1:
+      if self.ciclo%8<6:
+        self.vel_alien[1]=screen.get_height()//100
+      else:
+        self.vel_alien[1]=-screen.get_height()//100
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
+    elif self.tipo_alien==2:
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
+    elif self.tipo_alien==3:
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
   def tamanho_alien(self)->tuple[int,int]:
-    return (screen.get_height()//5,screen.get_height()//5)
+    return (screen.get_height()//7,screen.get_height()//7)
   
   #metodo para reposicionar apos mudança de tela
   def reposicionar(self, dimensões_antigas, dimensões_novas):

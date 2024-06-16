@@ -248,7 +248,7 @@ class Janelas:
                     self.animações.add(Animação(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
 
                 if len(aliens) < random.randint(2, 3) and self.ciclo%5==0:
-                    aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
+                    aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(0, 3)))
                 
                 if len(players)==0:
                     self.janela_atual=7
@@ -272,7 +272,7 @@ class Janelas:
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
                 self.botoes[1].alterar_texto("GAME OVER", 'NORMAL')
-                self.botoes[2].alterar_texto("Retentar")
+                self.botoes[2].alterar_texto("De Novo")
                 self.botoes[3].alterar_texto("Voltar")
                 self.botoes[1].update()
                 self.botoes[2].update()
