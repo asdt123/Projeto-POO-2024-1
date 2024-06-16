@@ -20,7 +20,7 @@ players = pygame.sprite.Group()
 VIDA_PLAYER = 100
 imagens_naves = "imagens/jogadores/naves.png"
 morte_naves = "imagens/morte/morte_naves.png"
-municao_naves = "imagens/armamento/munições.png"
+municao_naves = "imagens/armamento/municoes.png"
 imagens_naves_selecao = "imagens/jogadores/naves_selecao.png"
 
 
@@ -30,13 +30,13 @@ VIDA_ALIEN = [100, 75, 120, 50]
 DANO_ALIEN = [2, 1, 4, 1]
 imagens_aliens = "imagens/inimigos/inimigos.png"
 morte_aliens = ""
-municao_aliens = "imagens/armamento/munições.png"
+municao_aliens = "imagens/armamento/municoes.png"
 
 #drops
 drops = pygame.sprite.Group()
 
 # backgorund 
-background = "imagens/cenário/Cenarios.png"
+background = "imagens/cenario/Cenarios.png"
 background_altura, background_largura = 2500, 128
 
 ## Cores ##

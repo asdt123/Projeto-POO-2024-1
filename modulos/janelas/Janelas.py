@@ -47,12 +47,12 @@ class Janelas:
         # Carregar a imagem lateral
         self.informacao_bg = []
         for i in range(2):
-            self.informacao_bg.append(pygame.image.load("imagens/cenário/informacao.png").convert_alpha())
+            self.informacao_bg.append(pygame.image.load("imagens/cenario/informacao.png").convert_alpha())
 
         #carrega o backgorund
         self.background = []
         for i in range(4):
-            self.background.append(pygame.image.load("imagens/cenário/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
+            self.background.append(pygame.image.load("imagens/cenario/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
         self.index_b = 0
         
     def desenhar_info_jogadores(self):
@@ -110,7 +110,7 @@ class Janelas:
             case 0: # Menu inical
                 self.background.clear()
                 for i in range(4):
-                    self.background.append(pygame.image.load("imagens/cenário/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
+                    self.background.append(pygame.image.load("imagens/cenario/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
                 tempo_oscilação = 30
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[1].update()
@@ -229,20 +229,20 @@ class Janelas:
                 self.animações.empty()
 
                 self.background.clear()
-                self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
+                self.background.append(pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
 
             case 6: # Fases do jogo
                 if self.scroll < background_altura-background_largura-1:
                     self.scroll += 0.5
                 else:
-                    self.scroll = 0
+                    self.janela_atual=9;
                 
                 # Calcular áreas dinâmicas
                 
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 
-                self.background[0]=pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
+                self.background[0]=pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
 
 
                 if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0 and self.scroll<1500:
@@ -294,7 +294,18 @@ class Janelas:
                 self.botoes[2].update()
                 self.botoes[3].update()
                 pass
-        
+            
+            case 9:    
+                info_width = screen.get_width()//6
+                cenario_width = screen.get_width() - 2 * info_width
+                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
+                self.botoes[1].alterar_texto("PARABENS", 'TITULO')
+                self.botoes[2].alterar_texto("De Novo")
+                self.botoes[3].alterar_texto("MENU")
+                self.botoes[1].update()
+                self.botoes[2].update()
+                self.botoes[3].update()
+                pass
         # "Limpa" o mouse e o teclado para evitar clicks indevidos
         if self.tecla_pres[0:2] == [True,True]:
             self.tecla_pres = [False,False,pygame.K_0]
@@ -310,14 +321,14 @@ class Janelas:
                         elif self.janela_atual==7:
                             self.janela_atual=5
                             break
-                        elif self.janela_atual==8:
+                        elif self.janela_atual==8 or self.janela_atual==9:
                             self.janela_atual=6
                             break
                     if botões.id==3:
                         if self.janela_atual==2:
                             self.janela_atual+=2
                             break
-                        elif self.janela_atual==7 or self.janela_atual==8:
+                        elif self.janela_atual==7 or self.janela_atual==8 or self.janela_atual==9:
                             self.janela_atual=0
                             break
                     if botões.id==4 and (self.janela_atual==1 or self.janela_atual==2):

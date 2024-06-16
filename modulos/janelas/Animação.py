@@ -15,7 +15,7 @@ class Animação(pygame.sprite.Sprite):
     #for i in range(2):
       #self.img_anim.append(pygame.transform.scale(, (64*2,64*2)))
 
-    self.image = pygame.image.load('imagens/animação/nuvens.png').subsurface((0,self.tipo_animação*64),(64,64)).convert_alpha()
+    self.image = pygame.image.load('imagens/animacao/nuvens.png').subsurface((0,self.tipo_animação*64),(64,64)).convert_alpha()
     self.image = pygame.transform.scale(self.image, self.tamanho_animação())
     self.rect = self.image.get_rect()
     self.rect.left = posição_inicial
