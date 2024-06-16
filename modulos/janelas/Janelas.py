@@ -275,7 +275,7 @@ class Janelas:
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
-                self.botoes[1].alterar_texto("GAME OVER", 'NORMAL')
+                self.botoes[1].alterar_texto("GAME OVER", 'TITULO')
                 self.botoes[2].alterar_texto("De Novo")
                 self.botoes[3].alterar_texto("Voltar")
                 self.botoes[1].update()
@@ -287,7 +287,7 @@ class Janelas:
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
-                self.botoes[1].alterar_texto("PAUSE", 'NORMAL')
+                self.botoes[1].alterar_texto("PAUSE", 'TITULO')
                 self.botoes[2].alterar_texto("CONTINUAR")
                 self.botoes[3].alterar_texto("MENU")
                 self.botoes[1].update()
