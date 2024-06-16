@@ -35,7 +35,7 @@ class Janelas:
 
         #botoes utilizados
         self.botoes = []
-        for i in range(20):
+        for i in range(21):
             self.botoes.append(Botões(i))
 
         # Guarda todas as skins disponíveis para seleção
@@ -91,7 +91,9 @@ class Janelas:
         self.botoes[16].alterar_texto("?")
         self.botoes[17].alterar_texto("Pressione", 'ESTATICO')
         self.botoes[18].alterar_texto("Voltar")
-        self.botoes[19].alterar_texto("", 'BOX')     
+        self.botoes[19].alterar_texto("", 'BOX')   
+        self.botoes[20].alterar_texto("| |")     
+
 
         #contagem de ciclos, a cada 30 frames conta um
         self.ciclo += 1
@@ -230,7 +232,6 @@ class Janelas:
                 self.background.append(pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
 
             case 6: # Fases do jogo
-
                 if self.scroll < background_altura-background_largura-1:
                     self.scroll += 0.4
                 else:
@@ -258,6 +259,7 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
                 self.desenhar_info_jogadores()
 
+
                 self.animações.draw(screen)
                 self.animações.update()
                 players.draw(screen)
@@ -266,6 +268,8 @@ class Janelas:
                 aliens.update(players)
                 drops.draw(screen)
                 drops.update(players)
+                self.botoes[20].update()
+
 
             case 7:    
                 info_width = screen.get_width()//6
@@ -274,6 +278,18 @@ class Janelas:
                 self.botoes[1].alterar_texto("GAME OVER", 'NORMAL')
                 self.botoes[2].alterar_texto("De Novo")
                 self.botoes[3].alterar_texto("Voltar")
+                self.botoes[1].update()
+                self.botoes[2].update()
+                self.botoes[3].update()
+                pass
+
+            case 8:    
+                info_width = screen.get_width()//6
+                cenario_width = screen.get_width() - 2 * info_width
+                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
+                self.botoes[1].alterar_texto("PAUSE", 'NORMAL')
+                self.botoes[2].alterar_texto("CONTINUAR")
+                self.botoes[3].alterar_texto("MENU")
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
@@ -294,11 +310,14 @@ class Janelas:
                         elif self.janela_atual==7:
                             self.janela_atual=5
                             break
+                        elif self.janela_atual==8:
+                            self.janela_atual=6
+                            break
                     if botões.id==3:
                         if self.janela_atual==2:
                             self.janela_atual+=2
                             break
-                        elif self.janela_atual==7:
+                        elif self.janela_atual==7 or self.janela_atual==8:
                             self.janela_atual=0
                             break
                     if botões.id==4 and (self.janela_atual==1 or self.janela_atual==2):
@@ -338,6 +357,10 @@ class Janelas:
                             break
                         if botões.id==18:
                             self.janela_atual-=2
+                            break
+                    elif self.janela_atual==6:
+                        if botões.id==20:
+                            self.janela_atual=8
                             break
                     
 

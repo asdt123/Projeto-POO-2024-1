@@ -131,8 +131,12 @@ class Botões():
     
     #divisoria
     if self.id == 19:
-      return (screen.get_width()//2-screen.get_width()//200,-10,screen.get_width()/100 ,screen.get_height()+10)
+      return (screen.get_width()//2-screen.get_width()//200,-10,screen.get_width()//100 ,screen.get_height()+10)
     
+    #pause
+    if self.id == 20:
+      return (5*screen.get_width()//6-screen.get_width()//18,int(0.1*screen.get_height()),screen.get_width()//20 ,screen.get_width()//20)
+
   def tamanho_letra(self):
      return int(6+3*(self.rect.h-8)//4)
 
