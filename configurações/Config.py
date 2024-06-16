@@ -58,103 +58,103 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
     match nome_caixa:
 
       case "ESPAÇO":
-        return (int(0.3013*screen.get_width()),int(0.5398*screen.get_height()),int(0.4047*screen.get_width()),int(0.1107*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//5,screen.get_height()*0.6,screen.get_width()//2.5,screen.get_height()//15)
 
       case "TÍTULO":
-        return (int(0.2453*screen.get_width()),int(0.0467*screen.get_height()),int(0.5193*screen.get_width()),int(0.3860*screen.get_height()))
+        return (screen.get_width()//4,screen.get_height()//10,screen.get_width()//2,screen.get_height()//6)
       
       case "CAMPANHA:Branco":
-        return (int(0.3898*screen.get_width()),int(0.6374*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.6*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
       
       case "CAMPANHA:Vermelho":
-        return (int(0.3770*screen.get_width()),int(0.6192*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.6*screen.get_height()-screen.get_height()//60),screen.get_width()//4,screen.get_height()//10)
       
       case "VERSUS:Branco":
-        return (int(0.3898*screen.get_width()),int(0.7420*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.7*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
       
       case "VERSUS:Vermelho":
-        return (int(0.3770*screen.get_width()),int(0.7241*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.7*screen.get_height()-screen.get_height()//60),screen.get_width()//4,screen.get_height()//10)
       
       case "VOLTAR:Branco":
-        return (int(0.3898*screen.get_width()),int(0.8503*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.8*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
       
       case "VOLTAR:Vermelho":
-        return (int(0.3770*screen.get_width()),int(0.8328*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.8*screen.get_height()-screen.get_height()//60),screen.get_width()//4,screen.get_height()//10)
       
       case "1_JOGADOR:Branco":
-        return (int(0.3898*screen.get_width()),int(0.6374*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.6*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
       
       case "1_JOGADOR:Vermelho":
-        return (int(0.3770*screen.get_width()),int(0.6192*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.6*screen.get_height()-screen.get_height()//60),screen.get_width()//4,screen.get_height()//10)
       
       case "2_JOGADORES:Branco":
-        return (int(0.3898*screen.get_width()),int(0.7420*screen.get_height()),int(0.2295*screen.get_width()),int(0.0715*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.7*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
       
       case "2_JOGADORES:Vermelho":
-        return (int(0.3770*screen.get_width()),int(0.7241*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,int(0.7*screen.get_height()-screen.get_height()//60),screen.get_width()//4,screen.get_height()//10)
       
       case "JOGADOR_CENTRO":
-        return (int(0.3724*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//8,screen.get_height()//20,screen.get_width()//4,screen.get_height()//10)
 
       case "NAVE_SELECAO_CENTRO":
-        return (int(screen.get_width()//2-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.3556*screen.get_width()),int(0.5333*screen.get_height()))
-      
+        return (screen.get_width()//2-screen.get_height()//3.5,0.17*screen.get_height())
+                
       case "DIVISORIA":
-        return (int(0.4989*screen.get_width()),int(0.0*screen.get_height()),int(0.01*screen.get_width()),int(1.0*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//200,0,screen.get_width()/100 ,screen.get_height())
       
       case "JOGADOR_1_ESQUERDA":
-        return (int(0.1254*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (screen.get_width()//4-screen.get_width()//8,screen.get_height()//20,screen.get_width()//4,screen.get_height()//10)
 
       case "JOGADOR_2_DIREITA":
-        return (int(0.6208*screen.get_width()),int(0.0320*screen.get_height()),int(0.2547*screen.get_width()),int(0.1080*screen.get_height()))
+        return (3*screen.get_width()//4-screen.get_width()//8,screen.get_height()/20,screen.get_width()//4,screen.get_height()//10)
 
       case "NAVE_SELECAO_1":
-        return (int(screen.get_width()//4-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
+        return (screen.get_width()//4-screen.get_height()//3.5,int(0.17*screen.get_height()))
       
       case "NAVE_SELECAO_2":
-        return (int(screen.get_width()//2+screen.get_width()//4-(screen.get_height()//7)*2),int(0.1851*screen.get_height()),int(0.2133*screen.get_width()),int(0.3200*screen.get_height()))
+        return (3*screen.get_width()//4-screen.get_height()//3.5,int(0.17*screen.get_height()))
       
       case "BOTAO_A":
-        return (int(0.0570*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (screen.get_width()//8-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "BOTAO_D":
-        return (int(0.3528*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (3*screen.get_width()//8-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "BOTAO_A_CENTRO":
-        return (int(0.2094*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (screen.get_width()//4-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "BOTAO_D_CENTRO":
-        return (int(0.6917*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (3*screen.get_width()//4-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "BOTAO_<":
-        return (int(0.5615*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (5*screen.get_width()//8-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "BOTAO_>":
-        return (int(0.8448*screen.get_width()),int(0.6609*screen.get_height()),int(0.0923*screen.get_width()),int(0.1449*screen.get_height()))
+        return (7*screen.get_width()//8-screen.get_width()//20,int(0.65*screen.get_height()),screen.get_width()//10,screen.get_height()//6)
 
       case "VOLTAR_SELECAO:Branco":
-        return (int(0.0191*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+        return (screen.get_width()//10-screen.get_width()//16,int(0.9*screen.get_height()),screen.get_width()//8,screen.get_height()//15)
 
       case "VOLTAR_SELECAO:Vermelho":
-        return (int(0.0123*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+        return (screen.get_width()//10-screen.get_width()//16,int(0.9*screen.get_height())-screen.get_height()//60,screen.get_width()//8,screen.get_height()//10)
 
       case "PRESSIONE_SELECAO:Branco":
-        return (int(0.4389*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//16,int(0.85*screen.get_height()),screen.get_width()//8,screen.get_height()//20)
 
       case "PRESSIONE_SELECAO:Vermelho":
-        return (int(0.4389*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+        return (screen.get_width()//2-screen.get_width()//16-screen.get_width()//120,int(0.85*screen.get_height())-screen.get_height()//120,screen.get_width()//7,screen.get_height()//15)
 
       case "PRESSIONE_1_SELECAO:Branco":
-        return (int(0.3402*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+        return (screen.get_width()//4-screen.get_width()//16,int(0.85*screen.get_height()),screen.get_width()//8,screen.get_height()//20)
 
       case "PRESSIONE_1_SELECAO:Vermelho":
-        return (int(0.3333*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+        return (screen.get_width()//4-screen.get_width()//16-screen.get_width()//120,int(0.85*screen.get_height())-screen.get_height()//120,screen.get_width()//7,screen.get_height()//15)
 
       case "PRESSIONE_2_SELECAO:Branco":
-        return (int(0.5535*screen.get_width()),int(0.8766*screen.get_height()),int(0.1148*screen.get_width()),int(0.0972*screen.get_height()))
+        return (3*screen.get_width()//4-screen.get_width()//16,int(0.85*screen.get_height()),screen.get_width()//8,screen.get_height()//20)
 
       case "PRESSIONE_2_SELECAO:Vermelho":
-        return (int(0.5467*screen.get_width()),int(0.8932*screen.get_height()),int(0.1285*screen.get_width()),int(0.0962*screen.get_height()))
+        return (3*screen.get_width()//4-screen.get_width()//16-screen.get_width()//120,int(0.85*screen.get_height())-screen.get_height()//120,screen.get_width()//7,screen.get_height()//15)
 
       case _:
         # Retorno: (x,y,x_size,y_size)
@@ -164,13 +164,15 @@ def CAIXA(nome_caixa:str)->tuple[int,int,int,int]:
 def MENSAGEM(nome_mensagem:str)->list:
 
   box = CAIXA(nome_mensagem)
+  size = int(6+3*(box[3]-8)//4)
+  fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
   
   match nome_mensagem:
 
+
     case "ESPAÇO":
       
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("PRESSIONE ESPAÇO",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -178,8 +180,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "TÍTULO":
       
-      size = int((box[0]+box[2]+box[1]+box[3])/12)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Space Fighters",True,CORES["Verde"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -188,8 +189,6 @@ def MENSAGEM(nome_mensagem:str)->list:
     case "CAMPANHA:Branco":
 
       
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
       texto = fonte.render("CAMPANHA",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -197,8 +196,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "CAMPANHA:Vermelho":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("CAMPANHA",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -206,8 +204,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "VERSUS:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("VERSUS",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -215,8 +212,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "VERSUS:Vermelho":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("VERSUS",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -224,8 +220,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "VOLTAR:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("VOLTAR",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -233,8 +228,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "VOLTAR:Vermelho":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("VOLTAR",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -242,17 +236,15 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "1_JOGADOR:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("1 JOGADOR",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
-
+      print(texto_rect)
       return [texto,texto_rect]
 
     case "1_JOGADOR:Vermelho":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("1 JOGADOR",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -260,8 +252,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "2_JOGADORES:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/30)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("2 JOGADORES",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -269,8 +260,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "2_JOGADORES:Vermelho":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("2 JOGADORES",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -278,8 +268,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "JOGADOR_CENTRO":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/10)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("JOGADOR",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -287,8 +276,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "JOGADOR_1_ESQUERDA":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/10)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("JOGADOR 1",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -296,8 +284,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "JOGADOR_2_DIREITA":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("JOGADOR 2",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -305,8 +292,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_A":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("A",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -314,8 +300,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_D":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("D",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -323,8 +308,8 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_A_CENTRO":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
+      
       texto = fonte.render("A",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -332,8 +317,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_D_CENTRO":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7.5)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("D",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -341,8 +325,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_<":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("!",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -350,8 +333,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "BOTAO_>":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/7)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("?",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -359,8 +341,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "VOLTAR_SELECAO:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/20)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Voltar",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -368,8 +349,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "VOLTAR_SELECAO:Vermelho":
     
-      size = int((box[0]+box[2]+box[1]+box[3])/15)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Voltar",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -377,8 +357,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "PRESSIONE_SELECAO:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/40)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -386,8 +365,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "PRESSIONE_SELECAO:Vermelho":
     
-      size = int((box[0]+box[2]+box[1]+box[3])/35)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -395,8 +373,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "PRESSIONE_1_SELECAO:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/40)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -404,8 +381,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "PRESSIONE_1_SELECAO:Vermelho":
     
-      size = int((box[0]+box[2]+box[1]+box[3])/35)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -413,8 +389,7 @@ def MENSAGEM(nome_mensagem:str)->list:
     
     case "PRESSIONE_2_SELECAO:Branco":
 
-      size = int((box[0]+box[2]+box[1]+box[3])/40)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Branco"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 
@@ -422,8 +397,7 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "PRESSIONE_2_SELECAO:Vermelho":
     
-      size = int((box[0]+box[2]+box[1]+box[3])/35)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
+      
       texto = fonte.render("Pressione",True,CORES["Vermelho"])
       texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
 

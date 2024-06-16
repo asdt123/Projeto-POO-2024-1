@@ -136,13 +136,10 @@ while running:
       if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
         janela.pegar_tecla_apertada([True,True,pygame.K_a])
 
-    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
-      if event.button == 1:
-        janela.pegar_mouse_click([True,False])
-        
-    if event.type == pygame.MOUSEBUTTONUP and janela.janela_atual != 0:
-      if event.button == 1:
-        janela.pegar_mouse_click([True,True])
+    if event.type == pygame.MOUSEMOTION and janela.janela_atual != 0:
+      janela.pegar_mouse(event.pos)
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      janela.pegar_mouse(event.pos, event.button)
   
 
   janela.atualizar_janela()

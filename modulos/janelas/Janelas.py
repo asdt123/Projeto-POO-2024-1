@@ -4,6 +4,7 @@ from configurações.Config import *
 from modulos.personagens.Alien import Alien
 from modulos.personagens.Player import Player
 from .Animação import Animação
+from .Botões import Botões
 
 #criação do sprite do jogador e inimigos
 #trocar isso pra uma condicional antes da fase 1 e dps da seleceção de modelo
@@ -25,6 +26,10 @@ class Janelas:
         self.jogadores_prontos = [False,False]
         self.player = Player(0,0)
         self.player2 = Player(1,0)
+
+        self.botoes = []
+        for i in range(20):
+            self.botoes.append(Botões(i))
 
         # Guarda todas as skins disponíveis para seleção
         self.imgs = []
@@ -60,6 +65,28 @@ class Janelas:
            
 
     def atualizar_janela(self)->None:
+        self.botoes[0].alterar_texto("Pressione Espaço", 'ESPAÇO')
+        self.botoes[1].alterar_texto("Star Fighters", 'TITULO')
+        self.botoes[2].alterar_texto("Campanha")
+        self.botoes[3].alterar_texto("Versus")
+        self.botoes[4].alterar_texto("Voltar")
+        self.botoes[5].alterar_texto("JOGADOR", 'NORMAL')
+        self.botoes[6].alterar_texto("A")
+        self.botoes[7].alterar_texto("D")
+        self.botoes[8].alterar_texto("Pressione")
+        self.botoes[9].alterar_texto("Voltar")
+        self.botoes[10].alterar_texto("JOGADOR 1", 'NORMAL')
+        self.botoes[11].alterar_texto("A")
+        self.botoes[12].alterar_texto("D")
+        self.botoes[13].alterar_texto("Pressione", 'ESTATICO')
+        self.botoes[14].alterar_texto("JOGADOR 2", 'NORMAL')
+        self.botoes[15].alterar_texto("A")
+        self.botoes[16].alterar_texto("D")
+        self.botoes[17].alterar_texto("Pressione", 'ESTATICO')
+        self.botoes[18].alterar_texto("Voltar")
+        self.botoes[19].alterar_texto("", 'BOX')
+
+        
 
         self.ciclo += 1
         if self.ciclo > 100:
@@ -69,108 +96,40 @@ class Janelas:
         if self.index_b > len(self.background):
             self.index_b = 0    
         match self.janela_atual:
-
+            
             case 0: # Menu inical
 
                 tempo_oscilação = 30
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
+                self.botoes[1].update()
 
                 #texto oscila de 15 em 15 ciclos
                 if self.ciclo%tempo_oscilação<(tempo_oscilação//2):
-                  screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
+                  self.botoes[0].update()
                 else:
                   pass
 
             case 1: # Menu Principal
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                self.botoes[1].update()
+                self.botoes[2].update()
+                self.botoes[3].update()
+                self.botoes[4].update()
+                        
 
-                ##screen.fill(CORES["Azul do ceu"])
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
-                
-                #para mudar de cor, pode usar o evento pygame.MOUSEMOTION
-                if(pygame.mouse.get_pos()[0] >= CAIXA("CAMPANHA:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("CAMPANHA:Branco")[0]+CAIXA("CAMPANHA:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("CAMPANHA:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("CAMPANHA:Branco")[1]+CAIXA("CAMPANHA:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("CAMPANHA:Vermelho"),2)
-                    screen.blit(MENSAGEM("CAMPANHA:Vermelho")[0],MENSAGEM("CAMPANHA:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 2
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("CAMPANHA:Branco"),2)
-                    screen.blit(MENSAGEM("CAMPANHA:Branco")[0],MENSAGEM("CAMPANHA:Branco")[1])
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("VERSUS:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VERSUS:Branco")[0]+CAIXA("VERSUS:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VERSUS:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VERSUS:Branco")[1]+CAIXA("VERSUS:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("VERSUS:Vermelho"),2)
-                    screen.blit(MENSAGEM("VERSUS:Vermelho")[0],MENSAGEM("VERSUS:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        pass
-                
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VERSUS:Branco"),2)
-                    screen.blit(MENSAGEM("VERSUS:Branco")[0],MENSAGEM("VERSUS:Branco")[1])
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("VOLTAR:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VOLTAR:Branco")[0]+CAIXA("VOLTAR:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VOLTAR:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VOLTAR:Branco")[1]+CAIXA("VOLTAR:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("VOLTAR:Vermelho"),2)
-                    screen.blit(MENSAGEM("VOLTAR:Vermelho")[0],MENSAGEM("VOLTAR:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 0
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR:Branco"),2)
-                    screen.blit(MENSAGEM("VOLTAR:Branco")[0],MENSAGEM("VOLTAR:Branco")[1])
-            
 
             case 2: # Menu número de jogadores
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                self.botoes[2].alterar_texto("1 jogador")
+                self.botoes[3].alterar_texto("2 jogadores")
 
-                ##screen.fill(CORES["Azul do ceu"])
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
+                self.botoes[1].update()
+                self.botoes[2].update()
+                self.botoes[3].update()
+                self.botoes[4].update()
+                        
+        
                 
-                if(pygame.mouse.get_pos()[0] >= CAIXA("1_JOGADOR:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("1_JOGADOR:Branco")[0]+CAIXA("1_JOGADOR:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("1_JOGADOR:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("1_JOGADOR:Branco")[1]+CAIXA("1_JOGADOR:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("1_JOGADOR:Vermelho"),2)
-                    screen.blit(MENSAGEM("1_JOGADOR:Vermelho")[0],MENSAGEM("1_JOGADOR:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 3
-                
-                else:
-
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("1_JOGADOR:Branco"),2)
-                    screen.blit(MENSAGEM("1_JOGADOR:Branco")[0],MENSAGEM("1_JOGADOR:Branco")[1])
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("2_JOGADORES:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("2_JOGADORES:Branco")[0]+CAIXA("2_JOGADORES:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("2_JOGADORES:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("2_JOGADORES:Branco")[1]+CAIXA("2_JOGADORES:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("2_JOGADORES:Vermelho"),2)
-                    screen.blit(MENSAGEM("2_JOGADORES:Vermelho")[0],MENSAGEM("2_JOGADORES:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 4
-                
-                else:
-
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("2_JOGADORES:Branco"),2)
-                    screen.blit(MENSAGEM("2_JOGADORES:Branco")[0],MENSAGEM("2_JOGADORES:Branco")[1])
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("VOLTAR:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VOLTAR:Branco")[0]+CAIXA("VOLTAR:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VOLTAR:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VOLTAR:Branco")[1]+CAIXA("VOLTAR:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("VOLTAR:Vermelho"),2)
-                    screen.blit(MENSAGEM("VOLTAR:Vermelho")[0],MENSAGEM("VOLTAR:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 1
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR:Branco"),2)
-                    screen.blit(MENSAGEM("VOLTAR:Branco")[0],MENSAGEM("VOLTAR:Branco")[1])
-
             #alem disso, as 4 primeiras skins tem o dobro de sprites do resto. olhar esses casos. #adicionar 4 se o valor da variavel
             #self.skin1 for maior que 3
 
@@ -178,50 +137,19 @@ class Janelas:
 
             case 3: # Menu seleção de jogador unico
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                self.botoes[5].update()
+                self.botoes[6].update()
+                self.botoes[7].update()
+                self.botoes[8].update()
+                self.botoes[9].update()
                 
-                ##screen.fill(CORES["Azul do ceu"])
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_CENTRO"),2)
-                screen.blit(MENSAGEM("JOGADOR_CENTRO")[0],MENSAGEM("JOGADOR_CENTRO")[1])
-
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_A_CENTRO"),2)
-                screen.blit(MENSAGEM("BOTAO_A_CENTRO")[0],MENSAGEM("BOTAO_A_CENTRO")[1])
-                
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_D_CENTRO"),2)
-                screen.blit(MENSAGEM("BOTAO_D_CENTRO")[0],MENSAGEM("BOTAO_D_CENTRO")[1])
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("VOLTAR_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VOLTAR_SELECAO:Branco")[0]+CAIXA("VOLTAR_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VOLTAR_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VOLTAR_SELECAO:Branco")[1]+CAIXA("VOLTAR_SELECAO:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR_SELECAO:Vermelho"),2)
-                    screen.blit(MENSAGEM("VOLTAR_SELECAO:Vermelho")[0],MENSAGEM("VOLTAR_SELECAO:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 2
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR_SELECAO:Branco"),2)
-                    screen.blit(MENSAGEM("VOLTAR_SELECAO:Branco")[0],MENSAGEM("VOLTAR_SELECAO:Branco")[1])
-
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("PRESSIONE_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("PRESSIONE_SELECAO:Branco")[0]+CAIXA("PRESSIONE_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("PRESSIONE_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("PRESSIONE_SELECAO:Branco")[1]+CAIXA("PRESSIONE_SELECAO:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_SELECAO:Vermelho"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_SELECAO:Vermelho")[0],MENSAGEM("PRESSIONE_SELECAO:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 5
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_SELECAO:Branco"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_SELECAO:Branco")[0],MENSAGEM("PRESSIONE_SELECAO:Branco")[1])
-
-
                 if self.skin1 < 0:
                     self.skin1 = len(self.imgs)-1
                 elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
 
                 # Guarda todas as skins disponíveis para seleção
-                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
+                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(screen.get_width()//2-screen.get_height()//3.5,screen.get_height()//6))
                 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_D_CENTRO"),2)
@@ -233,64 +161,19 @@ class Janelas:
             
             case 4: # Menu selseção de dois jogadores
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                self.botoes[10].update()
+                self.botoes[11].update()
+                self.botoes[12].update()
+                self.botoes[13].update()
 
-                #screen.fill(CORES["Azul do ceu"])
-                pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("DIVISORIA"))
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_1_ESQUERDA"),2)
-                screen.blit(MENSAGEM("JOGADOR_1_ESQUERDA")[0],MENSAGEM("JOGADOR_1_ESQUERDA")[1])
+                self.botoes[14].update()
+                self.botoes[15].update()
+                self.botoes[16].update()
+                self.botoes[17].update()
 
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_2_DIREITA"),2)
-                screen.blit(MENSAGEM("JOGADOR_2_DIREITA")[0],MENSAGEM("JOGADOR_2_DIREITA")[1])
-                
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_A"),2)
-                screen.blit(MENSAGEM("BOTAO_A")[0],MENSAGEM("BOTAO_A")[1])
-                
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_D"),2)
-                screen.blit(MENSAGEM("BOTAO_D")[0],MENSAGEM("BOTAO_D")[1])
-                
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_<"),2)
-                screen.blit(MENSAGEM("BOTAO_<")[0],MENSAGEM("BOTAO_<")[1])
-                
-                pygame.draw.rect(screen,CORES["Branco"],CAIXA("BOTAO_>"),2)
-                screen.blit(MENSAGEM("BOTAO_>")[0],MENSAGEM("BOTAO_>")[1])
+                self.botoes[18].update()
 
-                if(pygame.mouse.get_pos()[0] >= CAIXA("VOLTAR_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("VOLTAR_SELECAO:Branco")[0]+CAIXA("VOLTAR_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("VOLTAR_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("VOLTAR_SELECAO:Branco")[1]+CAIXA("VOLTAR_SELECAO:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR_SELECAO:Vermelho"),2)
-                    screen.blit(MENSAGEM("VOLTAR_SELECAO:Vermelho")[0],MENSAGEM("VOLTAR_SELECAO:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.janela_atual = 2
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("VOLTAR_SELECAO:Branco"),2)
-                    screen.blit(MENSAGEM("VOLTAR_SELECAO:Branco")[0],MENSAGEM("VOLTAR_SELECAO:Branco")[1])
-
-
-                if(pygame.mouse.get_pos()[0] >= CAIXA("PRESSIONE_1_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("PRESSIONE_1_SELECAO:Branco")[0]+CAIXA("PRESSIONE_1_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("PRESSIONE_1_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("PRESSIONE_1_SELECAO:Branco")[1]+CAIXA("PRESSIONE_1_SELECAO:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_1_SELECAO:Vermelho"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_1_SELECAO:Vermelho")[0],MENSAGEM("PRESSIONE_1_SELECAO:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.jogadores_prontos[0] = True
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_1_SELECAO:Branco"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_1_SELECAO:Branco")[0],MENSAGEM("PRESSIONE_1_SELECAO:Branco")[1])
-
-                
-                if(pygame.mouse.get_pos()[0] >= CAIXA("PRESSIONE_2_SELECAO:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("PRESSIONE_2_SELECAO:Branco")[0]+CAIXA("PRESSIONE_2_SELECAO:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("PRESSIONE_2_SELECAO:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("PRESSIONE_2_SELECAO:Branco")[1]+CAIXA("PRESSIONE_2_SELECAO:Branco")[3])):
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_2_SELECAO:Vermelho"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_2_SELECAO:Vermelho")[0],MENSAGEM("PRESSIONE_2_SELECAO:Vermelho")[1])
-                    if self.mouse_pres[0] == True and self.mouse_pres[1] == True:
-                        self.jogadores_prontos[1] = True
-
-                else:
-                    
-                    pygame.draw.rect(screen,CORES["Branco"],CAIXA("PRESSIONE_2_SELECAO:Branco"),2)
-                    screen.blit(MENSAGEM("PRESSIONE_2_SELECAO:Branco")[0],MENSAGEM("PRESSIONE_2_SELECAO:Branco")[1])
+                self.botoes[19].update()
 
 
                 if self.skin1 < 0:
@@ -298,14 +181,16 @@ class Janelas:
                 elif self.skin1 > len(self.imgs)-1:
                     self.skin1 = 0
                 
+
+
                 if self.skin2 < 0:
                     self.skin2 = len(self.imgs)-1
                 elif self.skin2 > len(self.imgs)-1:
                     self.skin2 = 0
 
                 # Guarda todas as skins disponíveis para seleção
-                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_1")[0],CAIXA("NAVE_SELECAO_1")[1]))
-                screen.blit(pygame.transform.scale(self.imgs[self.skin2],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_2")[0],CAIXA("NAVE_SELECAO_2")[1]))
+                screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(screen.get_width()//4-screen.get_height()//3.5,screen.get_height()//6))
+                screen.blit(pygame.transform.scale(self.imgs[self.skin2],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(3*screen.get_width()//4-screen.get_height()//3.5,screen.get_height()//6))
 
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_LEFT:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_<"),2)
@@ -399,8 +284,45 @@ class Janelas:
             self.mouse_pres = [False,False]
         
 
-    def pegar_mouse_click(self,MOUSE_APERTADO:list[bool,bool]):
-        self.mouse_pres = MOUSE_APERTADO
+    def pegar_mouse(self, pos, botão=None):
+        for botões in self.botoes:
+            if botões.mouse_porCima(pos):
+                if botões.mouse_click(botão):
+                    if self.janela_atual==1:
+                        if botões.id==2:
+                            self.janela_atual+=1
+                            break
+                        if botões.id==4:
+                            self.janela_atual-=1
+                            break
+                    elif self.janela_atual==2:
+                        if botões.id==2:
+                            self.janela_atual+=1
+                            break
+                        if botões.id==3:
+                            self.janela_atual+=2
+                            break
+                        if botões.id==4:
+                            self.janela_atual-=1
+                            break
+                    elif self.janela_atual==3:
+                        if botões.id==8:
+                            self.janela_atual+=2
+                            break
+                        if botões.id==9:
+                            self.janela_atual-=1
+                            break
+                    elif self.janela_atual==4:
+                        if botões.id==12:
+                            self.jogadores_prontos[0]= not self.jogadores_prontos[0]
+                            break
+                        if botões.id==16:
+                            self.jogadores_prontos[1]= not self.jogadores_prontos[1]
+                            break
+                        if botões.id==18:
+                            self.janela_atual-=2
+                            break
+                    
 
     def pegar_tecla_apertada(self,TECLAS_APERTADAS):
         self.tecla_pres = TECLAS_APERTADAS
