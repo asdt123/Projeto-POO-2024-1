@@ -99,7 +99,7 @@ class Janelas:
             self.ciclo = 0
         
         #atualização do fundo
-        self.index_b += 0.07
+        self.index_b += 0.11
         if self.index_b > len(self.background):
             self.index_b = 0    
         
