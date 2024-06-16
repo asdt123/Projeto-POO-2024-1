@@ -55,7 +55,7 @@ class Arsenal(pygame.sprite.Sprite):
           self.kill()
 
     #chegou ao final da tela o sprite é deletado do grupo
-    if self.rect.bottom < -30 or self.rect.bottom > screen.get_height():  
+    if self.rect.bottom < -30 or self.rect.bottom > screen.get_height() or self.rect.left<screen.get_width()//6 or self.rect.right>screen.get_width()-screen.get_width()//6 :  
       self.kill()
        
 
