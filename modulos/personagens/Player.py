@@ -37,8 +37,8 @@ class Player(Nave):
         self.img_anim_morte.append(pygame.image.load(morte_naves).subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
     
     #definindo o sprite inicial
-    super().__init__(VIDA_PLAYER,250,self.img_anim[0])
-    self.rect.bottom = 250
+    super().__init__(VIDA_PLAYER,(self.tipo_player*2+2)*screen.get_width()//6,self.img_anim[0])
+    self.rect.bottom = 3*screen.get_height()//4
     #grupo de sprites tiro
     self.tiros = pygame.sprite.Group()
     
@@ -54,10 +54,10 @@ class Player(Nave):
       self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,i*64),(64,64)).convert_alpha())
 
     #escolha da munição
-    self.tipo_mun = ['inf', 60, 60, 60]
+    self.tipo_mun = ['inf', 0, 0, 0]
     self.mun_ativ = 0
     self.cadencia = [2, 5, 1, 3]
-    self.dano = [5, 5, 5, 5]
+    self.dano = [5, 10, 10, 15]
 
   #metodo para deslocamento do sprite
   
@@ -166,7 +166,7 @@ class Player(Nave):
         self.vida = 100
         return None
     elif self.tipo_mun[id_drop]!='inf':
-      self.tipo_mun[id_drop]+=60
+      self.tipo_mun[id_drop]+=180
 
   #metodo para trocar munição
   def trocar_munição(self, rumo):
