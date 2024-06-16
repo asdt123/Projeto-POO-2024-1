@@ -232,7 +232,7 @@ class Janelas:
             case 6: # Fases do jogo
 
                 if self.scroll < background_altura-background_largura-1:
-                    self.scroll += 1
+                    self.scroll += 0.4
                 else:
                     self.scroll = 0
                 
@@ -241,7 +241,7 @@ class Janelas:
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 
-                self.background[0]=pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha()
+                self.background[0]=pygame.image.load("imagens/cenário/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
 
 
                 if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0:

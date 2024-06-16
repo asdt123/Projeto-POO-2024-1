@@ -230,7 +230,7 @@ class Player(Nave):
     mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
     format_text = fonte.render(mensagem1, False, (255,255,255))
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
-    screen.blit(format_text,(self.boxVida.left-screen.get_width()//90,self.boxVida.bottom+screen.get_height()//90))
+    screen.blit(format_text,(self.boxVida.left-format_text.get_rect().w//8,self.boxVida.bottom+screen.get_height()//90))
     screen.blit(format_text2,(self.boxVida.left,screen.get_height()//2 ))
 
     #volta o estado da skin para normal se não estiver atacando
