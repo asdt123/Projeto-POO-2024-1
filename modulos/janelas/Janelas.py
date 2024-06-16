@@ -302,10 +302,10 @@ class Janelas:
                             self.jogadores_prontos[0]= not self.jogadores_prontos[0]
                             break
                         if botões.id==15:
-                            self.skin1 -= 1
+                            self.skin2 -= 1
                             break
                         if botões.id==16:
-                            self.skin1 += 1
+                            self.skin2 += 1
                             break
                         if botões.id==17:
                             self.jogadores_prontos[1]= not self.jogadores_prontos[1]
