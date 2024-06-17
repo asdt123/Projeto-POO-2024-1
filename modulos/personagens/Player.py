@@ -239,8 +239,12 @@ class Player(Nave):
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       if self.vidas>1:
-        self.vidas-=1
-        self.vida=100
+        self.index_morte+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
+        if self.index_morte>=3.6:
+          self.vidas-=1
+          self.vida=100
+          self.index_morte=0
       else:
         self.index_morte+=0.37
         self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
