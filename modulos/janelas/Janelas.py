@@ -208,7 +208,9 @@ class Janelas:
                     self.jogadores_prontos = [False,False]
 
             case 5:
+                self.scroll = 0
                 screen.fill(CORES["Preto"])
+                players.empty()
                 if self.skin1<4:
                     self.player = Player(0,self.skin1*2)
                 else:
@@ -236,39 +238,39 @@ class Janelas:
                     self.scroll += 0.5
                 else:
                     self.janela_atual=9;
-                
-                # Calcular áreas dinâmicas
-                
-                info_width = screen.get_width()//6
-                cenario_width = screen.get_width() - 2 * info_width
-                
-                self.background[0]=pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
+                if self.janela_atual == 6:
+                    # Calcular áreas dinâmicas
+                    
+                    info_width = screen.get_width()//6
+                    cenario_width = screen.get_width() - 2 * info_width
+                    
+                    self.background[0]=pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
 
 
-                if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0 and self.scroll<1500:
-                    self.animações.add(Animação(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
+                    if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0 and self.scroll<1500:
+                        self.animações.add(Animação(random.randint(info_width, info_width+cenario_width), random.randint(0, 1)))
 
-                if len(aliens) < random.randint(2,3) and self.ciclo%5==0:
-                    aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(self.scroll//1100, self.scroll//550)))
-                
-                if len(players)==0:
-                    self.janela_atual=7
-                #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
-                #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
+                    if len(aliens) < random.randint(2,3) and self.ciclo%5==0:
+                        aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(self.scroll//1100, self.scroll//600)))
+                    
+                    if len(players)==0:
+                        self.janela_atual=7
+                    #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
+                    #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
 
-                screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
-                self.desenhar_info_jogadores()
+                    screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
+                    self.desenhar_info_jogadores()
 
 
-                self.animações.draw(screen)
-                self.animações.update()
-                players.draw(screen)
-                players.update(aliens)
-                aliens.draw(screen)
-                aliens.update(players)
-                drops.draw(screen)
-                drops.update(players)
-                self.botoes[20].update()
+                    self.animações.draw(screen)
+                    self.animações.update()
+                    players.draw(screen)
+                    players.update(aliens)
+                    aliens.draw(screen)
+                    aliens.update(players)
+                    drops.draw(screen)
+                    drops.update(players)
+                    self.botoes[20].update()
 
 
             case 7:    
@@ -318,11 +320,11 @@ class Janelas:
                         if self.janela_atual==1 or self.janela_atual==2:
                             self.janela_atual+=1
                             break
-                        elif self.janela_atual==7:
+                        elif self.janela_atual==7 or self.janela_atual==9:
                             self.janela_atual=5
                             break
-                        elif self.janela_atual==8 or self.janela_atual==9:
-                            self.janela_atual=6
+                        elif self.janela_atual==8:
+                            self.janela_atual=5
                             break
                     if botões.id==3:
                         if self.janela_atual==2:
