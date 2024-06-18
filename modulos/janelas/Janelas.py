@@ -26,10 +26,16 @@ class Janelas:
         self.player = Player(0,0)
         self.player2 = Player(1,0)
 
+        self.titulo_img_id = 0
+
         # Guarda todas as skins disponíveis para seleção
         self.imgs = []
         for i in range(14):
             self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i*64,0),(64,64)).convert_alpha())
+
+        self.titulo_img = []
+        for i in range(3):
+            self.titulo_img.append(pygame.image.load(imagem_titulo).subsurface((512*i,0,512,256)).convert_alpha())
 
 
         # Carregar a imagem de fundo
@@ -99,16 +105,24 @@ class Janelas:
         
         self.index_b += 0.05
         if self.index_b > len(self.background):
-            self.index_b = 0    
+            self.index_b = 0
+
+        if self.ciclo == 50:
+            self.titulo_img_id += 1
+        if self.titulo_img_id > 2:
+            self.titulo_img_id = 0
+
+
         match self.janela_atual:
 
             case 0: # Menu inical
-
+                  
                 tempo_oscilação = 30
-                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)],(screen.get_width(), screen.get_height())),(0,0))
+                
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
-
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],MENSAGEM("TÍTULO")[1]),MENSAGEM("TÍTULO")[0])
+                
                 #texto oscila de 15 em 15 ciclos
                 if self.ciclo%tempo_oscilação<(tempo_oscilação//2):
                   screen.blit(MENSAGEM("ESPAÇO")[0],MENSAGEM("ESPAÇO")[1])
@@ -116,11 +130,11 @@ class Janelas:
                   pass
 
             case 1: # Menu Principal
+
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
-                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],MENSAGEM("TÍTULO")[1]),MENSAGEM("TÍTULO")[0])
                 
                 #para mudar de cor, pode usar o evento pygame.MOUSEMOTION
                 if(pygame.mouse.get_pos()[0] >= CAIXA("CAMPANHA:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("CAMPANHA:Branco")[0]+CAIXA("CAMPANHA:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("CAMPANHA:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("CAMPANHA:Branco")[1]+CAIXA("CAMPANHA:Branco")[3])):
@@ -161,11 +175,11 @@ class Janelas:
             
 
             case 2: # Menu número de jogadores
+
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
-                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("TÍTULO"),2)
-                screen.blit(MENSAGEM("TÍTULO")[0],MENSAGEM("TÍTULO")[1])
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],MENSAGEM("TÍTULO")[1]),MENSAGEM("TÍTULO")[0])
                 
                 if(pygame.mouse.get_pos()[0] >= CAIXA("1_JOGADOR:Branco")[0] and pygame.mouse.get_pos()[0] <= (CAIXA("1_JOGADOR:Branco")[0]+CAIXA("1_JOGADOR:Branco")[2])) and (pygame.mouse.get_pos()[1] >= CAIXA("1_JOGADOR:Branco")[1] and pygame.mouse.get_pos()[1] <= (CAIXA("1_JOGADOR:Branco")[1]+CAIXA("1_JOGADOR:Branco")[3])):
                     
@@ -209,9 +223,9 @@ class Janelas:
             #vai rolar apenas uma vez. serve pro caso 4 tbm
 
             case 3: # Menu seleção de jogador unico
+                
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 
-                ##screen.fill(CORES["Azul do ceu"])
                 pygame.draw.rect(screen,CORES["Branco"],CAIXA("JOGADOR_CENTRO"),2)
                 screen.blit(MENSAGEM("JOGADOR_CENTRO")[0],MENSAGEM("JOGADOR_CENTRO")[1])
 
@@ -255,15 +269,16 @@ class Janelas:
                 # Guarda todas as skins disponíveis para seleção
                 screen.blit(pygame.transform.scale(self.imgs[self.skin1],tuple(a*b for a,b in zip((4,4),(screen.get_height()//7,screen.get_height()//7)))),(CAIXA("NAVE_SELECAO_CENTRO")))
                 
-                if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_d:
+                if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_RIGHT:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_>_CENTRO"),2)
                     self.skin1 += 1
                 
-                if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_a:
+                if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_LEFT:
                     pygame.draw.rect(screen,CORES["Vermelho"],CAIXA("BOTAO_<_CENTRO"),2)
                     self.skin1 -= 1
             
             case 4: # Menu selseção de dois jogadores
+                
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
 
                 #screen.fill(CORES["Azul do ceu"])

@@ -6,6 +6,7 @@ relogio = pygame.time.Clock()
 # Definições da janela
 
 TÍTULO = "Space Fighters"
+imagem_titulo = "imagens/cenário/Titulo.png"
 
 FPS = 30
 pygame.display.set_caption(TÍTULO)
@@ -178,12 +179,10 @@ def MENSAGEM(nome_mensagem:str)->list:
 
     case "TÍTULO":
       
-      size = int((box[0]+box[2]+box[1]+box[3])/12)
-      fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",size)
-      texto = fonte.render("Space Fighters",True,CORES["Verde"])
-      texto_rect = texto.get_rect(center=(int(box[0]+box[2]//2),int(box[1]+box[3]//2)))
+      x_y = (int(0.26*screen.get_width()),int(0.038*screen.get_height()))
+      x_y_size = (int(0.6*screen.get_width()),int(0.45*screen.get_height()))
 
-      return [texto,texto_rect]
+      return [x_y,x_y_size]
     
     case "CAMPANHA:Branco":
 
