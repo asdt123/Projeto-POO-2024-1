@@ -1,4 +1,5 @@
 # Space Fighters
+![logo](https://github.com/asdt123/Projeto-POO-2024-1/assets/145406623/4c9a4275-2809-44f7-98fb-95fb8b7034a1)
 
 ### Tópicos
 
