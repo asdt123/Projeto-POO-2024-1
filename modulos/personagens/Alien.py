@@ -7,18 +7,26 @@ import pygame
 import random
 
 
+
 class Alien(Nave):
-  def __init__(self,posição_inicial:tuple,tipo_alien:int)->None:
+  def __init__(self,posição_inicial:int,tipo_alien:int)->None:
     #definição da animação e qual alien vai ser gerado(0 pra ufo e 1 pro roxo)
     self.tipo_alien = tipo_alien
     self.index = 0
     self.img_anim = []
     for i in range(2):
-      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)), (64*2,64*2)))
+      self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), self.tamanho_alien()))
     super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
+    self.rect.bottom = -30
+
+    if self.rect.left+self.rect.w>screen.get_width() - screen.get_width()//6: 
+      self.rect.left = screen.get_width() - screen.get_width()//6 - self.rect.w
     #grupo pra sprites de tiro
     self.tiros = pygame.sprite.Group()
     self.pontos = 100
+
+    
+    self.vel_alien = [screen.get_height()//100,screen.get_height()//100]
     
   #define o tipo de ataque e arma a partir do tipo de alien
   def atacar(self)->None:
@@ -55,12 +63,32 @@ class Alien(Nave):
 
   #metodo para definir movimento a partir do tipo de alien (em construção)  
   def mover(self)->None:
-    #movimenta pra baixo
-    self.rect.move_ip(0,screen.get_height()//100)
+    if self.tipo_alien==0:
+      #movimenta pra baixo
+      self.rect.move_ip(0,self.vel_alien[1])
+    elif self.tipo_alien==1:
+      if self.ciclo%8<6:
+        self.vel_alien[1]=screen.get_height()//100
+      else:
+        self.vel_alien[1]=-screen.get_height()//100
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
+    elif self.tipo_alien==2:
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
+    elif self.tipo_alien==3:
+      #movimenta para lado
+      if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
+        self.vel_alien[0]=-self.vel_alien[0]
+      self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
 
   #metodo para ajustar tamanho do sprite apos mudança de tela
   def tamanho_alien(self)->tuple[int,int]:
-    return (screen.get_height()//5,screen.get_height()//5)
+    return (screen.get_height()//7,screen.get_height()//7)
   
   #metodo para reposicionar apos mudança de tela
   def reposicionar(self, dimensões_antigas, dimensões_novas):
@@ -81,11 +109,11 @@ class Alien(Nave):
     if self.index >= 2:
       self.index = 0
     self.image = pygame.transform.scale(self.img_anim[int(self.index)], self.tamanho_alien())
-    self.rect.w, self.rect.h = self.tamanho_alien()
 
     #ajusta hitbox
     self.rect.w = self.image.get_width()
     self.rect.h = self.image.get_height()
+    
 
     #verifica se acertou o jogador
     self.tiros.update(player)

@@ -12,6 +12,8 @@ class Player(Nave):
     self.alternar_skin = 0
     self.tipo_player = tipo_player
 
+    self.vidas = 3
+
     #sprites normais
     #até a 4 skin tem animação de tiro diferente, o resto não
     self.img_anim = []
@@ -35,8 +37,8 @@ class Player(Nave):
         self.img_anim_morte.append(pygame.image.load(morte_naves).subsurface((i*64,(self.skin-4)*64),(64,64)).convert_alpha())
     
     #definindo o sprite inicial
-    super().__init__(VIDA_PLAYER,(250,250),self.img_anim[0])
-    
+    super().__init__(VIDA_PLAYER,(self.tipo_player*2+2)*screen.get_width()//6,self.img_anim[0])
+    self.rect.bottom = 3*screen.get_height()//4
     #grupo de sprites tiro
     self.tiros = pygame.sprite.Group()
     
@@ -52,10 +54,10 @@ class Player(Nave):
       self.tipo_mun_spr.append(pygame.image.load(municao_naves).subsurface((64,i*64),(64,64)).convert_alpha())
 
     #escolha da munição
-    self.tipo_mun = ['inf', 60, 60, 60]
+    self.tipo_mun = ['inf', 0, 0, 0]
     self.mun_ativ = 0
     self.cadencia = [2, 5, 1, 3]
-    self.dano = [5, 5, 5, 5]
+    self.dano = [5, 10, 10, 15]
 
   #metodo para deslocamento do sprite
   
@@ -92,13 +94,13 @@ class Player(Nave):
         self.rect.move_ip((0, 0))
       elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0, 0))
-      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-screen.get_width()//6 and velocidade[0]>0:
+      elif self.rect.top<0 and velocidade[1]<0 and self.rect.right>screen.get_width()-screen.get_width()//6 - screen.get_width()//90 and velocidade[0]>0:
         self.rect.move_ip((0, 0))
-      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-screen.get_width()//6  and velocidade[0]>0:
+      elif self.rect.bottom>screen.get_height() and velocidade[1]>0 and self.rect.right>screen.get_width()-screen.get_width()//6 - screen.get_width()//90  and velocidade[0]>0:
         self.rect.move_ip((0, 0))
       elif self.rect.left<screen.get_width()//6 and velocidade[0]<0:
         self.rect.move_ip((0,velocidade[1]))
-      elif self.rect.right>screen.get_width()-screen.get_width()//6 and velocidade[0]>0:
+      elif self.rect.right>screen.get_width()-screen.get_width()//6 - screen.get_width()//90 and velocidade[0]>0:
         self.rect.move_ip((0,velocidade[1]))
       elif self.rect.top<0 and velocidade[1]<0:
         self.rect.move_ip((velocidade[0], 0))
@@ -106,11 +108,6 @@ class Player(Nave):
         self.rect.move_ip((velocidade[0], 0))
       else:
         self.rect.move_ip(velocidade)
-
-        if self.rect.left<screen.get_width()//6:
-          self.rect.left=screen.get_width()//6
-        if self.rect.right>screen.get_width()-screen.get_width()//6:
-          self.rect.right=screen.get_width()-screen.get_width()//6
 
   #metodo para realizar ataque
   def atacar(self)->None:
@@ -164,7 +161,7 @@ class Player(Nave):
         self.vida = 100
         return None
     elif self.tipo_mun[id_drop]!='inf':
-      self.tipo_mun[id_drop]+=60
+      self.tipo_mun[id_drop]+=180
 
   #metodo para trocar munição
   def trocar_munição(self, rumo):
@@ -181,10 +178,10 @@ class Player(Nave):
   def barra_vida(self):
     #vida player 1
     if self.tipo_player==0:
-      return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
+      return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
     #vida player 2
     else:
-      return (screen.get_width()//1.25,screen.get_height()//24,int((screen.get_width()/900)*self.vida*1.5), screen.get_height()//30)
+      return (screen.get_width()//1.16,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
 
   #metodo para ajustar dimensão do sprite munição para mudança de tela
   def tamanho_municao(self)->tuple[int,int]:
@@ -205,35 +202,47 @@ class Player(Nave):
     if self.ciclo>100:
       self.ciclo=0
 
-    #mostra na tela a vida do jogador
+    #mostra na tela a vida e a munição do jogador
     self.boxVida.update(self.barra_vida())
     pygame.draw.rect(screen,(255,0,0),self.boxVida)
+    ponto_medio_inf=self.tipo_player*5*screen.get_width()//6+screen.get_width()//12
+    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (ponto_medio_inf-screen.get_height()//30,screen.get_height()//2.5) )
+    for i in range(-1,self.vidas-1):
+      screen.blit(pygame.transform.scale(self.img_anim[0],(screen.get_width()//20,screen.get_width()//20)), (ponto_medio_inf+i*screen.get_width()//20-screen.get_width()//40,screen.get_height()//1.5) )
+
 
     #recupera a vida ate 40% mais ou menos, uma mamata
     if self.ciclo%10==5 and self.vida<40 and self.vida>0:
-      self.vida += 1
+      self.vida += 2
 
     #desenha os tiros na tela e verifica se acertou um alien
     self.tiros.draw(screen)
     self.tiros.update(aliens,self)
 
     #imprime a pontuação e a arma usada, temporario
-    fonte = pygame.font.SysFont("Monospace", screen.get_width()//45, True, True)
+    fonte = pygame.font.SysFont("fontes/Star_fonte_completa-Regular.ttf", screen.get_width()//35, True, True)
     mensagem1 = f"Pontuação: {self.pontos}"
     mensagem2 = f"Munição: {self.tipo_mun[self.mun_ativ]}"
     format_text = fonte.render(mensagem1, False, (255,255,255))
     format_text2 = fonte.render(mensagem2, False, (255,255,255))
-    screen.blit(format_text,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//90))
-    screen.blit(format_text2,(self.boxVida.left,self.boxVida.bottom+screen.get_height()//18 ))
-    screen.blit(pygame.transform.scale(self.tipo_mun_spr[self.mun_ativ], tuple(a*b for a,b in zip((2,2), self.tamanho_municao()))), (self.boxVida.left,self.boxVida.bottom+screen.get_height()//10) )
+    screen.blit(format_text,(self.boxVida.left-format_text.get_rect().w//8,self.boxVida.bottom+screen.get_height()//90))
+    screen.blit(format_text2,(self.boxVida.left,screen.get_height()//2 ))
 
     #volta o estado da skin para normal se não estiver atacando
     self.alternar_skin = 0
    
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
-      self.index_morte+=0.37
-      self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-      if self.index_morte>=3.6:
-        self.kill()
+      if self.vidas>1:
+        self.index_morte+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
+        if self.index_morte>=3.6:
+          self.vidas-=1
+          self.vida=100
+          self.index_morte=0
+      else:
+        self.index_morte+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
+        if self.index_morte>=3.6:
+          self.kill()
     

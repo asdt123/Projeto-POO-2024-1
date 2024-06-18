@@ -23,59 +23,50 @@ while running:
 
   if janela.janela_atual == 6:
     
-    if key[pygame.K_1]:   # atacar
-      janela.player2.atacar()
+    if key[pygame.K_r]:   # atacar
+      janela.player.atacar()
     
     if key[pygame.K_d] and key[pygame.K_w]:  # Andar para direita e pra cima
-      janela.player2.mover((velocidade,-velocidade))
-    elif key[pygame.K_d] and key[pygame.K_s]:  # Andar para direita e pra baixo
-      janela.player2.mover((velocidade,velocidade))
-    elif key[pygame.K_a] and key[pygame.K_w]:  # Andar para esquerda e pra cima
-      janela.player2.mover((-velocidade,-velocidade))
-    elif key[pygame.K_a] and key[pygame.K_s]:  # Andar para esquerda e pra baixo
-      janela.player2.mover((-velocidade,velocidade))
-    elif key[pygame.K_w]:     # Andar para cima
-      janela.player2.mover((0,-velocidade))
-    elif key[pygame.K_a]:   # Andar para esquerda
-      janela.player2.mover((-velocidade,0))
-    elif key[pygame.K_s]:   # Andar para baixo
-      janela.player2.mover((0,velocidade))
-    elif key[pygame.K_d]:  # Andar para direita
-      janela.player2.mover((velocidade, 0))
-    else:
-      janela.player2.mover((0,0))
-
-    if key[pygame.K_2] and not players.has(janela.player2):   # renascer
-      janela.player2 = Player(1,17)
-      players.add(janela.player2)
-
-
-    if key[pygame.K_l]:   # atacar
-      janela.player.atacar()
-
-    if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
       janela.player.mover((velocidade,-velocidade))
-    elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:  # Andar para direita e pra baixo
+    elif key[pygame.K_d] and key[pygame.K_s]:  # Andar para direita e pra baixo
       janela.player.mover((velocidade,velocidade))
-    elif key[pygame.K_LEFT] and key[pygame.K_UP]:  # Andar para esquerda e pra cima
+    elif key[pygame.K_a] and key[pygame.K_w]:  # Andar para esquerda e pra cima
       janela.player.mover((-velocidade,-velocidade))
-    elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:  # Andar para esquerda e pra baixo
+    elif key[pygame.K_a] and key[pygame.K_s]:  # Andar para esquerda e pra baixo
       janela.player.mover((-velocidade,velocidade))
-    elif key[pygame.K_UP]:     # Andar para cima
+    elif key[pygame.K_w]:     # Andar para cima
       janela.player.mover((0,-velocidade))
-    elif key[pygame.K_LEFT]:   # Andar para esquerda
+    elif key[pygame.K_a]:   # Andar para esquerda
       janela.player.mover((-velocidade,0))
-    elif key[pygame.K_DOWN]:   # Andar para baixo
+    elif key[pygame.K_s]:   # Andar para baixo
       janela.player.mover((0,velocidade))
-    elif key[pygame.K_RIGHT]:  # Andar para direita
-      janela.player.mover((velocidade,0))
+    elif key[pygame.K_d]:  # Andar para direita
+      janela.player.mover((velocidade, 0))
     else:
       janela.player.mover((0,0))
 
-    if key[pygame.K_j] and not players.has(janela.player):   # renascer
-      janela.player = Player(0, 0)
-      players.add(janela.player)
 
+    if key[pygame.K_l]:   # atacar
+      janela.player2.atacar()
+
+    if key[pygame.K_RIGHT] and key[pygame.K_UP]:  # Andar para direita e pra cima
+      janela.player2.mover((velocidade,-velocidade))
+    elif key[pygame.K_RIGHT] and key[pygame.K_DOWN]:  # Andar para direita e pra baixo
+      janela.player2.mover((velocidade,velocidade))
+    elif key[pygame.K_LEFT] and key[pygame.K_UP]:  # Andar para esquerda e pra cima
+      janela.player2.mover((-velocidade,-velocidade))
+    elif key[pygame.K_LEFT] and key[pygame.K_DOWN]:  # Andar para esquerda e pra baixo
+      janela.player2.mover((-velocidade,velocidade))
+    elif key[pygame.K_UP]:     # Andar para cima
+      janela.player2.mover((0,-velocidade))
+    elif key[pygame.K_LEFT]:   # Andar para esquerda
+      janela.player2.mover((-velocidade,0))
+    elif key[pygame.K_DOWN]:   # Andar para baixo
+      janela.player2.mover((0,velocidade))
+    elif key[pygame.K_RIGHT]:  # Andar para direita
+      janela.player2.mover((velocidade,0))
+    else:
+      janela.player2.mover((0,0))
 
   #analise dos demais eventos
   for event in pygame.event.get():
@@ -89,14 +80,19 @@ while running:
         lista_aliens.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
       for lista_drops in drops.sprites():
         lista_drops.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
+      for lista_animações in janela.animações.sprites():
+        lista_animações.reposicionar(DIMENSÕES_TELA,DIMENSÕES_TELA_NOVA)
+
       DIMENSÕES_TELA = DIMENSÕES_TELA_NOVA
     
     if event.type == pygame.KEYDOWN:
-      if event.key == pygame.K_ESCAPE:
-        running = False
       if event.key == pygame.K_k:
+        janela.player2.trocar_munição(1)
+      if event.key == pygame.K_j:
+        janela.player2.trocar_munição(-1)
+      if event.key == pygame.K_1:
         janela.player.trocar_munição(1)
-      if event.key == pygame.K_TAB:
+      if event.key == pygame.K_2:
         janela.player.trocar_munição(-1)
 
       if event.key == pygame.K_SPACE and janela.janela_atual == 0:
@@ -118,10 +114,6 @@ while running:
         janela.pegar_tecla_apertada([True,False,pygame.K_a])
 
     if event.type == pygame.KEYUP:
-      if event.key == pygame.K_k:
-        janela.player.trocar_munição(1)
-      if event.key == pygame.K_TAB:
-        janela.player.trocar_munição(-1)
       if event.key == pygame.K_SPACE and (janela.janela_atual == 3 or janela.janela_atual == 4):
         janela.pegar_tecla_apertada([True,True,pygame.K_SPACE])
 
@@ -137,14 +129,11 @@ while running:
       if event.key == pygame.K_a and (janela.janela_atual == 3 or janela.janela_atual == 4):
         janela.pegar_tecla_apertada([True,True,pygame.K_a])
 
-    if event.type == pygame.MOUSEBUTTONDOWN and janela.janela_atual != 0:
-      if event.button == 1:
-        janela.pegar_mouse_click([True,False])
-        
-    if event.type == pygame.MOUSEBUTTONUP and janela.janela_atual != 0:
-      if event.button == 1:
-        janela.pegar_mouse_click([True,True])
-
+    if event.type == pygame.MOUSEMOTION and janela.janela_atual != 0:
+      janela.pegar_mouse(event.pos)
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      janela.pegar_mouse(event.pos, event.button)
+  
 
   janela.atualizar_janela()
 

@@ -23,7 +23,7 @@ class Drops(pygame.sprite.Sprite):
         self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
 
     def tamanho_drop(self)->tuple[int,int]:
-        return (screen.get_height()//30,screen.get_height()//30)
+        return (screen.get_height()//27,screen.get_height()//27)
 
     def update(self, player):
         #movimenta o longo da tela para não ficar disponivel eternamente
