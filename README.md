@@ -29,14 +29,17 @@ A ideia do jogo foi trazer a lembrança do antigo jogo da epóca dos anos 80, ma
 
 <a href="https://www.python.org/" alvo="_em branco">
 
+###
 
-# Acesso ao projeto
-Você pode[acessar o código fonte do projeto](https://github.com/asdt123/Projeto-POO-2024-1.git)
+## Acesso ao projeto
+Você pode [acessar o código fonte do projeto](https://github.com/asdt123/Projeto-POO-2024-1.git).
 
-# Abrir e rodar o projeto
+## Abrir e rodar o projeto
 
+<p alinhar="justificar">
 Após baixar o projeto, você pode abrir no seu editor de código da sua preferência. Se o projeto for baixado via zip, é necessário extraí-lo antes de abrir no editor.
+</p>
 
-# Desenvolvedores
+## Desenvolvedores
 
-Nomes 
+|[<imagem fonte="https://avatars.githubusercontent.com/u/132157285?v=4" largura=115><sub>Arthur Teixeira</sub>](https://github.com/asdt123)|
