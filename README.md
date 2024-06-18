@@ -42,4 +42,5 @@ Após baixar o projeto, você pode abrir no seu editor de código da sua prefer�
 
 ## Desenvolvedores
 
-|[<imagem fonte="https://avatars.githubusercontent.com/u/132157285?v=4" largura=115><sub>Arthur Teixeira</sub>](https://github.com/asdt123)|
+|[<imagem fonte="https://avatars.githubusercontent.com/u/132157285?v=4" largura=115><br><sub>Arthur Teixeira</sub>](https://github.com/asdt123)|[<imagem fonte="https://avatars.githubusercontent.com/u/118644674?v=4" largura=115><br><sub>Gabriel Cordeiro</sub>](https://github.com/gc-duarte)|[<imagem fonte="https://avatars.githubusercontent.com/u/145406623?v=4" largura=115><br><sub>Lucas Fernandes</sub>](https://github.com/Lucasferoo)|
+|:---:|:---:|:---:
