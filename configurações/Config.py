@@ -6,7 +6,7 @@ relogio = pygame.time.Clock()
 # Definições da janela
 
 TÍTULO = "Space Fighters"
-imagem_titulo = "imagens/cenário/Titulo.png"
+imagem_titulo = "imagens/cenario/Titulo.png"
 
 FPS = 30
 pygame.display.set_caption(TÍTULO)

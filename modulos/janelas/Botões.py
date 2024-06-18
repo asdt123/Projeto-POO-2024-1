@@ -4,7 +4,7 @@ from configurações.Config import *
 
 
 class Botões():
-  def __init__(self, id_box, texto=None, flag=None):
+  def __init__(self, id_box:int, texto=None, flag=None)->None:
     #define como vai ser impresso na tela
     self.flag = flag
 
@@ -16,7 +16,7 @@ class Botões():
     self.rect= pygame.Rect(self.caixa())
     self.size = self.tamanho_letra()
     self.fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",self.size)
-    self.texto= texto
+    self.texto = texto
     self.texto_imp = self.fonte.render(self.texto,True,CORES["Branco"])
 
   # Atualiza os tamanhos de todos os botões
@@ -26,6 +26,9 @@ class Botões():
       return (screen.get_width()//2-screen.get_width()//5,screen.get_height()*0.6,screen.get_width()//2.5,screen.get_height()//15)
     
     #titulo
+    # (int(0.6*screen.get_width()),int(0.45*screen.get_height()))  x_y_size
+    # (int(0.26*screen.get_width()),int(0.038*screen.get_height())) x_y
+
     if self.id == 1:
       return (screen.get_width()//4,screen.get_height()//5,screen.get_width()//2,screen.get_height()//6)
     
@@ -149,7 +152,6 @@ class Botões():
       self.ressaltado=False
       return False
     
-
   def mouse_click(self,botão):
     if self.flag=='ESTATICO' and botão == 1:
       self.ressaltado = not self.ressaltado

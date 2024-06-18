@@ -55,6 +55,13 @@ class Janelas:
             self.background.append(pygame.image.load("imagens/cenario/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
         self.index_b = 0
         
+        # Carrega as imagens do título
+        self.titulo_img_id = 0
+        self.titulo_img = []
+        for i in range(3):
+            self.titulo_img.append(pygame.image.load(imagem_titulo).subsurface((512*i,0,512,256)).convert_alpha())
+
+
     def desenhar_info_jogadores(self):
         #deixa a largura da informação baseada na largura do jogo
         #assim ela não varia se mudar o tamanho da tela
@@ -94,7 +101,6 @@ class Janelas:
         self.botoes[19].alterar_texto("", 'BOX')   
         self.botoes[20].alterar_texto("| |")     
 
-
         #contagem de ciclos, a cada 30 frames conta um
         self.ciclo += 1
         if self.ciclo > 100:
@@ -105,15 +111,24 @@ class Janelas:
         if self.index_b > len(self.background):
             self.index_b = 0    
         
+        #mudar imagens do título
+        if self.ciclo == 50:
+            self.titulo_img_id += 1
+        if self.titulo_img_id > 2:
+            self.titulo_img_id = 0
+
         #impressão da janela
         match self.janela_atual:
+
             case 0: # Menu inical
+
                 self.background.clear()
                 for i in range(4):
                     self.background.append(pygame.image.load("imagens/cenario/menu_inicial.png").subsurface((0,600*i), (900, 600)).convert_alpha())
                 tempo_oscilação = 30
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
-                self.botoes[1].update()
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
+                #self.botoes[1].update()
 
                 #texto oscila de 15 em 15 ciclos
                 if self.ciclo%tempo_oscilação<(tempo_oscilação//2):
@@ -124,7 +139,8 @@ class Janelas:
             case 1: # Menu Principal
 
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
-                self.botoes[1].update()
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
+                #self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
                 self.botoes[4].update()               
@@ -134,7 +150,8 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[2].alterar_texto("1 jogador")
                 self.botoes[3].alterar_texto("2 jogadores")
-                self.botoes[1].update()
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
+                #self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
                 self.botoes[4].update()       
@@ -241,7 +258,7 @@ class Janelas:
                 if self.scroll < background_altura-background_largura-1:
                     self.scroll += 0.5
                 else:
-                    self.janela_atual=9;
+                    self.janela_atual=9
                 if self.janela_atual == 6:
                     # Calcular áreas dinâmicas
                     
