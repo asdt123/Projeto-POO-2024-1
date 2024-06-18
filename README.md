@@ -27,9 +27,8 @@ A ideia do jogo foi trazer a lembrança do antigo jogo da epóca dos anos 80, ma
 
 ## Ferramentas usadas
 
-<a href="https://www.python.org/" alvo="_em branco">
-
-###
+• [Python](https://www.python.org/)</a>
+• [Git](https://www.git-scm.com/)
 
 ## Acesso ao projeto
 Você pode [acessar o código fonte do projeto](https://github.com/asdt123/Projeto-POO-2024-1.git).
@@ -42,5 +41,6 @@ Após baixar o projeto, você pode abrir no seu editor de código da sua prefer�
 
 ## Desenvolvedores
 
-|[<imagem fonte="https://avatars.githubusercontent.com/u/132157285?v=4" largura=115><br><sub>Arthur Teixeira</sub>](https://github.com/asdt123)|[<imagem fonte="https://avatars.githubusercontent.com/u/118644674?v=4" largura=115><br><sub>Gabriel Cordeiro</sub>](https://github.com/gc-duarte)|[<imagem fonte="https://avatars.githubusercontent.com/u/145406623?v=4" largura=115><br><sub>Lucas Fernandes</sub>](https://github.com/Lucasferoo)|
-|:---:|:---:|:---:
+| [<imagem fonte="https://avatars.githubusercontent.com/u/132157285?v=4" largura=115><br><sub>Arthur Teixeira</sub>](https://github.com/asdt123) | [<imagem fonte="[https://avatars.githubusercontent.com/u/118644674?v=4](https://github.com/asdt123/Projeto-POO-2024-1/assets/145406623/3c2640e8-b5ef-4a5c-b269-eb0f8459c0cf)" largura=115><br><sub>Gabriel Cordeiro</sub>](https://github.com/gc-duarte) | [<imagem fonte="https://avatars.githubusercontent.com/u/145406623?v=4" largura=115><br><sub>Lucas Fernandes</sub>](https://github.com/Lucasferoo)|
+|:---:|:---:|:---:|
+
