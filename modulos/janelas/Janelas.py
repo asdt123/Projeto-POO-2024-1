@@ -2,6 +2,7 @@ import pygame
 import random
 from configurações.Config import *
 from modulos.personagens.Alien import Alien
+from modulos.personagens.Conta import *
 from modulos.personagens.Player import Player
 from .Animação import Animação
 from .Botões import Botões
@@ -32,10 +33,12 @@ class Janelas:
         self.jogadores_prontos = [False,False]
         self.player = Player(0,0)
         self.player2 = Player(1,0)
+        self.conta = Conta()
+        self.cadastro = Cadastro()
 
         #botoes utilizados
         self.botoes = []
-        for i in range(21):
+        for i in range(24):
             self.botoes.append(Botões(i))
 
         # Guarda todas as skins disponíveis para seleção
@@ -43,6 +46,9 @@ class Janelas:
         for i in range(14):
             self.imgs.append(pygame.image.load(imagens_naves_selecao).subsurface((i*64,0),(64,64)).convert_alpha())
 
+
+        self.text = ""
+        
 
         # Carregar a imagem lateral
         self.informacao_bg = []
@@ -62,7 +68,7 @@ class Janelas:
             self.titulo_img.append(pygame.image.load(imagem_titulo).subsurface((512*i,0,512,256)).convert_alpha())
 
 
-    def desenhar_info_jogadores(self):
+    def desenhar_info_jogadores(self)->None:
         #deixa a largura da informação baseada na largura do jogo
         #assim ela não varia se mudar o tamanho da tela
 
@@ -94,12 +100,15 @@ class Janelas:
         self.botoes[12].alterar_texto("D")
         self.botoes[13].alterar_texto("Pressione", 'ESTATICO')
         self.botoes[14].alterar_texto("JOGADOR 2", 'NORMAL')
-        self.botoes[15].alterar_texto("!")
-        self.botoes[16].alterar_texto("?")
+        self.botoes[15].alterar_texto("<")
+        self.botoes[16].alterar_texto(">")
         self.botoes[17].alterar_texto("Pressione", 'ESTATICO')
         self.botoes[18].alterar_texto("Voltar")
         self.botoes[19].alterar_texto("", 'BOX')   
-        self.botoes[20].alterar_texto("| |")     
+        self.botoes[20].alterar_texto("| |")
+        self.botoes[21].alterar_texto("Confirmar")
+        self.botoes[22].alterar_texto(self.text)
+        self.botoes[23].alterar_texto("Nome:",'NORMAL')
 
         #contagem de ciclos, a cada 30 frames conta um
         self.ciclo += 1
@@ -135,6 +144,7 @@ class Janelas:
                   self.botoes[0].update()
                 else:
                   pass
+                
 
             case 1: # Menu Principal
 
@@ -156,7 +166,53 @@ class Janelas:
                 self.botoes[3].update()
                 self.botoes[4].update()       
 
-            case 3: # Menu seleção de jogador unico
+            case 3: # Definir nick do jogador solo
+                
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
+                
+                if self.tecla_pres[0] == True:
+    
+                    if self.tecla_pres[2] == pygame.K_BACKSPACE:
+                        self.text = self.text[:-1] 
+
+                    else:
+
+                        if len(self.text) != 3:
+                            self.text += (chr(self.tecla_pres[2])).upper()
+
+                        else:
+                            pass
+                
+                self.botoes[4].update()
+                self.botoes[21].update()
+                self.botoes[22].update()
+                self.botoes[23].update()
+
+            case 4: # Definir nick da dupla
+                
+                screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
+                screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
+                
+                if self.tecla_pres[0] == True:
+    
+                    if self.tecla_pres[2] == pygame.K_BACKSPACE:
+                        self.text = self.text[:-1] 
+                    
+                    else:
+
+                        if len(self.text) != 6:
+                            self.text += (chr(self.tecla_pres[2])).upper()
+
+                        else:
+                            pass
+                
+                self.botoes[4].update()
+                self.botoes[21].update()
+                self.botoes[22].update()
+                self.botoes[23].update()
+
+            case 5: # Menu seleção de jogador unico
                 
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 #jogador
@@ -180,7 +236,7 @@ class Janelas:
                 if self.tecla_pres[0] == True and self.tecla_pres[1] == True and self.tecla_pres[2] == pygame.K_a:
                     self.skin1 -= 1
             
-            case 4: # Menu selseção de dois jogadores
+            case 6: # Menu selseção de dois jogadores
                 
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 #jogador 1
@@ -225,27 +281,28 @@ class Janelas:
                     self.skin1 -= 1
                 
                 if self.jogadores_prontos == [True,True]:
-                    self.janela_atual = 5
+                    self.janela_atual = 7
                     self.jogadores_prontos = [False,False]
 
-            case 5:
+            case 7: # Criar jogadores
+                
                 self.scroll = 0
                 screen.fill(CORES["Preto"])
                 players.empty()
-                if self.skin1<4:
+                if self.skin1 < 4:
                     self.player = Player(0,self.skin1*2)
                 else:
                     self.player = Player(0,self.skin1+4)
                 players.add(self.player)
-
-                if self.skin2!=20:
-                    if self.skin2<4:
+                
+                if self.skin2 != 20:
+                    if self.skin2 < 4:
                         self.player2 = Player(1,self.skin2*2)
                     else:
                         self.player2 = Player(1,self.skin2+4)
                     players.add(self.player2)
 
-                self.janela_atual = 6
+                self.janela_atual = 8
                 self.scroll = 0
 
                 aliens.empty()
@@ -254,18 +311,19 @@ class Janelas:
                 self.background.clear()
                 self.background.append(pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - self.scroll), (128, 128)).convert_alpha())
 
-            case 6: # Fases do jogo
+            case 8: # Fases do jogo
+                
                 if self.scroll < background_altura-background_largura-1:
                     self.scroll += 0.5
                 else:
-                    self.janela_atual=9
-                if self.janela_atual == 6:
+                    self.janela_atual = 11
+                if self.janela_atual == 8:
                     # Calcular áreas dinâmicas
                     
                     info_width = screen.get_width()//6
                     cenario_width = screen.get_width() - 2 * info_width
                     
-                    self.background[0]=pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
+                    self.background[0] = pygame.image.load("imagens/cenario/Cenarios.png").subsurface((0, 2500 - 128 - int(self.scroll)), (128, 128)).convert_alpha()
 
 
                     if len(self.animações) < random.randint(2, 3) and self.ciclo%3==0 and self.scroll<1500:
@@ -274,8 +332,8 @@ class Janelas:
                     if len(aliens) < random.randint(2,3) and self.ciclo%5==0:
                         aliens.add(Alien(random.randint(info_width, info_width+cenario_width), random.randint(self.scroll//1100, self.scroll//600)))
                     
-                    if len(players)==0:
-                        self.janela_atual=7
+                    if len(players) == 0:
+                        self.janela_atual = 9
                     #codigo para atualização do cenario, carrega so a parte que aparece na tela de baixo pra cima
                     #logica basica da basica, tem que melhorar e alterar pro nosso cenario.
 
@@ -293,8 +351,8 @@ class Janelas:
                     drops.update(players)
                     self.botoes[20].update()
 
-
-            case 7:    
+            case 9: # Perdeu o jogo  
+                
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
@@ -304,9 +362,9 @@ class Janelas:
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
-                pass
 
-            case 8:    
+            case 10: # Pause
+
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
@@ -316,9 +374,9 @@ class Janelas:
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
-                pass
             
-            case 9:    
+            case 11: # Venceu o jogo   
+
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
@@ -328,78 +386,131 @@ class Janelas:
                 self.botoes[1].update()
                 self.botoes[2].update()
                 self.botoes[3].update()
-                pass
+                
+
         # "Limpa" o mouse e o teclado para evitar clicks indevidos
         if self.tecla_pres[0:2] == [True,True]:
             self.tecla_pres = [False,False,pygame.K_0]
-
-    def pegar_mouse(self, pos, botão=None):
+        elif self.tecla_pres[0] == True and (self.janela_atual == 3 or self.janela_atual == 4):
+            self.tecla_pres = [False,False,pygame.K_0]
+        else:
+            pass
+    
+    def pegar_mouse(self, pos:tuple[int,int,int,int], botão=None)->None:
         for botões in self.botoes:
             if botões.mouse_porCima(pos):
                 if botões.mouse_click(botão):
-                    if botões.id==2:
-                        if self.janela_atual==1 or self.janela_atual==2:
-                            self.janela_atual+=1
+                    if botões.id == 2: 
+                        if self.janela_atual == 1 or self.janela_atual == 2:
+                            self.janela_atual += 1
                             break
-                        elif self.janela_atual==7 or self.janela_atual==9:
-                            self.janela_atual=5
+                        elif self.janela_atual == 9 or self.janela_atual == 11:
+                            if len(players.sprites()) == 1:
+                                self.conta.set_pontos(self.player.pontos)
+                            elif len(players.sprites()) == 2:
+                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
+                            self.janela_atual = 7
                             break
-                        elif self.janela_atual==8:
-                            self.janela_atual=5
+                        elif self.janela_atual == 10:
+                            self.janela_atual = 7
                             break
-                    if botões.id==3:
-                        if self.janela_atual==2:
-                            self.janela_atual+=2
+                    if botões.id == 3:
+                        if self.janela_atual == 2:
+                            self.janela_atual += 2
                             break
-                        elif self.janela_atual==7 or self.janela_atual==8 or self.janela_atual==9:
-                            self.janela_atual=0
+
+                        elif self.janela_atual == 9 or self.janela_atual == 11:
+
+                            if len(players.sprites()) == 1:
+                                print("Dentro")
+                                self.conta.set_pontos(self.player.pontos)
+                            elif len(players.sprites()) == 2:
+                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
+                            
+                            self.cadastro.registrar(self.conta)
+                            self.cadastro.salvar_banco_dados()
+                            players.empty()               
+                            self.janela_atual = 0
                             break
-                    if botões.id==4 and (self.janela_atual==1 or self.janela_atual==2):
-                        self.janela_atual-=1
+
+                        elif self.janela_atual == 10:
+
+                            self.conta.set_pontos(0)
+                            self.cadastro.registrar(self.conta)
+                            self.cadastro.salvar_banco_dados()
+                            players.empty()
+                            self.janela_atual = 0
+                            break
+
+                    if botões.id == 4 and (self.janela_atual == 1 or self.janela_atual == 2 or self.janela_atual == 3):
+                        
+                        self.janela_atual -= 1
+                        while len(self.text) != 0:
+                            self.text = self.text[:-1]
                         break
-                    elif self.janela_atual==3:
-                        if botões.id==6:
+
+                    if botões.id == 4 and self.janela_atual == 4:
+                        
+                        self.janela_atual -= 2
+                        while len(self.text) != 0:
+                            self.text = self.text[:-1]
+                        break
+
+                    if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
+
+                        self.conta.set_nome(self.text)
+                        while len(self.text) != 0:
+                            self.text = self.text[:-1]
+
+                        self.janela_atual += 2
+                        break
+
+                    elif self.janela_atual == 5:
+                        if botões.id == 6:
                             self.skin1 -= 1
                             break
-                        if botões.id==7:
+                        if botões.id == 7:
                             self.skin1 += 1
                             break
-                        if botões.id==8:
-                            self.janela_atual+=2
+                        if botões.id == 8:
+                            self.janela_atual += 2
                             break
-                        if botões.id==9:
-                            self.janela_atual-=1
+                        if botões.id == 9:
+                            self.janela_atual -= 2
                             break
-                    elif self.janela_atual==4:
-                        if botões.id==11:
+                    elif self.janela_atual == 6:
+                        if botões.id == 11:
                             self.skin1 -= 1
                             break
-                        if botões.id==12:
+                        if botões.id == 12:
                             self.skin1 += 1
                             break
-                        if botões.id==13:
-                            self.jogadores_prontos[0]= not self.jogadores_prontos[0]
+                        if botões.id == 13:
+                            self.jogadores_prontos[0] = not self.jogadores_prontos[0]
                             break
-                        if botões.id==15:
+                        if botões.id == 15:
                             self.skin2 -= 1
                             break
-                        if botões.id==16:
+                        if botões.id == 16:
                             self.skin2 += 1
                             break
-                        if botões.id==17:
-                            self.jogadores_prontos[1]= not self.jogadores_prontos[1]
+                        if botões.id == 17:
+                            self.jogadores_prontos[1] = not self.jogadores_prontos[1]
                             break
-                        if botões.id==18:
-                            self.janela_atual-=2
+                        if botões.id == 18:
+                            self.janela_atual -= 2
                             break
-                    elif self.janela_atual==6:
-                        if botões.id==20:
-                            self.janela_atual=8
+                    elif self.janela_atual == 8:
+                        if botões.id == 20:
+                            self.janela_atual = 10
                             break
                     
 
-    def pegar_tecla_apertada(self,TECLAS_APERTADAS):
+    def pegar_tecla_apertada(self,TECLAS_APERTADAS)->None:
         self.tecla_pres = TECLAS_APERTADAS
 
-    def selecionar_skin(self):
-        return self.skin1    
+    def selecionar_skin(self)->int:
+        return self.skin1 
+    
+    def get_janela_atual(self)->int:
+        return self.janela_atual 

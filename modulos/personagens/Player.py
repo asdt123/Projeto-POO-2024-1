@@ -177,7 +177,7 @@ class Player(Nave):
   #metodo para ajustar dimensão do bloco de vida para mudança de tela
   def barra_vida(self):
     #vida player 1
-    if self.tipo_player==0:
+    if self.tipo_player == 0:
       return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
     #vida player 2
     else:
@@ -198,9 +198,9 @@ class Player(Nave):
   #metodo para atualizar sprite ao longo da compilação
   def update(self,aliens:pygame.sprite.Group)->None:
     #variavel que acompanha ciclos de jogo
-    self.ciclo+=1
-    if self.ciclo>100:
-      self.ciclo=0
+    self.ciclo += 1
+    if self.ciclo > 100:
+      self.ciclo = 0
 
     #mostra na tela a vida e a munição do jogador
     self.boxVida.update(self.barra_vida())
