@@ -41,12 +41,7 @@ class Animação(pygame.sprite.Sprite):
 
   #metodo para atualizar sprite ao longo da compilação
   def update(self)->None:
-
-    #cicla atraves das sprites e define a escala do sprite
-    #self.index += 0.2
-    #if self.index >= 2:
-     # self.index = 0
-
+    
     self.image = pygame.transform.scale(self.image, self.tamanho_animação())
     self.rect.w, self.rect.h = self.tamanho_animação()
 

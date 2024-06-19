@@ -139,10 +139,10 @@ class Botões():
     if self.id == 20:
       return (5*screen.get_width()//6-screen.get_width()//18,int(0.1*screen.get_height()),screen.get_width()//20 ,screen.get_width()//20)
 
-  def tamanho_letra(self):
+  def tamanho_letra(self)->int:
      return int(6+3*(self.rect.h-8)//4)
 
-  def mouse_porCima(self,pos):
+  def mouse_porCima(self,pos)->bool:
     if self.rect.collidepoint(pos):
       if self.flag!='NORMAL' and self.flag!='ESTATICO':
         self.ressaltado=True
@@ -151,7 +151,8 @@ class Botões():
       self.ressaltado=False
       return False
     
-  def mouse_click(self,botão):
+
+  def mouse_click(self,botão)->bool:
     if self.flag=='ESTATICO' and botão == 1:
       self.ressaltado = not self.ressaltado
       return True
@@ -159,11 +160,11 @@ class Botões():
       return True 
     return False
  
-  def alterar_texto(self, texto, flag=None):
+  def alterar_texto(self, texto, flag=None)->None:
      self.flag=flag
      self.texto=texto
 
-  def update(self):
+  def update(self)->None:
     self.rect.update(self.caixa())
     self.size = self.tamanho_letra()
     self.fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",self.size)
