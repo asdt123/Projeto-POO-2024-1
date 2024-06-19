@@ -22,13 +22,22 @@ class Cadastro:
 
   def registrar(self,conta)->None:
 
-    self.contas.append(conta)
+    if self.confirmar_conta(conta):
+      self.contas.append(conta)
+    else:
+      pass
+    
+  def confirmar_conta(self,conta)->None:
+
+    for conta_aux in self.contas:
+      if conta.nome == conta_aux.nome:
+        return False
+    return True    
 
   def salvar_banco_dados(self)->None:
 
-    with open("test.txt","a") as arq:
+    with open("test.txt","w") as arq:
       for conta in self.contas:
         arq.write(f"{conta.nome} : {conta.pontos}\n")
 
-    self.contas.pop()
   

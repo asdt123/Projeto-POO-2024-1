@@ -149,10 +149,15 @@ class Botões():
 
     #nick
     if self.id == 23:
-      return (screen.get_width()//2-screen.get_width()//1,int(0.53*screen.get_height()),screen.get_width()//4,screen.get_height()//10)
+      return (screen.get_width()//2-screen.get_width()//2.5,int(0.53*screen.get_height()),screen.get_width()//4,screen.get_height()//10)
 
+    #rank
+    if self.id == 24:
+      return (screen.get_width()//2-screen.get_width()//2.05,int(0.9*screen.get_height()),screen.get_width()//6,screen.get_height()//12)
+    
   def tamanho_letra(self)->int:
      return int(6+3*(self.rect.h-8)//4)
+    
 
   def mouse_porCima(self,pos:tuple[int,int,int,int])->bool:
     if self.rect.collidepoint(pos):

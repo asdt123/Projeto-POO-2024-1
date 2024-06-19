@@ -33,12 +33,10 @@ class Janelas:
         self.jogadores_prontos = [False,False]
         self.player = Player(0,0)
         self.player2 = Player(1,0)
-        self.conta = Conta()
-        self.cadastro = Cadastro()
 
         #botoes utilizados
         self.botoes = []
-        for i in range(24):
+        for i in range(25):
             self.botoes.append(Botões(i))
 
         # Guarda todas as skins disponíveis para seleção
@@ -48,7 +46,10 @@ class Janelas:
 
 
         self.text = ""
-        
+        self.id_contas = 0
+        self.conta = [Conta()]
+        self.cadastro = Cadastro()
+
 
         # Carregar a imagem lateral
         self.informacao_bg = []
@@ -108,6 +109,7 @@ class Janelas:
         self.botoes[21].alterar_texto("Confirmar")
         self.botoes[22].alterar_texto(self.text)
         self.botoes[23].alterar_texto("Nome:",'NORMAL')
+        self.botoes[24].alterar_texto("Rank")
 
         #contagem de ciclos, a cada 30 frames conta um
         self.ciclo += 1
@@ -150,7 +152,8 @@ class Janelas:
                 screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
                 self.botoes[2].update()
                 self.botoes[3].update()
-                self.botoes[4].update()               
+                self.botoes[4].update()
+                self.botoes[24].update()              
 
             case 2: # Menu número de jogadores
 
@@ -383,6 +386,15 @@ class Janelas:
                 self.botoes[2].update()
                 self.botoes[3].update()
                 
+            case 12: # Tabela dos 10 melhores solo e dupla
+
+                screen.fill(CORES["Preto"])
+                self.botoes[10].alterar_texto("Solo",'NORMAL')
+                self.botoes[14].alterar_texto("Dupla",'NORMAL')
+                self.botoes[10].update()
+                self.botoes[14].update()
+
+                pass
 
         # "Limpa" o mouse e o teclado para evitar clicks indevidos
         if self.tecla_pres[0:2] == [True,True]:
@@ -391,6 +403,12 @@ class Janelas:
             self.tecla_pres = [False,False,pygame.K_0]
         else:
             pass
+        # Reseta as skins apóes sair dos menus de seleção
+        if self.janela_atual != 5 and self.janela_atual != 6:
+            self.skin1 = 20
+            self.skin2 = 20
+        else:
+            pass 
     
     def pegar_mouse(self, pos:tuple[int,int,int,int], botão=None)->None:
         for botões in self.botoes:
@@ -401,10 +419,10 @@ class Janelas:
                             self.janela_atual += 1
                             break
                         elif self.janela_atual == 9 or self.janela_atual == 11:
-                            if len(players.sprites()) == 1:
-                                self.conta.set_pontos(self.player.pontos)
-                            elif len(players.sprites()) == 2:
-                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
+                            if len(players) == 1:
+                                self.conta[self.id_contas].set_pontos(self.player.pontos)
+                            elif len(players) == 2:
+                                self.conta[self.id_contas].set_pontos(self.player.pontos+self.player2.pontos)
                             self.janela_atual = 7
                             break
                         elif self.janela_atual == 10:
@@ -417,25 +435,28 @@ class Janelas:
 
                         elif self.janela_atual == 9 or self.janela_atual == 11:
 
-                            if len(players.sprites()) == 1:
+                            if len(players) == 1:
                                 print("Dentro")
-                                self.conta.set_pontos(self.player.pontos)
-                            elif len(players.sprites()) == 2:
-                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
+                                self.conta[self.id_contas].set_pontos(self.player.pontos)
+                            elif len(players) == 2:
+                                self.conta[self.id_contas].set_pontos(self.player.pontos+self.player2.pontos)
                             
-                            self.cadastro.registrar(self.conta)
+                            
+                            self.cadastro.registrar(self.conta[self.id_contas])
                             self.cadastro.salvar_banco_dados()
-                            players.empty()               
+                            self.conta.append(Conta())
+                            self.id_contas += 1               
                             self.janela_atual = 0
                             break
 
                         elif self.janela_atual == 10:
 
-                            self.conta.set_pontos(0)
-                            self.cadastro.registrar(self.conta)
+                            self.cadastro.registrar(self.conta[self.id_contas])
                             self.cadastro.salvar_banco_dados()
-                            players.empty()
+                            self.conta.append(Conta())
+                            self.id_contas += 1               
                             self.janela_atual = 0
+                            
                             break
 
                     if botões.id == 4 and (self.janela_atual == 1 or self.janela_atual == 2 or self.janela_atual == 3):
@@ -453,14 +474,23 @@ class Janelas:
                         break
 
                     if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
-
-                        self.conta.set_nome(self.text)
-                        while len(self.text) != 0:
-                            self.text = self.text[:-1]
-
-                        self.janela_atual += 2
+                        
+                        #if self.cadastro.confirmar_conta(self.conta[self.id_contas]):
+                            
+                            self.conta[self.id_contas].set_nome(self.text)
+                        
+                            if len(self.text) == 3:
+                                self.janela_atual += 2
+                                while len(self.text) != 0:
+                                    self.text = self.text[:-1]
+                            else:
+                                pass
+                        
+                            break
+                    
+                    if botões.id == 24 and self.janela_atual == 1:
+                        self.janela_atual = 12
                         break
-
                     elif self.janela_atual == 5:
                         if botões.id == 6:
                             self.skin1 -= 1

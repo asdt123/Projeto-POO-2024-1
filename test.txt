@@ -1,4 +1,1 @@
 AAA : 0
-BBB : 0
-CCC : 0
-SDA : 0

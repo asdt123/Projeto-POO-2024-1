@@ -1,4 +1,32 @@
 import pygame
+import mysql.connector
+
+# Inicializa o mysql e conecta com 
+# um server criado previamente
+mydb = mysql.connector.connect(
+  host = "localhost",
+  user = "root",
+  password = "ELE078TTTEC",
+  database = "testdb"
+)
+
+# Faz a ponte python-mysql
+# É onde os comandos são escritos
+mycursor = mydb.cursor()
+
+# Cria uma nova base de dados. Só é executado uma vez
+#mycursor.execute("CREATE DATABASE testdb")
+
+# Mostra todas as bases de dados
+mycursor.execute("SHOW DATABASES")
+
+for db in mycursor:
+  print(db)
+
+# Criando uma tabela de dados para a base "rankdb"
+#mycursor.execute("CREATE TABLE players (nome VARCHAR(3),pontos INTEGER(10))")
+
+sqlFormula = "INSERT INTO players (nome,pontos) VALUES (%s,%s)"
 
 pygame.init()
 relogio = pygame.time.Clock()
@@ -9,8 +37,6 @@ screen = pygame.display.set_mode((900,600))
 
 fonte = pygame.font.Font(None,40)
 text = ""
-
-y = 300
 
 # press, tecla, caps
 tecla_press = [False,pygame.K_POWER,False]
@@ -154,21 +180,18 @@ while run:
       
     elif tecla_press[1] == pygame.K_RETURN:
       
-      with open("test.txt","w") as arq:
-        arq.write(f"{text}\n")
-
-      run = False
+      mycursor.executemany(sqlFormula,(text,500))
+      mydb.commit()
 
     else:
       print(tecla_press[1])
       text += chr(tecla_press[1])
 
-    print(len(text))
     tecla_press = [False,False,pygame.K_POWER]
 
 
   texto = fonte.render(text,True,(0,0,0))
-  screen.blit(texto,(300,y))
+  screen.blit(texto,(300,300))
 
   pygame.display.flip()
 
