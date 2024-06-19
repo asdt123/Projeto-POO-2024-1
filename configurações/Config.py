@@ -34,6 +34,7 @@ municao_aliens = "imagens/armamento/municoes.png"
 
 #drops
 drops = pygame.sprite.Group()
+endereço_tiro = "imagens/armamento/municoes.png"
 
 # backgorund 
 background = "imagens/cenario/Cenarios.png"

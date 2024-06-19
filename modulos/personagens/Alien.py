@@ -56,7 +56,7 @@ class Alien(Nave):
     if self.vida<=0:
       #sorteio para ver se o drop cai
       if random.randint(0,10)<3:
-        drops.add(Drops(municao_aliens, self.rect.center,random.choice([self.tipo_alien, 100])))
+        drops.add(Drops(self.rect.center,random.choice([self.tipo_alien, 100])))
       return self.pontos
     return 0
 

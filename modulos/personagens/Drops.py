@@ -2,7 +2,7 @@ from configurações.Config import *
 import pygame
 
 class Drops(pygame.sprite.Sprite):
-    def __init__(self, endereço_tiro, posição_alien, id_drop ) -> None:
+    def __init__(self, posição_alien : tuple[int,int], id_drop : int ) -> None:
         pygame.sprite.Sprite.__init__(self)
         #id para determinar o drop, sendo 1-x munição e 100 vida
         self.id_drop = id_drop
