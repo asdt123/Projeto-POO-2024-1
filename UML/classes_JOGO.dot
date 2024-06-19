@@ -9,11 +9,13 @@ charset="utf-8"
 "Animação" [color="black", fontcolor="black", label=<{Animação|image : pygame.surface.Surface<br ALIGN="LEFT"/>index : int<br ALIGN="LEFT"/>rect : pygame.rect.Rect : pygame.Rect<br ALIGN="LEFT"/>tipo_animação : int<br ALIGN="LEFT"/>|__init__(posição_inicial: int, tipo_animação: int): None<br ALIGN="LEFT"/>mover(): None<br ALIGN="LEFT"/>reposicionar(dimensões_antigas, dimensões_novas): None<br ALIGN="LEFT"/>tamanho_animação(): tuple[int, int]<br ALIGN="LEFT"/>update(): None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
 "Botões" [color="black", fontcolor="black", label=<{Botões|flag : NoneType<br ALIGN="LEFT"/>fonte : pygame.font.Font <br ALIGN="LEFT"/>id : int<br ALIGN="LEFT"/>rect : pygame.rect.Rect<br ALIGN="LEFT"/>ressaltado : bool<br ALIGN="LEFT"/>size : int<br ALIGN="LEFT"/>texto : NoneType<br ALIGN="LEFT"/>texto_imp : pygame.surface.Surface<br ALIGN="LEFT"/>|__init__(id_box, texto, flag)<br ALIGN="LEFT"/>alterar_texto(texto, flag)<br ALIGN="LEFT"/>caixa(): tuple[int, int, int, int]<br ALIGN="LEFT"/>mouse_click(botão) : bool<br ALIGN="LEFT"/>mouse_porCima(pos) : bool<br ALIGN="LEFT"/>tamanho_letra() : int<br ALIGN="LEFT"/>update() : None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
 "Drops" [color="black", fontcolor="black", label=<{Drops|id_drop : int<br ALIGN="LEFT"/>image : pygame.surface.Surface<br ALIGN="LEFT"/>img_anim : list<br ALIGN="LEFT"/>index : int<br ALIGN="LEFT"/>rect : pygame.rect.Rect<br ALIGN="LEFT"/>|__init__(posição_alien, id_drop): None<br ALIGN="LEFT"/>reposicionar(dimensões_antigas, dimensões_novas): None<br ALIGN="LEFT"/>tamanho_drop(): tuple[int, int]<br ALIGN="LEFT"/>update(player): None<br ALIGN="LEFT"/>}>, shape="record", style="solid"];
+"Nave" -> "pygame.sprite.Sprite" [arrowhead="empty", arrowtail="none"];
+"Animação" -> "pygame.sprite.Sprite" [arrowhead="empty", arrowtail="none"];
 "Arsenal" -> "Nave" [arrowhead="diamond", arrowtail="none", fontcolor="green", label=" 1..4", style="solid"];
-"Alien" -> "Nave" [arrowhead="normal", arrowtail="none"];
+"Alien" -> "Nave" [arrowhead="empty", arrowtail="none"];
 "Alien" -> "Janelas" [arrowhead="diamond", arrowtail="none",  fontcolor="green", label="  2..3"];
 "Alien" -> "Drops" [arrowhead="none",  fontcolor="green", label="  1..1",arrowtail="none", style="solid"];
-"Player" -> "Nave" [arrowhead="normal", arrowtail="none"];
+"Player" -> "Nave" [arrowhead="empty", arrowtail="none"];
 "Player" -> "Alien" [arrowhead="none", arrowtail="none",  fontcolor="green", label="  0..*"];
 "Player" -> "Drops" [arrowhead="none",  fontcolor="green", label="  1..*",arrowtail="none", style="solid"];
 "Player" -> "Janelas" [arrowhead="diamond", arrowtail="none",  fontcolor="green", label="1..2                  "];
