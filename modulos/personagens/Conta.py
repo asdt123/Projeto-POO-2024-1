@@ -25,39 +25,46 @@ class Cadastro:
 
   def registrar(self,conta)->None:
 
-    if self.confirmar_conta(conta):
       self.contas.append(conta)
-    else:
-      pass
-    
-  def confirmar_conta(self,conta)->None:
 
-    for conta_aux in self.contas:
-      if conta.nome == conta_aux.nome:
-        return False
-    return True    
-
-  def salvar_banco_dados(self)->None:
+  def salvar_banco_dados(self, num_players)->None:
 
     # Conectar ou criar banco de dados
     conn = sqlite3.connect('jogadores.db')
     cursor = conn.cursor()
-
         # Criar a tabela com as colunas de nome e pontuação
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS jogadores (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT NOT NULL,
-        pontuacao INT
-       )
-    ''')
+    if num_players == 1:
+      cursor.execute('''
+          CREATE TABLE IF NOT EXISTS solo (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nome TEXT NOT NULL,
+          pontuacao INT
+        )
+      ''')
+      conn.commit()
+      for conta in self.contas:
+        cursor.execute('''
+        INSERT INTO solo (nome, pontuacao) VALUES (?, ?)
+        ''', (conta.nome, conta.pontos))
+
+    else:
+      cursor.execute('''
+          CREATE TABLE IF NOT EXISTS dupla (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nome TEXT NOT NULL,
+          pontuacao INT
+        )
+      ''')
+      conn.commit()
+      for conta in self.contas:
+        cursor.execute('''
+        INSERT INTO dupla (nome, pontuacao) VALUES (?, ?)
+        ''', (conta.nome, conta.pontos))
 
     # Confirmar as mudanças
-    conn.commit()
-    for conta in self.contas:
-      print(conta.nome, conta.pontos)
-      cursor.execute('''
-      INSERT INTO jogadores (nome, pontuacao) VALUES (?, ?)
-      ''', (conta.nome, conta.pontos))
 
+    conn.commit()
+    self.contas.clear()
+
+    
   

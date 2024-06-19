@@ -388,16 +388,38 @@ class Janelas:
                 self.botoes[2].update()
                 self.botoes[3].update()
                 
-            case 12: # Tabela dos 10 melhores solo e dupla
+            case 12: # Tabela dos 7 melhores solo e dupla
 
                 screen.fill(CORES["Preto"])
                 self.botoes[10].alterar_texto("Solo",'NORMAL')
                 self.botoes[14].alterar_texto("Dupla",'NORMAL')
                 self.botoes[10].update()
                 self.botoes[14].update()
-                self.botoes[4].update()
+                self.botoes[18].update()
+                self.botoes[19].update()
 
-                pass
+                conn = sqlite3.connect('jogadores.db')
+                cursor = conn.cursor()
+                #solo
+                cursor.execute('SELECT nome, pontuacao FROM solo ORDER BY pontuacao DESC limit 7')
+                dados = cursor.fetchall()
+                
+                offset = screen.get_height()//10;
+                for nome, pontuacao in dados:
+                    texto = self.botoes[10].fonte.render(f"{nome}    {pontuacao}", True, CORES["Branco"])
+                    screen.blit(texto, (self.botoes[10].rect.x, self.botoes[10].rect.y+offset))
+                    offset += screen.get_height()//10  # Espaçamento entre as linhas
+                cursor.execute('SELECT nome, pontuacao FROM solo ORDER BY pontuacao DESC')
+                dados = cursor.fetchall()
+                
+                #solo
+                cursor.execute('SELECT nome, pontuacao FROM dupla ORDER BY pontuacao DESC limit 7')
+                dados = cursor.fetchall()
+                offset = screen.get_height()//10;
+                for nome, pontuacao in dados:
+                    texto = self.botoes[14].fonte.render(f"{nome}     {pontuacao}", True, CORES["Branco"])
+                    screen.blit(texto, (self.botoes[14].rect.x, self.botoes[14].rect.y+offset))
+                    offset += screen.get_height()//10  # Espaçamento entre as linhas
 
         # "Limpa" o mouse e o teclado para evitar clicks indevidos
         if self.tecla_pres[0:2] == [True,True]:
@@ -415,14 +437,26 @@ class Janelas:
                         if self.janela_atual == 1 or self.janela_atual == 2:
                             self.janela_atual += 1
                             break
-                        elif self.janela_atual == 9 or self.janela_atual == 11:
-                            if self.num_players== 1:
-                                self.conta.set_pontos(self.player.pontos)
+                        if self.janela_atual == 9:
+                            if self.num_players == 1:
+                                self.conta.set_pontos(0.95*self.player.pontos)
                             elif self.num_players == 2:
-                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
+                                self.conta.set_pontos(0.95*(self.player.pontos+self.player2.pontos)//2) 
+                            self.cadastro.registrar(self.conta)
+                            self.cadastro.salvar_banco_dados(self.num_players)
                             self.janela_atual = 7
                             break
-                        elif self.janela_atual == 10:
+                        if self.janela_atual == 11:
+                            if self.num_players == 1:
+                                self.conta.set_pontos(self.player.vidas*200+self.player.pontos*1.05)
+                            elif self.num_players == 2:
+                                self.conta.set_pontos((self.player.vidas*200+self.player.pontos+self.player2.vidas*200+self.player2.pontos)//2)
+                            
+                            self.cadastro.registrar(self.conta)
+                            self.cadastro.salvar_banco_dados(self.num_players)              
+                            self.janela_atual = 7
+                            break
+                        if self.janela_atual == 10:
                             self.janela_atual = 8
                             break
                     if botões.id == 3:
@@ -430,24 +464,26 @@ class Janelas:
                             self.janela_atual += 2
                             break
 
-                        elif self.janela_atual == 9 or self.janela_atual == 11:
-
+                        if self.janela_atual == 9:
                             if self.num_players == 1:
-                                print("Dentro")
-                                self.conta.set_pontos(self.player.pontos)
+                                self.conta.set_pontos(0.95*self.player.pontos)
                             elif self.num_players == 2:
-                                self.conta.set_pontos((self.player.pontos+self.player2.pontos)//2)
-                            
+                                self.conta.set_pontos(0.95*(self.player.pontos+self.player2.pontos)//2) 
                             self.cadastro.registrar(self.conta)
-                            self.cadastro.salvar_banco_dados()
-                            self.id_contas += 1               
+                            self.cadastro.salvar_banco_dados(self.num_players)
                             self.janela_atual = 0
                             break
-
+                        if self.janela_atual == 11:
+                            if self.num_players == 1:
+                                self.conta.set_pontos(self.player.vidas*200+self.player.pontos*1.05)
+                            elif self.num_players == 2:
+                                self.conta.set_pontos((self.player.vidas*200+self.player.pontos+self.player2.vidas*200+self.player2.pontos)//2)
+                            
+                            self.cadastro.registrar(self.conta)
+                            self.cadastro.salvar_banco_dados(self.num_players)              
+                            self.janela_atual = 0
+                            break
                         elif self.janela_atual == 10:
-
-                            self.cadastro.registrar(self.conta[self.id_contas])
-                            self.cadastro.salvar_banco_dados()
                             self.janela_atual = 0
                             
                             break
@@ -471,7 +507,8 @@ class Janelas:
                         self.janela_atual = 1
                         break
 
-                    if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
+                    if botões.id == 21:
+                        if self.janela_atual == 3:
                         
                             self.conta.set_nome(self.text)
                         
@@ -483,7 +520,21 @@ class Janelas:
                                 pass
                         
                             break
-                    
+                        if self.janela_atual == 4:
+                            self.conta.set_nome(self.text)
+                        
+                            if len(self.text) == 6:
+                                self.janela_atual += 2
+                                while len(self.text) != 0:
+                                    self.text = self.text[:-1]
+                            else:
+                                pass
+                        
+                            break
+                    if self.janela_atual == 12:
+                        if botões.id == 24:
+                            self.janela_atual=1
+                            break
                     if botões.id == 24 and self.janela_atual == 1:
                         self.janela_atual = 12
                         break
