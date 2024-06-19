@@ -3,7 +3,7 @@ from configurações.Config import *
 
 
 class Botões():
-  def __init__(self, id_box:int, texto=None, flag=None)->None:
+  def __init__(self, id_box, texto=None, flag=None):
     #define como vai ser impresso na tela
     self.flag = flag
 
@@ -15,7 +15,7 @@ class Botões():
     self.rect= pygame.Rect(self.caixa())
     self.size = self.tamanho_letra()
     self.fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",self.size)
-    self.texto = texto
+    self.texto= texto
     self.texto_imp = self.fonte.render(self.texto,True,CORES["Branco"])
 
   # Atualiza os tamanhos de todos os botões
@@ -25,9 +25,6 @@ class Botões():
       return (screen.get_width()//2-screen.get_width()//5,screen.get_height()*0.6,screen.get_width()//2.5,screen.get_height()//15)
     
     #titulo
-    # (int(0.6*screen.get_width()),int(0.45*screen.get_height()))  x_y_size
-    # (int(0.26*screen.get_width()),int(0.038*screen.get_height())) x_y
-
     if self.id == 1:
       return (screen.get_width()//4,screen.get_height()//5,screen.get_width()//2,screen.get_height()//6)
     
@@ -138,55 +135,43 @@ class Botões():
     #pause
     if self.id == 20:
       return (5*screen.get_width()//6-screen.get_width()//18,int(0.1*screen.get_height()),screen.get_width()//20 ,screen.get_width()//20)
-    
-    #confirmar nick
-    if self.id == 21:
-      return (screen.get_width()//2+screen.get_width()//10,int(0.55*screen.get_height()),screen.get_width()//4,screen.get_height()//15)
-    
-    #digitar nick
-    if self.id == 22:
-      return (screen.get_width()//2-screen.get_width()//5,int(0.53*screen.get_height()),screen.get_width()//4,screen.get_height()//10)
 
-    #nick
-    if self.id == 23:
-      return (screen.get_width()//2-screen.get_width()//1,int(0.53*screen.get_height()),screen.get_width()//4,screen.get_height()//10)
-
-  def tamanho_letra(self)->int:
+  def tamanho_letra(self):
      return int(6+3*(self.rect.h-8)//4)
 
-  def mouse_porCima(self,pos:tuple[int,int,int,int])->bool:
+  def mouse_porCima(self,pos):
     if self.rect.collidepoint(pos):
-      if self.flag != 'NORMAL' and self.flag != 'ESTATICO':
-        self.ressaltado = True
+      if self.flag!='NORMAL' and self.flag!='ESTATICO':
+        self.ressaltado=True
       return True
-    if self.flag != 'ESTATICO':
-      self.ressaltado = False
+    if self.flag!='ESTATICO':
+      self.ressaltado=False
       return False
     
-  def mouse_click(self,botão:int)->bool:
-    if self.flag == 'ESTATICO' and botão == 1:
+
+  def mouse_click(self,botão):
+    if self.flag=='ESTATICO' and botão == 1:
       self.ressaltado = not self.ressaltado
       return True
     elif self.ressaltado and botão == 1:
       return True 
     return False
  
-  def alterar_texto(self,texto:str,flag=None)->None:
-     self.flag = flag
-     self.texto = texto
+  def alterar_texto(self, texto, flag=None):
+     self.flag=flag
+     self.texto=texto
 
-  def update(self)->None:
-  def update(self)->None:
+  def update(self):
     self.rect.update(self.caixa())
     self.size = self.tamanho_letra()
     self.fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",self.size)
-    if self.flag == 'NORMAL':
+    if self.flag=='NORMAL':
       self.texto_imp = self.fonte.render(self.texto,True,CORES["Branco"])
-    elif self.flag == 'TITULO':
+    elif self.flag=='TITULO':
       self.texto_imp = self.fonte.render(self.texto,True,CORES["Verde"])
-    elif self.flag == 'ESPAÇO':
+    elif self.flag=='ESPAÇO':
       self.texto_imp = self.fonte.render(self.texto,True,CORES["Vermelho"])
-    elif self.flag =='BOX':
+    elif self.flag=='BOX':
       pygame.draw.rect(screen,CORES["Branco"],self.rect,2)  
     else:
       if not self.ressaltado:
@@ -198,4 +183,3 @@ class Botões():
 
     texto_rect = self.texto_imp.get_rect(center = self.rect.center)
     screen.blit(self.texto_imp,texto_rect)
-    

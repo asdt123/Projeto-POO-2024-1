@@ -2,7 +2,7 @@ from configurações.Config import *
 import pygame
 
 class Drops(pygame.sprite.Sprite):
-    def __init__(self, endereço_tiro, posição_alien, id_drop ) -> None:
+    def __init__(self, posição_alien : tuple[int,int], id_drop : int ) -> None:
         pygame.sprite.Sprite.__init__(self)
         #id para determinar o drop, sendo 1-x munição e 100 vida
         self.id_drop = id_drop
@@ -18,14 +18,14 @@ class Drops(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = posição_alien
     
-    def reposicionar(self, dimensões_antigas, dimensões_novas):
+    def reposicionar(self, dimensões_antigas, dimensões_novas) ->None:
         self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
         self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
 
     def tamanho_drop(self)->tuple[int,int]:
         return (screen.get_height()//27,screen.get_height()//27)
 
-    def update(self, player):
+    def update(self, player)->None:
         #movimenta o longo da tela para não ficar disponivel eternamente
         self.rect.move_ip(0,screen.get_height()//150)
 

@@ -6,26 +6,24 @@ from .Drops import Drops
 import pygame
 import random
 
-
-
 class Alien(Nave):
   def __init__(self,posição_inicial:int,tipo_alien:int)->None:
     #definição da animação e qual alien vai ser gerado(0 pra ufo e 1 pro roxo)
     self.tipo_alien = tipo_alien
-    self.index = 0
     self.img_anim = []
     for i in range(2):
       self.img_anim.append(pygame.transform.scale(pygame.image.load(imagens_aliens).subsurface((i*64,self.tipo_alien*64),(64,64)).convert_alpha(), self.tamanho_alien()))
-    super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[self.index])
+    super().__init__(VIDA_ALIEN[self.tipo_alien], posição_inicial,self.img_anim[0])
     self.rect.bottom = -30
 
+    #ajuste para sprite não passar da barra lateral
     if self.rect.left+self.rect.w>screen.get_width() - screen.get_width()//6: 
       self.rect.left = screen.get_width() - screen.get_width()//6 - self.rect.w
+    
     #grupo pra sprites de tiro
-    self.tiros = pygame.sprite.Group()
     self.pontos = 100
 
-    
+    #velocidade dos aliens nos dois eixos
     self.vel_alien = [screen.get_height()//100,screen.get_height()//100]
     
   #define o tipo de ataque e arma a partir do tipo de alien
@@ -55,9 +53,10 @@ class Alien(Nave):
   def receber_dano(self,dano:int)->int:
     #recebe dano e fica vermelho por um curto periodo
     super().receber_dano(dano)
-    if self.vida <= 0:
-      if random.randint(0,10)//1<3:
-        drops.add(Drops(municao_aliens, self.rect.center,random.choice([self.tipo_alien, 100])))
+    if self.vida<=0:
+      #sorteio para ver se o drop cai
+      if random.randint(0,10)<3:
+        drops.add(Drops(self.rect.center,random.choice([self.tipo_alien, 100])))
       return self.pontos
     return 0
 
@@ -67,11 +66,11 @@ class Alien(Nave):
       #movimenta pra baixo
       self.rect.move_ip(0,self.vel_alien[1])
     elif self.tipo_alien==1:
+      #movimenta para lado com tremidas pra cima
       if self.ciclo%8<6:
         self.vel_alien[1]=screen.get_height()//100
       else:
         self.vel_alien[1]=-screen.get_height()//100
-      #movimenta para lado
       if self.rect.left<=screen.get_width()//6 or self.rect.right>=screen.get_width() - screen.get_width()//6:
         self.vel_alien[0]=-self.vel_alien[0]
       self.rect.move_ip(self.vel_alien[0],self.vel_alien[1])
@@ -114,7 +113,6 @@ class Alien(Nave):
     self.rect.w = self.image.get_width()
     self.rect.h = self.image.get_height()
     
-
     #verifica se acertou o jogador
     self.tiros.update(player)
 
@@ -125,7 +123,7 @@ class Alien(Nave):
     for inimigo in inimigos_atingidos:
         inimigo.receber_dano(0.5)
     
-    #atira
+    #atira quando não ta encostado em um player
     if len(inimigos_atingidos) == 0:
        self.atacar()
 

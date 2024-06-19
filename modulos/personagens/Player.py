@@ -12,6 +12,7 @@ class Player(Nave):
     self.alternar_skin = 0
     self.tipo_player = tipo_player
 
+    #numero de vidas do player
     self.vidas = 3
 
     #sprites normais
@@ -25,7 +26,6 @@ class Player(Nave):
         self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
 
     #sprites de morte
-    self.index_morte = 0
     self.img_anim_morte = []
     if self.skin<8:
       #sprites pros modelos com animação de tiro
@@ -39,8 +39,6 @@ class Player(Nave):
     #definindo o sprite inicial
     super().__init__(VIDA_PLAYER,(self.tipo_player*2+2)*screen.get_width()//6,self.img_anim[0])
     self.rect.bottom = 3*screen.get_height()//4
-    #grupo de sprites tiro
-    self.tiros = pygame.sprite.Group()
     
     #auxilio visual para vida
     self.boxVida = pygame.Rect(self.barra_vida())
@@ -140,7 +138,7 @@ class Player(Nave):
       if self.tipo_mun[self.mun_ativ]==0:
         self.trocar_munição(1)
 
-  def reposicionar(self, dimensões_antigas, dimensões_novas):
+  def reposicionar(self, dimensões_antigas, dimensões_novas)->None:
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
@@ -153,7 +151,7 @@ class Player(Nave):
     super().receber_dano(dano)
   
   #metodo para receber drop
-  def receber_drop(self, id_drop):
+  def receber_drop(self, id_drop)->None:
     #verifica se o item recebido é vida ou mais munição
     if id_drop==100:
       self.vida += 30
@@ -164,18 +162,18 @@ class Player(Nave):
       self.tipo_mun[id_drop]+=180
 
   #metodo para trocar munição
-  def trocar_munição(self, rumo):
+  def trocar_munição(self, rumo)->None:
     #troca munição ativ para um que tem carga
     self.mun_ativ=((self.mun_ativ+rumo))%4
     while self.tipo_mun[self.mun_ativ]==0:
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
   #metodo para ajustar dimensão do sprite para mudança de tela
-  def tamanho_nave(self)->tuple[int,int]:
+  def tamanho_nave(self)->None:
     return (screen.get_height()//7,screen.get_height()//7)
   
   #metodo para ajustar dimensão do bloco de vida para mudança de tela
-  def barra_vida(self):
+  def barra_vida(self)->tuple[int,int]:
     #vida player 1
     if self.tipo_player == 0:
       return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
@@ -188,7 +186,7 @@ class Player(Nave):
     return (screen.get_height()//30,screen.get_height()//30)
 
   #metodo para ajustar localização do sprite para mudança de tela
-  def reposicionar(self, dimensões_antigas, dimensões_novas):
+  def reposicionar(self, dimensões_antigas, dimensões_novas)->None:
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
@@ -234,15 +232,15 @@ class Player(Nave):
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       if self.vidas>1:
-        self.index_morte+=0.37
-        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-        if self.index_morte>=3.6:
+        self.index+=0.15
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index)], self.tamanho_nave())
+        if self.index>=3.8:
           self.vidas-=1
           self.vida=100
-          self.index_morte=0
+          self.index=0
       else:
-        self.index_morte+=0.37
-        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-        if self.index_morte>=3.6:
+        self.index+=0.15
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index)], self.tamanho_nave())
+        if self.index>=3.8:
           self.kill()
     
