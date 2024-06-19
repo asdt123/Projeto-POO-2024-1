@@ -176,7 +176,6 @@ class Botões():
      self.texto = texto
 
   def update(self)->None:
-  def update(self)->None:
     self.rect.update(self.caixa())
     self.size = self.tamanho_letra()
     self.fonte = pygame.font.Font("fontes/Star_fonte_completa-Regular.ttf",self.size)
