@@ -35,6 +35,9 @@ charset="utf-8"
 "Player" -> "Alien" [arrowhead="none", arrowtail="none",  fontcolor="green", label="  0..*"];
 "Player" -> "Drops" [arrowhead="none",  fontcolor="green", label="  1..*",arrowtail="none", style="solid"];
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 38a9575 (atualização uml)
 "Player" -> "Janelas" [arrowhead="diamond", arrowtail="none",  fontcolor="green", label="1..2                  "];
 "Animação" -> "Janelas" [arrowhead="diamond", arrowtail="none",  fontcolor="green", label="2..3"];
 =======
