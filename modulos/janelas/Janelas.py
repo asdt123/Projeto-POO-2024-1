@@ -48,7 +48,7 @@ class Janelas:
 
         self.text = ""
         self.id_contas = 0
-        self.conta = [Conta()]
+        self.conta = Conta()
         self.cadastro = Cadastro()
 
 
@@ -406,12 +406,6 @@ class Janelas:
             self.tecla_pres = [False,False,pygame.K_0]
         else:
             pass
-        # Reseta as skins apóes sair dos menus de seleção
-        if self.janela_atual != 5 and self.janela_atual != 6:
-            self.skin1 = 20
-            self.skin2 = 20
-        else:
-            pass 
     
     def pegar_mouse(self, pos:tuple[int,int,int,int], botão=None)->None:
         for botões in self.botoes:
@@ -422,14 +416,14 @@ class Janelas:
                             self.janela_atual += 1
                             break
                         elif self.janela_atual == 9 or self.janela_atual == 11:
-                            if len(players) == 1:
-                                self.conta[self.id_contas].set_pontos(self.player.pontos)
-                            elif len(players) == 2:
-                                self.conta[self.id_contas].set_pontos(self.player.pontos+self.player2.pontos)
+                            if self.num_players== 1:
+                                self.conta.set_pontos(self.player.pontos)
+                            elif self.num_players == 2:
+                                self.conta.set_pontos(self.player.pontos+self.player2.pontos)
                             self.janela_atual = 7
                             break
                         elif self.janela_atual == 10:
-                            self.janela_atual = 7
+                            self.janela_atual = 8
                             break
                     if botões.id == 3:
                         if self.janela_atual == 2:
@@ -444,9 +438,8 @@ class Janelas:
                             elif self.num_players == 2:
                                 self.conta.set_pontos((self.player.pontos+self.player2.pontos)//2)
                             
-                            self.cadastro.registrar(self.conta[self.id_contas])
+                            self.cadastro.registrar(self.conta)
                             self.cadastro.salvar_banco_dados()
-                            self.conta.append(Conta())
                             self.id_contas += 1               
                             self.janela_atual = 0
                             break
@@ -455,8 +448,6 @@ class Janelas:
 
                             self.cadastro.registrar(self.conta[self.id_contas])
                             self.cadastro.salvar_banco_dados()
-                            self.conta.append(Conta())
-                            self.id_contas += 1               
                             self.janela_atual = 0
                             
                             break
@@ -482,9 +473,7 @@ class Janelas:
 
                     if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
                         
-                        #if self.cadastro.confirmar_conta(self.conta[self.id_contas]):
-                            
-                            self.conta[self.id_contas].set_nome(self.text)
+                            self.conta.set_nome(self.text)
                         
                             if len(self.text) == 3:
                                 self.janela_atual += 2
