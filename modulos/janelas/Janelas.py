@@ -532,7 +532,7 @@ class Janelas:
                         
                             break
                     if self.janela_atual == 12:
-                        if botões.id == 24:
+                        if botões.id == 18:
                             self.janela_atual=1
                             break
                     if botões.id == 24 and self.janela_atual == 1:
