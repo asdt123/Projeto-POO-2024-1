@@ -138,7 +138,7 @@ class Player(Nave):
       if self.tipo_mun[self.mun_ativ]==0:
         self.trocar_munição(1)
 
-  def reposicionar(self, dimensões_antigas, dimensões_novas):
+  def reposicionar(self, dimensões_antigas, dimensões_novas)->None:
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])
@@ -151,7 +151,7 @@ class Player(Nave):
     super().receber_dano(dano)
   
   #metodo para receber drop
-  def receber_drop(self, id_drop):
+  def receber_drop(self, id_drop)->None:
     #verifica se o item recebido é vida ou mais munição
     if id_drop==100:
       self.vida += 30
@@ -162,18 +162,18 @@ class Player(Nave):
       self.tipo_mun[id_drop]+=180
 
   #metodo para trocar munição
-  def trocar_munição(self, rumo):
+  def trocar_munição(self, rumo)->None:
     #troca munição ativ para um que tem carga
     self.mun_ativ=((self.mun_ativ+rumo))%4
     while self.tipo_mun[self.mun_ativ]==0:
       self.mun_ativ=((self.mun_ativ+rumo))%4
 
   #metodo para ajustar dimensão do sprite para mudança de tela
-  def tamanho_nave(self)->tuple[int,int]:
+  def tamanho_nave(self)->None:
     return (screen.get_height()//7,screen.get_height()//7)
   
   #metodo para ajustar dimensão do bloco de vida para mudança de tela
-  def barra_vida(self):
+  def barra_vida(self)->tuple[int,int]:
     #vida player 1
     if self.tipo_player==0:
       return (screen.get_width()//36,screen.get_height()//24,int((screen.get_width()/900)*self.vida), screen.get_height()//30)
@@ -186,7 +186,7 @@ class Player(Nave):
     return (screen.get_height()//30,screen.get_height()//30)
 
   #metodo para ajustar localização do sprite para mudança de tela
-  def reposicionar(self, dimensões_antigas, dimensões_novas):
+  def reposicionar(self, dimensões_antigas, dimensões_novas)->None:
     #reposiciona os sprites dos aliens e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])

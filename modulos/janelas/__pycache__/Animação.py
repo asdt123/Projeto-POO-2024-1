@@ -34,7 +34,7 @@ class Animação(pygame.sprite.Sprite):
     return (screen.get_height()//5,screen.get_height()//5)
   
   #metodo para reposicionar apos mudança de tela
-  def reposicionar(self, dimensões_antigas, dimensões_novas)->None:
+  def reposicionar(self, dimensões_antigas, dimensões_novas):
     #reposiciona os sprites dos animaçãos e dos tiros
     self.rect.x = round(self.rect.x / dimensões_antigas[0] * dimensões_novas[0])
     self.rect.y = round(self.rect.y / dimensões_antigas[1] * dimensões_novas[1])

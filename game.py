@@ -1,7 +1,5 @@
 import pygame
-from modulos.personagens.Player import Player
-from modulos.personagens.Alien import Alien
-from modulos.janelas.Janelas import * 
+from modulos.janelas.Janelas import Janelas
 from configurações.Config import *
 
 #inicialização pygames
