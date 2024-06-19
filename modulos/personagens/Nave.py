@@ -9,8 +9,17 @@ class Nave(ABC,pygame.sprite.Sprite):
     self.image = imagem_nave
     self.rect = self.image.get_rect()
     self.rect.left = posição_nave
+
     self.vida = vida
+
+    #index para animações automaticas
+    self.index = 0
+
+    #conta o ciclo de atualizações
     self.ciclo = 0
+
+    #grupo de sprites tiro
+    self.tiros = pygame.sprite.Group()
 
   def receber_dano(self,dano:int)->None:
     #atualiza o valor da vida e deixa vermelho
@@ -24,5 +33,6 @@ class Nave(ABC,pygame.sprite.Sprite):
   @abstractmethod
   def mover(self)->None:
     pass
+
 
     

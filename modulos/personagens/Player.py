@@ -12,6 +12,7 @@ class Player(Nave):
     self.alternar_skin = 0
     self.tipo_player = tipo_player
 
+    #numero de vidas do player
     self.vidas = 3
 
     #sprites normais
@@ -25,7 +26,6 @@ class Player(Nave):
         self.img_anim.append(pygame.image.load(imagens_naves).subsurface((i%10*64,self.skin*64),(64,64)).convert_alpha())
 
     #sprites de morte
-    self.index_morte = 0
     self.img_anim_morte = []
     if self.skin<8:
       #sprites pros modelos com animação de tiro
@@ -39,8 +39,6 @@ class Player(Nave):
     #definindo o sprite inicial
     super().__init__(VIDA_PLAYER,(self.tipo_player*2+2)*screen.get_width()//6,self.img_anim[0])
     self.rect.bottom = 3*screen.get_height()//4
-    #grupo de sprites tiro
-    self.tiros = pygame.sprite.Group()
     
     #auxilio visual para vida
     self.boxVida = pygame.Rect(self.barra_vida())
@@ -234,15 +232,15 @@ class Player(Nave):
     #verifica se morreu e não tem o qque fazer quando morre, se pa voltar pro menu inicial
     if self.vida <= 0:
       if self.vidas>1:
-        self.index_morte+=0.37
-        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-        if self.index_morte>=3.6:
+        self.index+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index)], self.tamanho_nave())
+        if self.index>=3.6:
           self.vidas-=1
           self.vida=100
-          self.index_morte=0
+          self.index=0
       else:
-        self.index_morte+=0.37
-        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index_morte)], self.tamanho_nave())
-        if self.index_morte>=3.6:
+        self.index+=0.37
+        self.image=pygame.transform.scale(self.img_anim_morte[int(self.index)], self.tamanho_nave())
+        if self.index>=3.6:
           self.kill()
     
