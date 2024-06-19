@@ -31,6 +31,7 @@ class Janelas:
 
         #jogadores
         self.jogadores_prontos = [False,False]
+        self.num_players = 0
         self.player = Player(0,0)
         self.player2 = Player(1,0)
 
@@ -166,7 +167,7 @@ class Janelas:
                 self.botoes[4].update()       
 
             case 3: # Definir nick do jogador solo
-                
+                self.num_players = 1
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
                 
@@ -189,6 +190,7 @@ class Janelas:
                 self.botoes[23].update()
 
             case 4: # Definir nick da dupla
+                self.num_players = 2
                 
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 screen.blit(pygame.transform.scale(self.titulo_img[self.titulo_img_id],(int(0.6*screen.get_width()),int(0.45*screen.get_height()))),(int(0.26*screen.get_width()),int(0.038*screen.get_height())))
@@ -436,12 +438,11 @@ class Janelas:
 
                         elif self.janela_atual == 9 or self.janela_atual == 11:
 
-                            if len(players) == 1:
+                            if self.num_players == 1:
                                 print("Dentro")
-                                self.conta[self.id_contas].set_pontos(self.player.pontos)
-                            elif len(players) == 2:
-                                self.conta[self.id_contas].set_pontos(self.player.pontos+self.player2.pontos)
-                            
+                                self.conta.set_pontos(self.player.pontos)
+                            elif self.num_players == 2:
+                                self.conta.set_pontos((self.player.pontos+self.player2.pontos)//2)
                             
                             self.cadastro.registrar(self.conta[self.id_contas])
                             self.cadastro.salvar_banco_dados()
@@ -540,6 +541,7 @@ class Janelas:
 
     def pegar_tecla_apertada(self,TECLAS_APERTADAS)->None:
         self.tecla_pres = TECLAS_APERTADAS
+
 
     def selecionar_skin(self)->int:
         return self.skin1 

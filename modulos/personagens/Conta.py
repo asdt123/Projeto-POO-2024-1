@@ -1,3 +1,6 @@
+import sqlite3
+
+
 class Conta:
   
   def __init__(self)->None:
@@ -36,8 +39,25 @@ class Cadastro:
 
   def salvar_banco_dados(self)->None:
 
-    with open("test.txt","w") as arq:
-      for conta in self.contas:
-        arq.write(f"{conta.nome} : {conta.pontos}\n")
+    # Conectar ou criar banco de dados
+    conn = sqlite3.connect('jogadores.db')
+    cursor = conn.cursor()
+
+        # Criar a tabela com as colunas de nome e pontuação
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS jogadores (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nome TEXT NOT NULL,
+        pontuacao INT
+       )
+    ''')
+
+    # Confirmar as mudanças
+    conn.commit()
+    for conta in self.contas:
+      print(conta.nome, conta.pontos)
+      cursor.execute('''
+      INSERT INTO jogadores (nome, pontuacao) VALUES (?, ?)
+      ''', (conta.nome, conta.pontos))
 
   
