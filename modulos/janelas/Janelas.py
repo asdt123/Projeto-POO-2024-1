@@ -393,6 +393,7 @@ class Janelas:
                 self.botoes[14].alterar_texto("Dupla",'NORMAL')
                 self.botoes[10].update()
                 self.botoes[14].update()
+                self.botoes[4].update()
 
                 pass
 
@@ -471,6 +472,11 @@ class Janelas:
                         self.janela_atual -= 2
                         while len(self.text) != 0:
                             self.text = self.text[:-1]
+                        break
+                    
+                    if botões.id == 4 and self.janela_atual == 12:
+                        
+                        self.janela_atual = 1
                         break
 
                     if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):

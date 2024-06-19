@@ -15,7 +15,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 # Cria uma nova base de dados. Só é executado uma vez
-#mycursor.execute("CREATE DATABASE testdb")
+mycursor.execute("DELETE DATABASE testdb")
 
 # Mostra todas as bases de dados
 mycursor.execute("SHOW DATABASES")
@@ -26,7 +26,7 @@ for db in mycursor:
 # Criando uma tabela de dados para a base "rankdb"
 #mycursor.execute("CREATE TABLE players (nome VARCHAR(3),pontos INTEGER(10))")
 
-sqlFormula = "INSERT INTO players (nome,pontos) VALUES (%s,%s)"
+#sqlFormula = "INSERT INTO players (nome,pontos) VALUES (%s,%s)"
 
 pygame.init()
 relogio = pygame.time.Clock()
@@ -180,8 +180,7 @@ while run:
       
     elif tecla_press[1] == pygame.K_RETURN:
       
-      mycursor.executemany(sqlFormula,(text,500))
-      mydb.commit()
+      pass
 
     else:
       print(tecla_press[1])
@@ -191,7 +190,7 @@ while run:
 
 
   texto = fonte.render(text,True,(0,0,0))
-  screen.blit(texto,(300,300))
+  screen.blit(texto,(30,300))
 
   pygame.display.flip()
 
