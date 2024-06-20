@@ -157,7 +157,9 @@ class Janelas:
                 self.botoes[24].update()              
 
             case 2: # Menu número de jogadores
-
+                self.skin1=20
+                self.skin2=20
+                
                 screen.blit(pygame.transform.scale(self.background[int(self.index_b)], (screen.get_width(), screen.get_height())), (0,0))
                 self.botoes[2].alterar_texto("1 jogador")
                 self.botoes[3].alterar_texto("2 jogadores")
@@ -222,7 +224,7 @@ class Janelas:
                 self.botoes[7].update()
                 self.botoes[8].update()
                 self.botoes[9].update()
-                
+                #invalidar skin 2
                 if self.skin1 < 0:
                     self.skin1 = len(self.imgs)-1
                 elif self.skin1 > len(self.imgs)-1:
@@ -286,7 +288,9 @@ class Janelas:
                     self.jogadores_prontos = [False,False]
 
             case 7: # Criar jogadores
-                
+                self.botoes[13].ressaltado=False
+                self.botoes[17].ressaltado=False
+
                 self.scroll = 0
                 screen.fill(CORES["Preto"])
                 players.empty()
@@ -377,7 +381,6 @@ class Janelas:
                 self.botoes[3].update()
             
             case 11: # Venceu o jogo   
-
                 info_width = screen.get_width()//6
                 cenario_width = screen.get_width() - 2 * info_width
                 screen.blit(pygame.transform.scale(self.background[0], (cenario_width, screen.get_height())), (info_width, 0))
@@ -507,7 +510,8 @@ class Janelas:
                         self.janela_atual = 1
                         break
 
-                    if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
+                    if botões.id == 21:
+                        if self.janela_atual == 3: 
                         
                             self.conta.set_nome(self.text)
                         
@@ -517,7 +521,16 @@ class Janelas:
                                     self.text = self.text[:-1]
                             else:
                                 pass
+                            break
+                        if self.janela_atual == 4:
+                            self.conta.set_nome(self.text)
                         
+                            if len(self.text) == 6:
+                                self.janela_atual += 2
+                                while len(self.text) != 0:
+                                    self.text = self.text[:-1]
+                            else:
+                                pass
                             break
                     if self.janela_atual == 12:
                         if botões.id == 24:
