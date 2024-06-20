@@ -27,10 +27,10 @@ class Cadastro:
 
       self.contas.append(conta)
 
-  def salvar_banco_dados(self, num_players)->None:
+  def salvar_banco_dados(self, num_players : int)->None:
 
     # Conectar ou criar banco de dados
-    conn = sqlite3.connect('jogadores.db')
+    conn = sqlite3.connect('database/jogadores.db')
     cursor = conn.cursor()
         # Criar a tabela com as colunas de nome e pontuação
     if num_players == 1:

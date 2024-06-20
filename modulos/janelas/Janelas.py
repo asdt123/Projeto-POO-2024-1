@@ -398,7 +398,7 @@ class Janelas:
                 self.botoes[18].update()
                 self.botoes[19].update()
 
-                conn = sqlite3.connect('jogadores.db')
+                conn = sqlite3.connect('database/jogadores.db')
                 cursor = conn.cursor()
                 #solo
                 cursor.execute('SELECT nome, pontuacao FROM solo ORDER BY pontuacao DESC limit 7')
