@@ -507,8 +507,7 @@ class Janelas:
                         self.janela_atual = 1
                         break
 
-                    if botões.id == 21:
-                        if self.janela_atual == 3:
+                    if botões.id == 21 and (self.janela_atual == 3 or self.janela_atual == 4):
                         
                             self.conta.set_nome(self.text)
                         
@@ -520,19 +519,8 @@ class Janelas:
                                 pass
                         
                             break
-                        if self.janela_atual == 4:
-                            self.conta.set_nome(self.text)
-                        
-                            if len(self.text) == 6:
-                                self.janela_atual += 2
-                                while len(self.text) != 0:
-                                    self.text = self.text[:-1]
-                            else:
-                                pass
-                        
-                            break
                     if self.janela_atual == 12:
-                        if botões.id == 18:
+                        if botões.id == 24:
                             self.janela_atual=1
                             break
                     if botões.id == 24 and self.janela_atual == 1:
